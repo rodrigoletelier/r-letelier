@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserve Atelier — Reservas Directas para Turismo de Lujo</title>
+  <meta name="description" content="Ayudamos a lodges, hoteles y experiencias turísticas a generar reservas directas y reducir su dependencia de OTAs mediante campañas digitales y sistemas de captación." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep:   #1C2B21;
+      --green-dark:   #243428;
+      --green-mid:    #2F4235;
+      --green-soft:   #3A5043;
+      --green-muted:  #4E6657;
+      --green-faint:  #8FA897;
+
+      --beige-warm:   #E6DDD2;
+      --beige-light:  #EDE7DF;
+      --beige-pale:   #F4F0EB;
+
+      --white-pure:   #F8F6F3;
+      --white-soft:   #F2EFE9;
+
+      --text-dark:    #1A1E1B;
+      --text-mid:     #3D4A40;
+      --text-muted:   #6B7A6E;
+      --text-faint:   #9CAA9E;
+
+      --border-dark:  rgba(60,80,65,0.18);
+      --border-mid:   rgba(60,80,65,0.1);
+      --border-light: rgba(60,80,65,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      color: var(--text-dark);
+      background: var(--white-pure);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .display { font-family: 'Cormorant Garamond', serif; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--white-pure);
+      border-bottom: 0.5px solid var(--border-mid);
+      padding: 1.1rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--green-deep);
+    }
+    .nav-cta {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      border: 0.5px solid var(--border-dark);
+      padding: 8px 20px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-cta:hover { background: var(--green-deep); color: var(--white-pure); }
+
+    /* ── HERO — blanco puro ── */
+    .hero {
+      background: var(--white-pure);
+      padding: 6rem 2.5rem 5rem;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 0.5px solid var(--border-light);
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,74,52,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+      margin-bottom: 2rem;
+      display: block;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 4.2rem);
+      font-weight: 300;
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      color: var(--text-dark);
+      margin-bottom: 1.6rem;
+      max-width: 640px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--green-soft);
+    }
+    .hero-sub {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 2.8rem;
+      font-weight: 300;
+    }
+    .btn {
+      display: inline-block;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 15px 36px;
+      border-radius: 2px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: opacity 0.2s, background 0.2s;
+    }
+    .btn-dark { background: var(--green-deep); color: var(--white-pure); }
+    .btn-dark:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--white-pure); border: 0.5px solid rgba(248,246,243,0.4); }
+    .btn-outline:hover { border-color: var(--white-pure); }
+    .hero-deco {
+      position: absolute;
+      right: 2.5rem;
+      top: 5rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 11px;
+      color: var(--green-faint);
+      opacity: 0.35;
+      writing-mode: vertical-rl;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── SECCIONES BASE ── */
+    section { padding: 5rem 2.5rem; }
+    .sec-tag {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--green-muted);
+      opacity: 0.6;
+      display: block;
+      margin-bottom: 1.1rem;
+    }
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 300;
+      line-height: 1.18;
+      color: var(--text-dark);
+      margin-bottom: 1.6rem;
+    }
+    .body-text {
+      font-size: 0.93rem;
+      line-height: 1.82;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* ── PROBLEMA — beige cálido ── */
+    .problema { background: var(--beige-warm); }
+    .prob-list { list-style: none; margin: 1.6rem 0; }
+    .prob-list li {
+      display: flex;
+      gap: 14px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-mid);
+      padding: 0.7rem 0;
+      border-bottom: 0.5px solid var(--border-dark);
+    }
+    .prob-list li:last-child { border-bottom: none; }
+    .prob-list li::before { content: '—'; color: var(--green-muted); flex-shrink: 0; opacity: 0.5; }
+    .insight {
+      margin-top: 1.8rem;
+      padding: 1.3rem 1.6rem;
+      border-left: 1.5px solid var(--green-soft);
+      background: rgba(31,43,33,0.04);
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-mid);
+      border-radius: 0 3px 3px 0;
+    }
+
+    /* ── PARADIGMA — verde profundo ── */
+    .paradigma {
+      background: var(--green-deep);
+      padding: 5rem 2.5rem;
+      text-align: center;
+    }
+    .paradigma-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.3rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.45;
+      color: var(--beige-pale);
+      max-width: 520px;
+      margin: 0 auto;
+      opacity: 0.9;
+    }
+
+    /* ── SOLUCIÓN — blanco suave ── */
+    .solucion { background: var(--white-soft); }
+    .sol-list { list-style: none; margin: 1.6rem 0; }
+    .sol-list li {
+      display: flex;
+      gap: 1.2rem;
+      padding: 0.85rem 0;
+      border-bottom: 0.5px solid var(--border-mid);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+    .sol-list li:last-child { border-bottom: none; }
+    .sol-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      color: var(--green-faint);
+      flex-shrink: 0;
+      width: 22px;
+      padding-top: 1px;
+    }
+
+    /* ── CÓMO FUNCIONA — beige pálido ── */
+    .como { background: var(--beige-pale); }
+    .como-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border-dark);
+      border: 0.5px solid var(--border-dark);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 2.2rem;
+    }
+    .como-card { background: var(--white-pure); padding: 1.8rem 1.4rem; }
+    .como-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--green-deep);
+      opacity: 0.12;
+      display: block;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+    .como-title {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 0.6rem;
+    }
+    .como-desc { font-size: 0.84rem; line-height: 1.65; color: var(--text-muted); font-weight: 300; }
+
+    /* ── QUÉ INCLUYE — verde oscuro ── */
+    .incluye { background: var(--green-dark); }
+    .incluye .sec-tag { color: var(--green-faint); opacity: 0.6; }
+    .incluye h2 { color: var(--beige-pale); }
+    .incluye-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-top: 1.8rem;
+      border: 0.5px solid rgba(142,168,151,0.15);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .inc-item {
+      padding: 1rem 1.3rem;
+      font-size: 0.85rem;
+      color: rgba(244,240,235,0.7);
+      border-bottom: 0.5px solid rgba(142,168,151,0.1);
+      border-right: 0.5px solid rgba(142,168,151,0.1);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.55;
+      font-weight: 300;
+    }
+    .inc-item:nth-child(even) { border-right: none; }
+    .inc-item:nth-last-child(-n+2) { border-bottom: none; }
+    .chk { width: 13px; height: 13px; flex-shrink: 0; margin-top: 3px; color: var(--green-faint); }
+
+    /* ── PARA QUIÉN — blanco puro ── */
+    .paraquien { background: var(--white-pure); }
+    .para-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    .para-card { border: 0.5px solid var(--border-dark); border-radius: 4px; padding: 1.5rem; }
+    .para-card.no { background: var(--beige-warm); border-color: transparent; }
+    .para-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-muted); opacity: 0.5; margin-bottom: 1.1rem; display: block; }
+    .para-list { list-style: none; }
+    .para-list li { font-size: 0.86rem; color: var(--text-muted); padding: 0.3rem 0; display: flex; gap: 8px; }
+    .para-list li::before { content: '·'; color: var(--green-soft); }
+    .para-card.no .para-list li { opacity: 0.7; }
+
+    /* ── SOBRE — beige cálido ── */
+    .sobre { background: var(--beige-warm); }
+    .sobre-inner { border: 0.5px solid var(--border-dark); border-radius: 4px; padding: 2.2rem; background: var(--white-pure); }
+    .sobre-copy { font-size: 0.95rem; line-height: 1.85; color: var(--text-muted); font-weight: 300; margin-bottom: 0.9rem; }
+    .sobre-copy strong { color: var(--green-mid); font-weight: 400; }
+    .byline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 0.92rem;
+      color: var(--text-faint);
+      margin-top: 1.6rem;
+      padding-top: 1.2rem;
+      border-top: 0.5px solid var(--border-mid);
+    }
+
+    /* ── EXPERIENCIA — blanco suave ── */
+    .experiencia { background: var(--white-soft); }
+    .exp-box {
+      margin-top: 1.8rem;
+      border: 0.5px dashed var(--border-dark);
+      border-radius: 4px;
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .exp-ph { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
+
+    /* ── CTA FINAL — verde profundo ── */
+    .cta-final {
+      background: var(--green-deep);
+      padding: 6.5rem 2.5rem;
+      text-align: center;
+    }
+    .cta-final h2 { color: var(--beige-pale); margin-bottom: 1.1rem; }
+    .cta-final p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(244,240,235,0.55);
+      max-width: 420px;
+      margin: 0 auto 2.8rem;
+      font-weight: 300;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-deep);
+      border-top: 0.5px solid rgba(142,168,151,0.12);
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--beige-pale);
+      opacity: 0.7;
+    }
+    .footer-right { font-size: 0.72rem; color: var(--green-faint); opacity: 0.4; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.4rem; }
+      .hero, section, .paradigma, .cta-final { padding-left: 1.4rem; padding-right: 1.4rem; }
+      .hero { padding-top: 4rem; padding-bottom: 3.5rem; }
+      .como-grid { grid-template-columns: 1fr; }
+      .incluye-grid { grid-template-columns: 1fr; }
+      .inc-item { border-right: none !important; }
+      .para-grid { grid-template-columns: 1fr; }
+      .hero-deco { display: none; }
+      footer { padding: 1.2rem 1.4rem; flex-direction: column; gap: 6px; text-align: center; }
+    }
+
+    /* ── ANIMACIONES SUAVES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero h1, .hero-sub, .hero .btn { animation: fadeUp 0.7s ease both; }
+    .hero-sub { animation-delay: 0.1s; }
+    .hero .btn { animation-delay: 0.2s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-brand">Reserve Atelier</span>
+    <a href="#contacto" class="nav-cta">Solicitar evaluación</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <span class="eyebrow">Sistema de reservas directas para turismo de lujo</span>
+    <h1>Genera reservas directas.<br><em>Deja de depender<br>de OTAs.</em></h1>
+    <p class="hero-sub">Ayudamos a lodges, hoteles y experiencias turísticas a atraer huéspedes de alto valor y aumentar sus reservas directas mediante un sistema de captación y seguimiento diseñado para turismo.</p>
+    <a href="#contacto" class="btn btn-dark">Solicitar evaluación</a>
+    <span class="hero-deco">Reservas Directas · Alto Valor</span>
+  </div>
+
+  <!-- PROBLEMA -->
+  <section class="problema">
+    <span class="sec-tag">El problema</span>
+    <h2>El problema no es la demanda.<br>Es la dependencia.</h2>
+    <p class="body-text">La mayoría de los negocios turísticos enfrentan lo mismo:</p>
+    <ul class="prob-list">
+      <li>Dependencia de plataformas como Booking o Airbnb</li>
+      <li>Comisiones que reducen el margen en cada reserva</li>
+      <li>Dificultad para generar reservas directas de forma constante</li>
+      <li>Campañas que generan consultas, pero no ingresos claros</li>
+    </ul>
+    <div class="insight">Estás invirtiendo en marketing, pero no tienes visibilidad real de qué está generando reservas.</div>
+  </section>
+
+  <!-- PARADIGMA -->
+  <div class="paradigma">
+    <p class="paradigma-text">"No necesitas más tráfico.<br>Necesitas un sistema que convierta<br>y te dé claridad."</p>
+  </div>
+
+  <!-- SOLUCIÓN -->
+  <section class="solucion">
+    <span class="sec-tag">La solución</span>
+    <h2>Un sistema de reservas directas,<br>no solo campañas.</h2>
+    <p class="body-text">En Reserve Atelier, diseñamos e implementamos un sistema que conecta cada etapa del proceso:</p>
+    <ul class="sol-list">
+      <li><span class="sol-num">01</span>Atracción de viajeros con intención real</li>
+      <li><span class="sol-num">02</span>Experiencias de conversión enfocadas en contacto directo</li>
+      <li><span class="sol-num">03</span>Captura de leads vía formulario y WhatsApp</li>
+      <li><span class="sol-num">04</span>Seguimiento que mejora la visibilidad de resultados</li>
+    </ul>
+    <div class="insight" style="background: rgba(31,43,33,0.04); border-left-color: var(--green-faint);">No se trata solo de generar consultas. Se trata de generar oportunidades reales de reserva.</div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="como">
+    <span class="sec-tag">Proceso</span>
+    <h2>Cómo funciona</h2>
+    <div class="como-grid">
+      <div class="como-card">
+        <span class="como-num">1</span>
+        <div class="como-title">Atracción</div>
+        <p class="como-desc">Captamos usuarios que ya están buscando experiencias turísticas similares a la tuya.</p>
+      </div>
+      <div class="como-card">
+        <span class="como-num">2</span>
+        <div class="como-title">Conversión</div>
+        <p class="como-desc">Los dirigimos a una experiencia clara, enfocada en generar contacto directo.</p>
+      </div>
+      <div class="como-card">
+        <span class="como-num">3</span>
+        <div class="como-title">Seguimiento</div>
+        <p class="como-desc">Implementamos mecanismos que muestran qué campañas generan oportunidades reales.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUÉ INCLUYE -->
+  <section class="incluye">
+    <span class="sec-tag">Alcance</span>
+    <h2>Qué incluye el sistema</h2>
+    <div class="incluye-grid">
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Campañas Google Ads por intención de búsqueda
+      </div>
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Campañas Meta Ads para visibilidad y remarketing
+      </div>
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Landing pages enfocadas en conversión
+      </div>
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Captación de leads vía formulario y WhatsApp
+      </div>
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Implementación de tracking (incluyendo GCLID)
+      </div>
+      <div class="inc-item">
+        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Optimización continua y reportes mensuales
+      </div>
+    </div>
+  </section>
+
+  <!-- PARA QUIÉN -->
+  <section class="paraquien">
+    <span class="sec-tag">Audiencia</span>
+    <h2>Para quién es</h2>
+    <div class="para-grid">
+      <div class="para-card">
+        <span class="para-label">Diseñado para</span>
+        <ul class="para-list">
+          <li>Lodges</li>
+          <li>Hoteles boutique</li>
+          <li>Experiencias turísticas de alto valor</li>
+          <li>Negocios que buscan aumentar reservas directas</li>
+          <li>Operadores que quieren reducir dependencia de OTAs</li>
+          <li>Quienes buscan mejorar la calidad de sus huéspedes</li>
+        </ul>
+      </div>
+      <div class="para-card no">
+        <span class="para-label">No es para</span>
+        <ul class="para-list">
+          <li>Negocios de bajo ticket</li>
+          <li>Modelos de volumen y bajo margen</li>
+          <li>Sin disposición a invertir en captación</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="sobre">
+    <span class="sec-tag">Estudio</span>
+    <div class="sobre-inner">
+      <h2 style="margin-bottom: 1.2rem;">Sobre Reserve Atelier</h2>
+      <p class="sobre-copy">Reserve Atelier es un estudio enfocado en la captación de clientes y generación de reservas directas para el sector turístico.</p>
+      <p class="sobre-copy">Combinamos estrategia, campañas digitales y sistemas de seguimiento con un objetivo claro: <strong>generar resultados medibles, no solo tráfico o consultas.</strong></p>
+      <p class="byline">by Rodrigo Letelier</p>
+    </div>
+  </section>
+
+  <!-- EXPERIENCIA -->
+  <section class="experiencia">
+    <span class="sec-tag">Experiencia</span>
+    <h2>Experiencia en desarrollo</h2>
+    <p class="body-text">Actualmente trabajamos con proyectos turísticos enfocados en mercados internacionales, desarrollando sistemas de captación y mejorando la visibilidad sobre el rendimiento real de sus campañas.</p>
+    <div class="exp-box">
+      <p class="exp-ph">→ Caso Wasai — datos y resultados próximamente</p>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="contacto" class="cta-final">
+    <h2>Evaluemos tu sistema<br>de captación actual.</h2>
+    <p>Analizamos tu situación y detectamos oportunidades concretas para aumentar tus reservas directas.</p>
+    <a href="https://wa.me/56900000000?text=Hola%20Rodrigo%2C%20quiero%20solicitar%20una%20evaluaci%C3%B3n%20con%20Reserve%20Atelier" target="_blank" class="btn btn-outline">Solicitar evaluación</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-brand">Reserve Atelier</span>
+    <span class="footer-right">by Rodrigo Letelier</span>
+  </footer>
+
+</body>
+</html>
