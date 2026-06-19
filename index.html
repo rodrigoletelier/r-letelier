@@ -1,579 +1,460 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reserve Atelier — Reservas Directas para Turismo de Lujo</title>
-  <meta name="description" content="Ayudamos a lodges, hoteles y experiencias turísticas a generar reservas directas y reducir su dependencia de OTAs mediante campañas digitales y sistemas de captación." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rodrigo Letelier | Marketing turístico para reservas directas</title>
+  <meta name="description" content="Marketing digital especializado en turismo para lodges, hoteles boutique y experiencias de naturaleza. Más reservas directas, menos dependencia de OTAs." />
+  <meta property="og:title" content="Rodrigo Letelier | Marketing turístico" />
+  <meta property="og:description" content="Más reservas directas para lodges, hoteles boutique y experiencias turísticas en Latinoamérica." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23071a13'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='58' fill='%23a6b891' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --green-deep:   #1C2B21;
-      --green-dark:   #243428;
-      --green-mid:    #2F4235;
-      --green-soft:   #3A5043;
-      --green-muted:  #4E6657;
-      --green-faint:  #8FA897;
-
-      --beige-warm:   #E6DDD2;
-      --beige-light:  #EDE7DF;
-      --beige-pale:   #F4F0EB;
-
-      --white-pure:   #F8F6F3;
-      --white-soft:   #F2EFE9;
-
-      --text-dark:    #1A1E1B;
-      --text-mid:     #3D4A40;
-      --text-muted:   #6B7A6E;
-      --text-faint:   #9CAA9E;
-
-      --border-dark:  rgba(60,80,65,0.18);
-      --border-mid:   rgba(60,80,65,0.1);
-      --border-light: rgba(60,80,65,0.06);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      color: var(--text-dark);
-      background: var(--white-pure);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .display { font-family: 'Cormorant Garamond', serif; }
-
-    /* ── NAV ── */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--white-pure);
-      border-bottom: 0.5px solid var(--border-mid);
-      padding: 1.1rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .nav-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem;
-      font-weight: 300;
-      letter-spacing: 0.12em;
-      color: var(--green-deep);
-    }
-    .nav-cta {
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--green-deep);
-      border: 0.5px solid var(--border-dark);
-      padding: 8px 20px;
-      border-radius: 2px;
-      text-decoration: none;
-      transition: background 0.2s, color 0.2s;
-    }
-    .nav-cta:hover { background: var(--green-deep); color: var(--white-pure); }
-
-    /* ── HERO — blanco puro ── */
-    .hero {
-      background: var(--white-pure);
-      padding: 6rem 2.5rem 5rem;
-      position: relative;
-      overflow: hidden;
-      border-bottom: 0.5px solid var(--border-light);
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      right: -60px;
-      top: -60px;
-      width: 320px;
-      height: 320px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(42,74,52,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .eyebrow {
-      font-size: 9px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--green-muted);
-      margin-bottom: 2rem;
-      display: block;
-    }
-    .hero h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 7vw, 4.2rem);
-      font-weight: 300;
-      line-height: 1.08;
-      letter-spacing: -0.01em;
-      color: var(--text-dark);
-      margin-bottom: 1.6rem;
-      max-width: 640px;
-    }
-    .hero h1 em {
-      font-style: italic;
-      color: var(--green-soft);
-    }
-    .hero-sub {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-      max-width: 520px;
-      margin-bottom: 2.8rem;
-      font-weight: 300;
-    }
-    .btn {
-      display: inline-block;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      padding: 15px 36px;
-      border-radius: 2px;
-      text-decoration: none;
-      cursor: pointer;
-      border: none;
-      transition: opacity 0.2s, background 0.2s;
-    }
-    .btn-dark { background: var(--green-deep); color: var(--white-pure); }
-    .btn-dark:hover { opacity: 0.85; }
-    .btn-outline { background: transparent; color: var(--white-pure); border: 0.5px solid rgba(248,246,243,0.4); }
-    .btn-outline:hover { border-color: var(--white-pure); }
-    .hero-deco {
-      position: absolute;
-      right: 2.5rem;
-      top: 5rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 11px;
-      color: var(--green-faint);
-      opacity: 0.35;
-      writing-mode: vertical-rl;
-      letter-spacing: 0.1em;
-    }
-
-    /* ── SECCIONES BASE ── */
-    section { padding: 5rem 2.5rem; }
-    .sec-tag {
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--green-muted);
-      opacity: 0.6;
-      display: block;
-      margin-bottom: 1.1rem;
-    }
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
-      font-weight: 300;
-      line-height: 1.18;
-      color: var(--text-dark);
-      margin-bottom: 1.6rem;
-    }
-    .body-text {
-      font-size: 0.93rem;
-      line-height: 1.82;
-      color: var(--text-muted);
-      font-weight: 300;
-    }
-
-    /* ── PROBLEMA — beige cálido ── */
-    .problema { background: var(--beige-warm); }
-    .prob-list { list-style: none; margin: 1.6rem 0; }
-    .prob-list li {
-      display: flex;
-      gap: 14px;
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--text-mid);
-      padding: 0.7rem 0;
-      border-bottom: 0.5px solid var(--border-dark);
-    }
-    .prob-list li:last-child { border-bottom: none; }
-    .prob-list li::before { content: '—'; color: var(--green-muted); flex-shrink: 0; opacity: 0.5; }
-    .insight {
-      margin-top: 1.8rem;
-      padding: 1.3rem 1.6rem;
-      border-left: 1.5px solid var(--green-soft);
-      background: rgba(31,43,33,0.04);
-      font-size: 0.9rem;
-      line-height: 1.75;
-      color: var(--text-mid);
-      border-radius: 0 3px 3px 0;
-    }
-
-    /* ── PARADIGMA — verde profundo ── */
-    .paradigma {
-      background: var(--green-deep);
-      padding: 5rem 2.5rem;
-      text-align: center;
-    }
-    .paradigma-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 4vw, 2.3rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.45;
-      color: var(--beige-pale);
-      max-width: 520px;
-      margin: 0 auto;
-      opacity: 0.9;
-    }
-
-    /* ── SOLUCIÓN — blanco suave ── */
-    .solucion { background: var(--white-soft); }
-    .sol-list { list-style: none; margin: 1.6rem 0; }
-    .sol-list li {
-      display: flex;
-      gap: 1.2rem;
-      padding: 0.85rem 0;
-      border-bottom: 0.5px solid var(--border-mid);
-      font-size: 0.9rem;
-      line-height: 1.65;
-      color: var(--text-muted);
-    }
-    .sol-list li:last-child { border-bottom: none; }
-    .sol-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.85rem;
-      color: var(--green-faint);
-      flex-shrink: 0;
-      width: 22px;
-      padding-top: 1px;
-    }
-
-    /* ── CÓMO FUNCIONA — beige pálido ── */
-    .como { background: var(--beige-pale); }
-    .como-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border-dark);
-      border: 0.5px solid var(--border-dark);
-      border-radius: 4px;
-      overflow: hidden;
-      margin-top: 2.2rem;
-    }
-    .como-card { background: var(--white-pure); padding: 1.8rem 1.4rem; }
-    .como-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem;
-      font-weight: 300;
-      color: var(--green-deep);
-      opacity: 0.12;
-      display: block;
-      margin-bottom: 0.5rem;
-      line-height: 1;
-    }
-    .como-title {
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--green-mid);
-      margin-bottom: 0.6rem;
-    }
-    .como-desc { font-size: 0.84rem; line-height: 1.65; color: var(--text-muted); font-weight: 300; }
-
-    /* ── QUÉ INCLUYE — verde oscuro ── */
-    .incluye { background: var(--green-dark); }
-    .incluye .sec-tag { color: var(--green-faint); opacity: 0.6; }
-    .incluye h2 { color: var(--beige-pale); }
-    .incluye-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      margin-top: 1.8rem;
-      border: 0.5px solid rgba(142,168,151,0.15);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-    .inc-item {
-      padding: 1rem 1.3rem;
-      font-size: 0.85rem;
-      color: rgba(244,240,235,0.7);
-      border-bottom: 0.5px solid rgba(142,168,151,0.1);
-      border-right: 0.5px solid rgba(142,168,151,0.1);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      line-height: 1.55;
-      font-weight: 300;
-    }
-    .inc-item:nth-child(even) { border-right: none; }
-    .inc-item:nth-last-child(-n+2) { border-bottom: none; }
-    .chk { width: 13px; height: 13px; flex-shrink: 0; margin-top: 3px; color: var(--green-faint); }
-
-    /* ── PARA QUIÉN — blanco puro ── */
-    .paraquien { background: var(--white-pure); }
-    .para-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
-    .para-card { border: 0.5px solid var(--border-dark); border-radius: 4px; padding: 1.5rem; }
-    .para-card.no { background: var(--beige-warm); border-color: transparent; }
-    .para-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-muted); opacity: 0.5; margin-bottom: 1.1rem; display: block; }
-    .para-list { list-style: none; }
-    .para-list li { font-size: 0.86rem; color: var(--text-muted); padding: 0.3rem 0; display: flex; gap: 8px; }
-    .para-list li::before { content: '·'; color: var(--green-soft); }
-    .para-card.no .para-list li { opacity: 0.7; }
-
-    /* ── SOBRE — beige cálido ── */
-    .sobre { background: var(--beige-warm); }
-    .sobre-inner { border: 0.5px solid var(--border-dark); border-radius: 4px; padding: 2.2rem; background: var(--white-pure); }
-    .sobre-copy { font-size: 0.95rem; line-height: 1.85; color: var(--text-muted); font-weight: 300; margin-bottom: 0.9rem; }
-    .sobre-copy strong { color: var(--green-mid); font-weight: 400; }
-    .byline {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 0.92rem;
-      color: var(--text-faint);
-      margin-top: 1.6rem;
-      padding-top: 1.2rem;
-      border-top: 0.5px solid var(--border-mid);
-    }
-
-    /* ── EXPERIENCIA — blanco suave ── */
-    .experiencia { background: var(--white-soft); }
-    .exp-box {
-      margin-top: 1.8rem;
-      border: 0.5px dashed var(--border-dark);
-      border-radius: 4px;
-      padding: 1.8rem;
-      text-align: center;
-    }
-    .exp-ph { font-size: 0.82rem; color: var(--text-faint); font-style: italic; }
-
-    /* ── CTA FINAL — verde profundo ── */
-    .cta-final {
-      background: var(--green-deep);
-      padding: 6.5rem 2.5rem;
-      text-align: center;
-    }
-    .cta-final h2 { color: var(--beige-pale); margin-bottom: 1.1rem; }
-    .cta-final p {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: rgba(244,240,235,0.55);
-      max-width: 420px;
-      margin: 0 auto 2.8rem;
-      font-weight: 300;
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--green-deep);
-      border-top: 0.5px solid rgba(142,168,151,0.12);
-      padding: 1.5rem 2.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .footer-brand {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      font-weight: 300;
-      letter-spacing: 0.1em;
-      color: var(--beige-pale);
-      opacity: 0.7;
-    }
-    .footer-right { font-size: 0.72rem; color: var(--green-faint); opacity: 0.4; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 600px) {
-      nav { padding: 1rem 1.4rem; }
-      .hero, section, .paradigma, .cta-final { padding-left: 1.4rem; padding-right: 1.4rem; }
-      .hero { padding-top: 4rem; padding-bottom: 3.5rem; }
-      .como-grid { grid-template-columns: 1fr; }
-      .incluye-grid { grid-template-columns: 1fr; }
-      .inc-item { border-right: none !important; }
-      .para-grid { grid-template-columns: 1fr; }
-      .hero-deco { display: none; }
-      footer { padding: 1.2rem 1.4rem; flex-direction: column; gap: 6px; text-align: center; }
-    }
-
-    /* ── ANIMACIONES SUAVES ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero h1, .hero-sub, .hero .btn { animation: fadeUp 0.7s ease both; }
-    .hero-sub { animation-delay: 0.1s; }
-    .hero .btn { animation-delay: 0.2s; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --green-950: #071a13;
+  --green-900: #0d2b20;
+  --green-800: #143d2d;
+  --green-700: #1f4d3a;
+  --green-500: #6f9464;
+  --sage: #a6b891;
+  --sage-soft: #c2cfb4;
+  --sand: #f4f0e8;
+  --sand-2: #ebe3d5;
+  --white: #ffffff;
+  --ink: #1e2420;
+  --muted: #657168;
+  --line: rgba(31, 77, 58, 0.16);
+  --line-dark: rgba(166, 184, 145, 0.18);
+  --shadow: 0 24px 70px rgba(7, 26, 19, 0.18);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --container: 1180px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--sand); color: var(--ink); font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+.container { width: min(var(--container), calc(100% - 40px)); margin-inline: auto; }
+.section { padding: 104px 0; }
+.section-dark { background: radial-gradient(circle at top left, rgba(111, 148, 100, 0.22), transparent 36%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
+.site-header { position: fixed; top: 18px; left: 20px; right: 20px; z-index: 100; display: flex; align-items: center; justify-content: space-between; width: min(var(--container), calc(100% - 40px)); margin: 0 auto; padding: 12px 16px 12px 22px; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 999px; background: rgba(7, 26, 19, 0.7); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); color: var(--white); }
+.brand { display: inline-flex; flex-direction: column; letter-spacing: 0.04em; text-transform: uppercase; }
+.brand-name { font-weight: 700; font-size: 0.88rem; line-height: 1.05; }
+.brand-subtitle { margin-top: 3px; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--sage); }
+.nav-links { display: flex; align-items: center; gap: 22px; font-size: 0.88rem; }
+.nav-links a { opacity: 0.85; transition: opacity 180ms ease; }
+.nav-links a:hover { opacity: 1; }
+.nav-cta { padding: 10px 18px; border-radius: 999px; background: rgba(166, 184, 145, 0.18); border: 1px solid rgba(166, 184, 145, 0.28); font-weight: 500; }
+.hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 156px 0 90px; background: radial-gradient(ellipse 60% 50% at 75% 45%, rgba(31, 77, 58, 0.55) 0%, transparent 70%), radial-gradient(ellipse 70% 60% at 15% 90%, rgba(111, 148, 100, 0.18) 0%, transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-900) 60%, var(--green-800)); color: var(--white); }
+.hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(166, 184, 145, 0.06) 1px, transparent 0); background-size: 28px 28px; pointer-events: none; opacity: 0.5; }
+.hero-content { position: relative; z-index: 2; max-width: 880px; }
+.eyebrow { margin: 0 0 18px; color: var(--sage); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+h1, h2, h3 { margin-top: 0; }
+h1, h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 400; line-height: 1.0; letter-spacing: -0.025em; }
+h1 { max-width: 920px; margin-bottom: 28px; font-size: clamp(2.8rem, 6.8vw, 6rem); }
+h1 em { font-style: italic; color: var(--sage); font-weight: 300; }
+h2 { margin-bottom: 22px; font-size: clamp(2.1rem, 4.4vw, 4rem); line-height: 1.05; }
+h2 span { color: var(--sage); }
+h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 600; }
+.hero-text { max-width: 680px; margin-bottom: 36px; color: rgba(255, 255, 255, 0.78); font-size: clamp(1.02rem, 1.5vw, 1.18rem); line-height: 1.65; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 14px 24px; border-radius: 999px; font-weight: 600; font-size: 0.95rem; line-height: 1; transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { color: var(--white); background: var(--green-500); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22); }
+.btn-primary:hover { background: #7da373; }
+.btn-secondary { color: var(--white); border: 1px solid rgba(255, 255, 255, 0.28); background: rgba(255, 255, 255, 0.06); }
+.microcopy { margin: 22px 0 0; color: rgba(255, 255, 255, 0.62); font-size: 0.9rem; }
+.hero-meta { position: absolute; bottom: 40px; left: 0; right: 0; z-index: 2; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(166, 184, 145, 0.55); }
+.hero-meta-inner { width: min(var(--container), calc(100% - 40px)); margin-inline: auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.logo-strip { padding: 32px 0; background: var(--sand); border-bottom: 1px solid var(--line); }
+.logos-wrap { display: flex; align-items: center; justify-content: center; gap: 48px; color: var(--muted); font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+.logos { display: flex; align-items: center; gap: 56px; }
+.logo-text { font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 400; color: var(--green-800); letter-spacing: -0.02em; text-transform: none; opacity: 0.75; }
+.problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 56px; }
+.problem-card { padding: 28px; border: 1px solid var(--line-dark); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.05); }
+.problem-card p { margin-bottom: 0; color: rgba(255, 255, 255, 0.72); font-size: 0.92rem; line-height: 1.6; }
+.icon-circle { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 24px; border: 1px solid rgba(166, 184, 145, 0.35); border-radius: 50%; color: var(--sage); }
+.icon-circle svg { width: 18px; height: 18px; }
+.section-center { text-align: center; }
+.narrow { max-width: 880px; margin-inline: auto; }
+.services { background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.14), transparent 30%), var(--sand); }
+.section-intro { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
+.service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 56px; }
+.service-card { min-height: 260px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.62); box-shadow: 0 10px 34px rgba(7, 26, 19, 0.04); transition: transform 240ms ease, box-shadow 240ms ease; }
+.service-card:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(7, 26, 19, 0.08); }
+.service-card p { color: var(--muted); font-size: 0.94rem; line-height: 1.6; }
+.service-number { display: inline-block; margin-bottom: 32px; color: var(--green-500); font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 300; }
+.method { background: var(--sand-2); }
+.method-steps { display: grid; gap: 0; margin-top: 54px; border-top: 1px solid var(--line); }
+.method-step { display: grid; grid-template-columns: 100px 1fr 2fr; gap: 40px; padding: 36px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.method-num { font-family: 'Fraunces', serif; font-size: 1.5rem; color: var(--green-500); font-weight: 300; }
+.method-title { font-family: 'Fraunces', serif; font-size: 1.65rem; line-height: 1.15; color: var(--ink); font-weight: 400; letter-spacing: -0.015em; margin: 0; }
+.method-desc { color: var(--muted); font-size: 0.98rem; line-height: 1.65; margin: 0; }
+.method-desc strong { color: var(--ink); font-weight: 600; }
+.cases { padding-bottom: 120px; }
+.case-stack { display: grid; gap: 28px; margin-top: 54px; }
+.case-card { overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line-dark); border-radius: var(--radius-xl); background: rgba(255, 255, 255, 0.05); box-shadow: var(--shadow); }
+.case-image { min-height: 420px; background: linear-gradient(135deg, rgba(31, 77, 58, 0.5), rgba(7, 26, 19, 0.7)); display: grid; place-items: center; position: relative; overflow: hidden; }
+.case-image img { width: 100%; height: 100%; object-fit: cover; }
+.case-image-placeholder { text-align: center; padding: 40px; color: rgba(166, 184, 145, 0.55); font-family: 'Fraunces', serif; font-style: italic; font-size: 0.95rem; }
+.case-logo { object-fit: contain; margin-bottom: 22px; display: block; }
+.case-logo-wasai { width: min(220px, 80%); max-height: 70px; filter: brightness(0) invert(1); opacity: 0.92; }
+.case-logo-wildtrip { width: min(180px, 70%); max-height: 56px; padding: 10px 14px; border-radius: 10px; background: rgba(255, 255, 255, 0.94); }
+.case-content { align-self: center; padding: clamp(34px, 5vw, 60px); }
+.case-kicker { margin-bottom: 14px; color: var(--sage); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.74rem; }
+.case-content h3 { max-width: 540px; margin-bottom: 22px; font-family: 'Fraunces', serif; font-size: clamp(1.55rem, 2.8vw, 2.3rem); font-weight: 400; letter-spacing: -0.022em; line-height: 1.15; color: var(--white); }
+.case-content p, .case-content li { color: rgba(255, 255, 255, 0.74); font-size: 0.96rem; line-height: 1.65; }
+.case-content ul { display: grid; gap: 8px; margin: 0 0 20px; padding-left: 0; list-style: none; }
+.case-content li { padding-left: 18px; position: relative; }
+.case-content li::before { content: ''; position: absolute; left: 0; top: 12px; width: 8px; height: 1px; background: var(--sage); }
+.case-brand { font-family: 'Fraunces', serif; font-size: 1.3rem; margin-bottom: 8px; color: var(--sage); font-weight: 400; letter-spacing: -0.02em; }
+.capabilities { background: var(--sand); }
+.cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 50px; }
+.cap-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
+.cap-card h4 { margin: 0 0 6px; font-size: 0.95rem; font-weight: 600; color: var(--ink); letter-spacing: -0.005em; }
+.cap-card p { margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.55; }
+.cap-meta { margin-top: 14px; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sage); font-weight: 600; }
+.about { background: var(--sand-2); }
+.split-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 70px; }
+.split-text p { max-width: 580px; color: var(--muted); font-size: 1.04rem; line-height: 1.7; margin-bottom: 14px; }
+.text-link { display: inline-flex; margin-top: 14px; color: var(--green-700); font-weight: 600; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity 180ms ease; }
+.text-link:hover { opacity: 0.7; }
+.portrait-card { position: relative; overflow: hidden; margin: 0; border-radius: var(--radius-xl); box-shadow: var(--shadow); background: var(--sand-2); aspect-ratio: 4 / 5; }
+.portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+.portrait-placeholder { width: 100%; height: 100%; display: grid; place-items: center; background: linear-gradient(135deg, var(--green-800), var(--green-950)); color: var(--sage); font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; padding: 30px; text-align: center; }
+.faq { background: var(--sand); }
+.faq-list { margin-top: 54px; border-top: 1px solid var(--line); max-width: 920px; margin-inline: auto; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-q { width: 100%; padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-family: 'Fraunces', serif; font-size: 1.18rem; color: var(--ink); font-weight: 400; text-align: left; letter-spacing: -0.01em; transition: color 200ms ease; }
+.faq-q:hover { color: var(--green-700); }
+.faq-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; color: var(--green-700); font-size: 1.2rem; font-weight: 300; transition: transform 240ms ease, background 240ms ease; line-height: 0; }
+.faq-item.open .faq-icon { transform: rotate(45deg); background: var(--green-500); color: var(--white); border-color: var(--green-500); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 320ms ease, padding 320ms ease; color: var(--muted); font-size: 0.98rem; line-height: 1.7; }
+.faq-item.open .faq-a { max-height: 400px; padding: 0 0 26px; }
+.final-cta { padding: 96px 0; background: var(--sand); }
+.cta-card { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
+.cta-card h2 { margin-bottom: 14px; color: var(--white); }
+.cta-card p { max-width: 580px; margin-bottom: 0; color: rgba(255, 255, 255, 0.78); font-size: 1.06rem; line-height: 1.65; }
+.site-footer { padding: 64px 0 28px; background: var(--green-950); color: rgba(255, 255, 255, 0.7); }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 38px; }
+.site-footer h4 { color: var(--white); font-size: 0.86rem; margin: 0 0 12px; font-weight: 600; letter-spacing: 0.04em; }
+.site-footer a, .site-footer span { display: block; margin-top: 8px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
+.site-footer a:hover { color: var(--white); }
+.footer-brand .brand-name { color: var(--white); }
+.footer-brand-tagline { margin-top: 14px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.6); max-width: 280px; line-height: 1.6; }
+.copyright { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.82rem; color: rgba(255, 255, 255, 0.45); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 980px) {
+  .site-header { position: absolute; }
+  .nav-links a:not(.nav-cta) { display: none; }
+  .hero { min-height: 760px; }
+  .problem-grid, .service-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-card, .split-layout, .cta-card, .footer-grid { grid-template-columns: 1fr; }
+  .case-content { padding: 40px 30px; }
+  .case-image { min-height: 280px; order: -1; }
+  .cap-grid { grid-template-columns: repeat(2, 1fr); }
+  .method-step { grid-template-columns: 60px 1fr; gap: 18px; }
+  .method-step .method-desc { grid-column: 2; padding-top: 6px; }
+  .cta-card { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 640px) {
+  .container { width: min(100% - 28px, var(--container)); }
+  .site-header { top: 12px; left: 14px; right: 14px; padding: 11px 14px; }
+  .brand-name { font-size: 0.78rem; }
+  .brand-subtitle { font-size: 0.52rem; }
+  .nav-cta { padding: 9px 14px; font-size: 0.78rem; }
+  .section { padding: 76px 0; }
+  .hero { min-height: 720px; padding-top: 130px; }
+  h1 { font-size: clamp(2.55rem, 13vw, 3.6rem); }
+  h2 { font-size: clamp(2rem, 10vw, 2.9rem); }
+  .hero-actions, .btn { width: 100%; }
+  .problem-grid, .service-grid, .cap-grid { grid-template-columns: 1fr; }
+  .logos { flex-direction: column; gap: 24px; }
+  .logos-wrap { flex-direction: column; gap: 22px; }
+  .faq-q { font-size: 1.04rem; padding: 20px 0; }
+  .copyright { flex-direction: column; align-items: flex-start; }
+}
+</style>
 </head>
 <body>
+  <header class="site-header" aria-label="Navegación principal">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <span class="brand-name">Rodrigo Letelier</span>
+      <span class="brand-subtitle">Marketing turístico</span>
+    </a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#servicios">Servicios</a>
+      <a href="#metodologia">Metodología</a>
+      <a href="#casos">Casos</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a class="nav-cta" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
+    </nav>
+  </header>
 
-  <!-- NAV -->
-  <nav>
-    <span class="nav-brand">Reserve Atelier</span>
-    <a href="#contacto" class="nav-cta">Solicitar evaluación</a>
-  </nav>
-
-  <!-- HERO -->
-  <div class="hero">
-    <span class="eyebrow">Sistema de reservas directas para turismo de lujo</span>
-    <h1>Genera reservas directas.<br><em>Deja de depender<br>de OTAs.</em></h1>
-    <p class="hero-sub">Ayudamos a lodges, hoteles y experiencias turísticas a atraer huéspedes de alto valor y aumentar sus reservas directas mediante un sistema de captación y seguimiento diseñado para turismo.</p>
-    <a href="#contacto" class="btn btn-dark">Solicitar evaluación</a>
-    <span class="hero-deco">Reservas Directas · Alto Valor</span>
-  </div>
-
-  <!-- PROBLEMA -->
-  <section class="problema">
-    <span class="sec-tag">El problema</span>
-    <h2>El problema no es la demanda.<br>Es la dependencia.</h2>
-    <p class="body-text">La mayoría de los negocios turísticos enfrentan lo mismo:</p>
-    <ul class="prob-list">
-      <li>Dependencia de plataformas como Booking o Airbnb</li>
-      <li>Comisiones que reducen el margen en cada reserva</li>
-      <li>Dificultad para generar reservas directas de forma constante</li>
-      <li>Campañas que generan consultas, pero no ingresos claros</li>
-    </ul>
-    <div class="insight">Estás invirtiendo en marketing, pero no tienes visibilidad real de qué está generando reservas.</div>
-  </section>
-
-  <!-- PARADIGMA -->
-  <div class="paradigma">
-    <p class="paradigma-text">"No necesitas más tráfico.<br>Necesitas un sistema que convierta<br>y te dé claridad."</p>
-  </div>
-
-  <!-- SOLUCIÓN -->
-  <section class="solucion">
-    <span class="sec-tag">La solución</span>
-    <h2>Un sistema de reservas directas,<br>no solo campañas.</h2>
-    <p class="body-text">En Reserve Atelier, diseñamos e implementamos un sistema que conecta cada etapa del proceso:</p>
-    <ul class="sol-list">
-      <li><span class="sol-num">01</span>Atracción de viajeros con intención real</li>
-      <li><span class="sol-num">02</span>Experiencias de conversión enfocadas en contacto directo</li>
-      <li><span class="sol-num">03</span>Captura de leads vía formulario y WhatsApp</li>
-      <li><span class="sol-num">04</span>Seguimiento que mejora la visibilidad de resultados</li>
-    </ul>
-    <div class="insight" style="background: rgba(31,43,33,0.04); border-left-color: var(--green-faint);">No se trata solo de generar consultas. Se trata de generar oportunidades reales de reserva.</div>
-  </section>
-
-  <!-- CÓMO FUNCIONA -->
-  <section class="como">
-    <span class="sec-tag">Proceso</span>
-    <h2>Cómo funciona</h2>
-    <div class="como-grid">
-      <div class="como-card">
-        <span class="como-num">1</span>
-        <div class="como-title">Atracción</div>
-        <p class="como-desc">Captamos usuarios que ya están buscando experiencias turísticas similares a la tuya.</p>
+  <main id="inicio">
+    <section class="hero">
+      <div class="container hero-content">
+        <p class="eyebrow">Marketing turístico para Latinoamérica</p>
+        <h1>Más reservas directas <em>para lodges, hoteles boutique</em> y experiencias de naturaleza.</h1>
+        <p class="hero-text">Ayudo a empresas turísticas a atraer viajeros de alto valor, generar reservas directas y depender menos de las OTAs. Combino ocho años de marketing digital con una formación en ecoturismo.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
+          <a class="btn btn-secondary" href="#casos">Ver casos</a>
+        </div>
+        <p class="microcopy">Diagnóstico inicial gratuito de 20 minutos.</p>
       </div>
-      <div class="como-card">
-        <span class="como-num">2</span>
-        <div class="como-title">Conversión</div>
-        <p class="como-desc">Los dirigimos a una experiencia clara, enfocada en generar contacto directo.</p>
+      <div class="hero-meta">
+        <div class="hero-meta-inner">
+          <span>Google Ads · Meta · SEO · Analytics</span>
+          <span>Santiago · Latinoamérica</span>
+        </div>
       </div>
-      <div class="como-card">
-        <span class="como-num">3</span>
-        <div class="como-title">Seguimiento</div>
-        <p class="como-desc">Implementamos mecanismos que muestran qué campañas generan oportunidades reales.</p>
+    </section>
+
+    <section class="section section-dark problem">
+      <div class="container section-center narrow">
+        <p class="eyebrow">El problema</p>
+        <h2>Muchos negocios turísticos tienen experiencias increíbles. <span>Pero dependen demasiado de terceros para venderlas.</span></h2>
+      </div>
+      <div class="container problem-grid">
+        <article class="problem-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M7 8a1 1 0 100-2 1 1 0 000 2zM17 18a1 1 0 100-2 1 1 0 000 2z"/></svg></div>
+          <h3>Comisiones de OTAs</h3>
+          <p>Booking, Expedia y otros canales capturan ventas, margen y la relación directa con el huésped.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <h3>Baja visibilidad propia</h3>
+          <p>El viajero busca experiencias, pero muchas veces no encuentra tu marca en el momento de decisión.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 7l10 10M17 17V9M17 17H9"/></svg></div>
+          <h3>Sitios que no convierten</h3>
+          <p>Páginas bonitas, pero sin mensajes claros, llamados a la acción ni medición de oportunidades reales.</p>
+        </article>
+        <article class="problem-card">
+          <div class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg></div>
+          <h3>Temporadas irregulares</h3>
+          <p>Demanda concentrada, campañas tardías y poca estrategia para llenar los meses débiles.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="servicios" class="section services">
+      <div class="container section-center narrow">
+        <p class="eyebrow">Cómo te ayudo</p>
+        <h2>Una estrategia enfocada en generar reservas.</h2>
+        <p class="section-intro">No se trata solo de activar campañas. Se trata de construir un sistema comercial donde cada canal cumpla una función clara dentro del recorrido del viajero.</p>
+      </div>
+      <div class="container service-grid">
+        <article class="service-card">
+          <span class="service-number">01</span>
+          <h3>Atracción de viajeros</h3>
+          <p>Campañas en Google y Meta dirigidas a personas que ya están buscando experiencias similares a las tuyas.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-number">02</span>
+          <h3>Conversión</h3>
+          <p>Landing pages y sitios optimizados para transformar visitas en consultas, solicitudes y reservas directas.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-number">03</span>
+          <h3>Posicionamiento</h3>
+          <p>SEO y contenido para aumentar tu visibilidad en buscadores y depender menos de plataformas de terceros.</p>
+        </article>
+        <article class="service-card">
+          <span class="service-number">04</span>
+          <h3>Medición</h3>
+          <p>Tracking avanzado y análisis para entender qué campañas generan oportunidades reales y dónde optimizar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="metodologia" class="section method">
+      <div class="container section-center narrow">
+        <p class="eyebrow">Metodología</p>
+        <h2>Un proceso ordenado, no campañas sueltas.</h2>
+        <p class="section-intro">Cada proyecto sigue un proceso de cuatro etapas pensado para construir resultados medibles en el tiempo, no fuegos artificiales puntuales.</p>
+      </div>
+      <div class="container">
+        <div class="method-steps">
+          <div class="method-step">
+            <div class="method-num">01</div>
+            <h3 class="method-title">Diagnóstico</h3>
+            <p class="method-desc">Análisis del negocio turístico, su cliente ideal, sus canales actuales y el rendimiento de cada uno. <strong>Identificamos dónde se está perdiendo margen y qué oportunidades existen</strong> para captar reservas directas.</p>
+          </div>
+          <div class="method-step">
+            <div class="method-num">02</div>
+            <h3 class="method-title">Estrategia y setup</h3>
+            <p class="method-desc">Definimos los canales, mensajes y métricas a trabajar. Configuramos las cuentas, el tracking y las landing pages. <strong>Todo el sistema queda preparado para medir lo que realmente importa:</strong> contactos y reservas.</p>
+          </div>
+          <div class="method-step">
+            <div class="method-num">03</div>
+            <h3 class="method-title">Activación de campañas</h3>
+            <p class="method-desc">Lanzamiento de campañas en Google Ads, Meta Ads y trabajo de SEO. Cada activación se mide desde el primer día para optimizar inversión y enfocar el presupuesto en lo que genera oportunidades reales.</p>
+          </div>
+          <div class="method-step">
+            <div class="method-num">04</div>
+            <h3 class="method-title">Optimización continua</h3>
+            <p class="method-desc">Análisis mensual, reportes claros y ajustes constantes. <strong>El sistema mejora mes a mes</strong> a partir de datos reales: qué viajeros llegan, desde dónde, y cuáles terminan reservando.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="casos" class="section section-dark cases">
+      <div class="container section-center narrow">
+        <p class="eyebrow">Casos</p>
+        <h2>Proyectos turísticos reales.</h2>
+        <p class="section-intro" style="color: rgba(255,255,255,0.7);">Trabajo actual con dos empresas del rubro, con foco en captación digital y reservas directas.</p>
+      </div>
+      <div class="container case-stack">
+        <article class="case-card">
+          <div class="case-image"><img src="assets/wasai-lodge.webp" alt="Wasai Lodge Tambopata - piscina y selva amazónica" loading="lazy" /></div>
+          <div class="case-content">
+            <img src="assets/wasai-logo.png" alt="Wasai Lodge &amp; Expeditions" class="case-logo case-logo-wasai" />
+            <p class="case-kicker">Lodge amazónico · Tambopata, Perú</p>
+            <h3>Construcción de un sistema de captación propio para viajeros internacionales.</h3>
+            <ul>
+              <li>Google Ads internacional segmentado por mercados de origen.</li>
+              <li>SEO y optimización de páginas clave del sitio.</li>
+              <li>Landing pages enfocadas en reservas directas.</li>
+              <li>Tracking avanzado de formularios y WhatsApp.</li>
+              <li>Estrategia para reducir dependencia de OTAs.</li>
+            </ul>
+            <p>El sistema permite ordenar la captación digital del lodge y medir con claridad qué canales generan oportunidades reales para el negocio.</p>
+          </div>
+        </article>
+        <article class="case-card">
+          <div class="case-image"><img src="assets/wildtrip-expedicion.webp" alt="Wildtrip - expedición en montaña" loading="lazy" /></div>
+          <div class="case-content">
+            <img src="assets/wildtrip-logo.png" alt="Wildtrip" class="case-logo case-logo-wildtrip" />
+            <p class="case-kicker">Plataforma de turismo aventura y experiencias outdoor</p>
+            <h3>Fortalecimiento digital y estructura comercial para una plataforma especializada.</h3>
+            <ul>
+              <li>Estrategia digital y desarrollo comercial.</li>
+              <li>Posicionamiento online y trabajo de marca.</li>
+              <li>Captación de usuarios cualificados.</li>
+              <li>Optimización de comunicación y adquisición.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section capabilities">
+      <div class="container section-center narrow">
+        <p class="eyebrow">Stack &amp; capacidades</p>
+        <h2>Herramientas que uso a diario.</h2>
+        <p class="section-intro">Las plataformas y técnicas con las que construyo sistemas de captación medibles para turismo.</p>
+      </div>
+      <div class="container cap-grid">
+        <div class="cap-card"><h4>Google Ads</h4><p>Campañas de búsqueda, performance max y display. Segmentación por mercados de origen, idiomas y nivel de intención.</p><p class="cap-meta">Captación · Search</p></div>
+        <div class="cap-card"><h4>Meta Ads</h4><p>Facebook e Instagram para awareness, retargeting y campañas de captación a viajeros de alto valor.</p><p class="cap-meta">Captación · Social</p></div>
+        <div class="cap-card"><h4>SEO técnico y de contenidos</h4><p>Optimización on-page, contenidos pensados por temporada y trabajo de autoridad para destinos turísticos.</p><p class="cap-meta">Posicionamiento</p></div>
+        <div class="cap-card"><h4>Google Analytics 4</h4><p>Configuración personalizada, eventos clave y reportes enfocados en conversiones reales, no vanity metrics.</p><p class="cap-meta">Medición</p></div>
+        <div class="cap-card"><h4>Google Tag Manager</h4><p>Implementación de tracking, GCLID, eventos personalizados y atribución completa del recorrido.</p><p class="cap-meta">Tracking</p></div>
+        <div class="cap-card"><h4>Landing pages &amp; CRO</h4><p>Diseño y desarrollo de páginas enfocadas en conversión. Tests, mejoras iterativas, foco en reserva directa.</p><p class="cap-meta">Conversión</p></div>
+      </div>
+    </section>
+
+    <section id="sobre-mi" class="section about">
+      <div class="container split-layout">
+        <div class="split-text">
+          <p class="eyebrow">Sobre mí</p>
+          <h2>Turismo primero. <span>Marketing después.</span></h2>
+          <p>Soy administrador en ecoturismo y llevo ocho años trabajando en marketing digital. Durante años los mantuve como mundos separados, hasta que entendí que se potencian uno al otro.</p>
+          <p>Mi trabajo no parte desde la plataforma. Parte desde entender cómo se vende una experiencia turística: el destino, la temporada, el tipo de viajero, la confianza y el proceso real de reserva.</p>
+          <p>Hoy trabajo desde Chile con proyectos turísticos en distintos países de Latinoamérica, ayudándolos a construir sistemas de captación propios.</p>
+          <a class="text-link" href="#contacto">Conversemos sobre tu proyecto →</a>
+        </div>
+        <figure class="portrait-card">
+          <img src="assets/rodrigo-montana-naranja.jpg" alt="Rodrigo Letelier en la cordillera" loading="lazy" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="section faq">
+      <div class="container section-center narrow">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2>Lo que más me preguntan.</h2>
+      </div>
+      <div class="container">
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Trabajas con negocios fuera de Chile?</span><span class="faq-icon">+</span></button><div class="faq-a">Sí. Trabajo con proyectos turísticos en distintos países de Latinoamérica. La metodología es la misma; lo que cambia es la configuración de campañas, mercados de origen e idiomas.</div></div>
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿En cuánto tiempo se ven resultados?</span><span class="faq-icon">+</span></button><div class="faq-a">Las primeras señales de captación llegan en las primeras semanas tras lanzar campañas. Los resultados sostenibles en reservas directas y SEO se consolidan en un horizonte de 3 a 6 meses, dependiendo del estado inicial del negocio.</div></div>
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo trabajas el presupuesto de medios?</span><span class="faq-icon">+</span></button><div class="faq-a">El presupuesto de medios (lo que se invierte en Google y Meta) es independiente del fee de gestión. Lo definimos juntos en función de los objetivos, la temporada y la capacidad del negocio para recibir reservas.</div></div>
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Hablas y trabajas en inglés?</span><span class="faq-icon">+</span></button><div class="faq-a">Sí. Buena parte del trabajo turístico apunta a mercados internacionales, por lo que las campañas, landing pages y reportes pueden manejarse en inglés y español de forma simultánea.</div></div>
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué necesito tener para empezar?</span><span class="faq-icon">+</span></button><div class="faq-a">Lo ideal es contar con un sitio web operativo (aunque sea mejorable), acceso a tus cuentas de Google y redes, y claridad sobre tu producto turístico. Si falta alguna pieza, lo cubrimos en la etapa de diagnóstico.</div></div>
+          <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué pasa si ya trabajo con otra agencia?</span><span class="faq-icon">+</span></button><div class="faq-a">Lo conversamos abiertamente. A veces tiene sentido complementar y a veces conviene una transición ordenada. Lo primero es entender qué está funcionando y qué no, sin comprometer la operación actual del negocio.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="final-cta">
+      <div class="container">
+        <div class="cta-card">
+          <div>
+            <p class="eyebrow">Próximo paso</p>
+            <h2>¿Quieres aumentar tus reservas directas?</h2>
+            <p>Conversemos sobre tu proyecto turístico y revisemos oportunidades concretas de crecimiento. La primera conversación es gratuita y no compromete a nada.</p>
+          </div>
+          <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="#inicio">
+          <span class="brand-name">Rodrigo Letelier</span>
+          <span class="brand-subtitle">Marketing turístico</span>
+        </a>
+        <p class="footer-brand-tagline">Marketing digital especializado en turismo. Más reservas directas para lodges, hoteles boutique y experiencias de naturaleza en Latinoamérica.</p>
+      </div>
+      <div>
+        <h4>Navegación</h4>
+        <a href="#servicios">Servicios</a>
+        <a href="#metodologia">Metodología</a>
+        <a href="#casos">Casos</a>
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div>
+        <h4>Servicios</h4>
+        <span>Google Ads</span>
+        <span>Meta Ads</span>
+        <span>SEO</span>
+        <span>Landing pages</span>
+        <span>Analytics &amp; Tracking</span>
+      </div>
+      <div>
+        <h4>Hablemos</h4>
+        <a href="mailto:hola@rodrigoletelier.cl">hola@rodrigoletelier.cl</a>
+        <a href="https://wa.me/56966170884" target="_blank" rel="noreferrer">+56 9 6617 0884</a>
+        <span style="margin-top: 12px; font-size: 0.82rem;">Santiago, Chile</span>
       </div>
     </div>
-  </section>
-
-  <!-- QUÉ INCLUYE -->
-  <section class="incluye">
-    <span class="sec-tag">Alcance</span>
-    <h2>Qué incluye el sistema</h2>
-    <div class="incluye-grid">
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Campañas Google Ads por intención de búsqueda
-      </div>
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Campañas Meta Ads para visibilidad y remarketing
-      </div>
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Landing pages enfocadas en conversión
-      </div>
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Captación de leads vía formulario y WhatsApp
-      </div>
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Implementación de tracking (incluyendo GCLID)
-      </div>
-      <div class="inc-item">
-        <svg class="chk" viewBox="0 0 13 13" fill="none"><path d="M2 6.5l3 3L11 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Optimización continua y reportes mensuales
-      </div>
+    <div class="container copyright">
+      <span>© 2026 Rodrigo Letelier. Marketing turístico para reservas directas.</span>
+      <span>rodrigoletelier.cl</span>
     </div>
-  </section>
-
-  <!-- PARA QUIÉN -->
-  <section class="paraquien">
-    <span class="sec-tag">Audiencia</span>
-    <h2>Para quién es</h2>
-    <div class="para-grid">
-      <div class="para-card">
-        <span class="para-label">Diseñado para</span>
-        <ul class="para-list">
-          <li>Lodges</li>
-          <li>Hoteles boutique</li>
-          <li>Experiencias turísticas de alto valor</li>
-          <li>Negocios que buscan aumentar reservas directas</li>
-          <li>Operadores que quieren reducir dependencia de OTAs</li>
-          <li>Quienes buscan mejorar la calidad de sus huéspedes</li>
-        </ul>
-      </div>
-      <div class="para-card no">
-        <span class="para-label">No es para</span>
-        <ul class="para-list">
-          <li>Negocios de bajo ticket</li>
-          <li>Modelos de volumen y bajo margen</li>
-          <li>Sin disposición a invertir en captación</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOBRE -->
-  <section class="sobre">
-    <span class="sec-tag">Estudio</span>
-    <div class="sobre-inner">
-      <h2 style="margin-bottom: 1.2rem;">Sobre Reserve Atelier</h2>
-      <p class="sobre-copy">Reserve Atelier es un estudio enfocado en la captación de clientes y generación de reservas directas para el sector turístico.</p>
-      <p class="sobre-copy">Combinamos estrategia, campañas digitales y sistemas de seguimiento con un objetivo claro: <strong>generar resultados medibles, no solo tráfico o consultas.</strong></p>
-      <p class="byline">by Rodrigo Letelier</p>
-    </div>
-  </section>
-
-  <!-- EXPERIENCIA -->
-  <section class="experiencia">
-    <span class="sec-tag">Experiencia</span>
-    <h2>Experiencia en desarrollo</h2>
-    <p class="body-text">Actualmente trabajamos con proyectos turísticos enfocados en mercados internacionales, desarrollando sistemas de captación y mejorando la visibilidad sobre el rendimiento real de sus campañas.</p>
-    <div class="exp-box">
-      <p class="exp-ph">→ Caso Wasai — datos y resultados próximamente</p>
-    </div>
-  </section>
-
-  <!-- CTA FINAL -->
-  <section id="contacto" class="cta-final">
-    <h2>Evaluemos tu sistema<br>de captación actual.</h2>
-    <p>Analizamos tu situación y detectamos oportunidades concretas para aumentar tus reservas directas.</p>
-    <a href="https://wa.me/56900000000?text=Hola%20Rodrigo%2C%20quiero%20solicitar%20una%20evaluaci%C3%B3n%20con%20Reserve%20Atelier" target="_blank" class="btn btn-outline">Solicitar evaluación</a>
-  </section>
-
-  <!-- FOOTER -->
-  <footer>
-    <span class="footer-brand">Reserve Atelier</span>
-    <span class="footer-right">by Rodrigo Letelier</span>
   </footer>
 
+<script>
+function toggleFaq(btn) {
+  var item = btn.parentElement;
+  var wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
 </body>
 </html>
