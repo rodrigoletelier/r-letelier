@@ -51,9 +51,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .nav-links a { opacity: 0.85; transition: opacity 180ms ease; }
 .nav-links a:hover { opacity: 1; }
 .nav-cta { padding: 10px 18px; border-radius: 999px; background: rgba(166, 184, 145, 0.18); border: 1px solid rgba(166, 184, 145, 0.28); font-weight: 500; }
-.hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 156px 0 90px; background: radial-gradient(ellipse 60% 50% at 75% 45%, rgba(31, 77, 58, 0.55) 0%, transparent 70%), radial-gradient(ellipse 70% 60% at 15% 90%, rgba(111, 148, 100, 0.18) 0%, transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-900) 60%, var(--green-800)); color: var(--white); }
-.hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(166, 184, 145, 0.06) 1px, transparent 0); background-size: 28px 28px; pointer-events: none; opacity: 0.5; }
-.hero-content { position: relative; z-index: 2; max-width: 880px; }
+.hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 156px 0 110px; color: var(--white); background: var(--green-950); }
+.hero-media { position: absolute; inset: 0; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 65% 30%; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(95deg, rgba(7, 26, 19, 0.94) 0%, rgba(7, 26, 19, 0.78) 38%, rgba(7, 26, 19, 0.4) 75%, rgba(7, 26, 19, 0.55) 100%), linear-gradient(180deg, rgba(7, 26, 19, 0.2) 0%, rgba(7, 26, 19, 0.55) 100%); }
+.hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(166, 184, 145, 0.04) 1px, transparent 0); background-size: 28px 28px; pointer-events: none; opacity: 0.6; z-index: 1; }
+.hero-content { position: relative; z-index: 2; max-width: 760px; }
 .eyebrow { margin: 0 0 18px; color: var(--sage); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
 h1, h2, h3 { margin-top: 0; }
 h1, h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 400; line-height: 1.0; letter-spacing: -0.025em; }
@@ -103,9 +106,9 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .case-image { min-height: 420px; background: linear-gradient(135deg, rgba(31, 77, 58, 0.5), rgba(7, 26, 19, 0.7)); display: grid; place-items: center; position: relative; overflow: hidden; }
 .case-image img { width: 100%; height: 100%; object-fit: cover; }
 .case-image-placeholder { text-align: center; padding: 40px; color: rgba(166, 184, 145, 0.55); font-family: 'Fraunces', serif; font-style: italic; font-size: 0.95rem; }
-.case-logo { object-fit: contain; margin-bottom: 22px; display: block; }
-.case-logo-wasai { width: min(220px, 80%); max-height: 70px; filter: brightness(0) invert(1); opacity: 0.92; }
-.case-logo-wildtrip { width: min(180px, 70%); max-height: 56px; padding: 10px 14px; border-radius: 10px; background: rgba(255, 255, 255, 0.94); }
+.case-logo { object-fit: contain; margin: 0 auto 26px; display: block; }
+.case-logo-wasai { width: min(280px, 90%); max-height: 110px; filter: brightness(0) invert(1); opacity: 0.95; margin-left: 0; }
+.case-logo-wildtrip { width: min(200px, 75%); max-height: 60px; padding: 10px 14px; border-radius: 10px; background: rgba(255, 255, 255, 0.94); margin-left: 0; }
 .case-content { align-self: center; padding: clamp(34px, 5vw, 60px); }
 .case-kicker { margin-bottom: 14px; color: var(--sage); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.74rem; }
 .case-content h3 { max-width: 540px; margin-bottom: 22px; font-family: 'Fraunces', serif; font-size: clamp(1.55rem, 2.8vw, 2.3rem); font-weight: 400; letter-spacing: -0.022em; line-height: 1.15; color: var(--white); }
@@ -126,8 +129,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .text-link { display: inline-flex; margin-top: 14px; color: var(--green-700); font-weight: 600; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity 180ms ease; }
 .text-link:hover { opacity: 0.7; }
 .portrait-card { position: relative; overflow: hidden; margin: 0; border-radius: var(--radius-xl); box-shadow: var(--shadow); background: var(--sand-2); aspect-ratio: 4 / 5; }
-.portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
-.portrait-placeholder { width: 100%; height: 100%; display: grid; place-items: center; background: linear-gradient(135deg, var(--green-800), var(--green-950)); color: var(--sage); font-family: 'Fraunces', serif; font-style: italic; font-size: 1rem; padding: 30px; text-align: center; }
+.portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
 .faq { background: var(--sand); }
 .faq-list { margin-top: 54px; border-top: 1px solid var(--line); max-width: 920px; margin-inline: auto; }
 .faq-item { border-bottom: 1px solid var(--line); }
@@ -198,6 +200,10 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 
   <main id="inicio">
     <section class="hero">
+      <div class="hero-media" aria-hidden="true">
+        <img src="assets/rodrigo-tren.jpg" alt="" />
+      </div>
+      <div class="hero-overlay"></div>
       <div class="container hero-content">
         <p class="eyebrow">Marketing turístico para Latinoamérica</p>
         <h1>Más reservas directas <em>para lodges, hoteles boutique</em> y experiencias de naturaleza.</h1>
