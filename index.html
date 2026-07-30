@@ -119,6 +119,14 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .cap-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
 .cap-card h4 { margin: 0 0 6px; font-size: 0.95rem; font-weight: 600; color: var(--ink); letter-spacing: -0.005em; }
 .cap-card p { margin: 0; color: var(--muted); font-size: 0.85rem; line-height: 1.55; }
+.process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 56px; }
+.process-step-num { display: block; margin-bottom: 16px; font-family: 'Source Serif 4', serif; font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-700); }
+.advisory-card { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 18px; padding: 30px clamp(24px, 4vw, 44px); border: 1px solid rgba(111, 148, 100, 0.28); border-radius: var(--radius-lg); background: linear-gradient(135deg, rgba(111, 148, 100, 0.12), rgba(166, 184, 145, 0.05)); }
+.advisory-icon { flex-shrink: 0; width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid rgba(111, 148, 100, 0.4); border-radius: 50%; color: var(--green-700); }
+.advisory-icon svg { width: 18px; height: 18px; }
+.advisory-text h3 { margin-bottom: 4px; }
+.advisory-text p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+.method-cta { margin-top: 44px; }
 .about { background: var(--sand-2); }
 .split-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 70px; }
 .split-text p { max-width: 580px; color: var(--muted); font-size: 1.04rem; line-height: 1.7; margin-bottom: 14px; }
@@ -140,7 +148,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .cta-card h2 { margin-bottom: 14px; color: var(--white); }
 .cta-card p { max-width: 580px; margin-bottom: 0; color: rgba(255, 255, 255, 0.78); font-size: 1.06rem; line-height: 1.65; }
 .site-footer { padding: 64px 0 28px; background: var(--green-950); color: rgba(255, 255, 255, 0.7); }
-.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 38px; }
+.footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 38px; }
 .site-footer h4 { color: var(--white); font-size: 0.86rem; margin: 0 0 12px; font-weight: 600; letter-spacing: 0.04em; }
 .site-footer a, .site-footer span { display: block; margin-top: 8px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
 .site-footer a:hover { color: var(--white); }
@@ -151,7 +159,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .site-header { position: absolute; }
   .nav-links a:not(.nav-cta) { display: none; }
   .hero { min-height: 760px; }
-  .problem-grid, .service-grid { grid-template-columns: repeat(2, 1fr); }
+  .problem-grid, .service-grid, .process-grid { grid-template-columns: repeat(2, 1fr); }
   .case-card, .split-layout, .cta-card, .footer-grid { grid-template-columns: 1fr; }
   .case-content { padding: 40px 30px; }
   .case-image { min-height: 280px; order: -1; }
@@ -169,7 +177,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   h1 { font-size: clamp(2.55rem, 13vw, 3.6rem); }
   h2 { font-size: clamp(2rem, 10vw, 2.9rem); }
   .hero-actions, .btn { width: 100%; }
-  .problem-grid, .service-grid, .cap-grid { grid-template-columns: 1fr; }
+  .problem-grid, .service-grid, .cap-grid, .process-grid { grid-template-columns: 1fr; }
+  .advisory-card { padding: 26px; }
   .logos { flex-direction: column; gap: 24px; }
   .logos-wrap { flex-direction: column; gap: 22px; }
   .faq-q { font-size: 1.04rem; padding: 20px 0; }
@@ -220,7 +229,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <span class="brand-name">Rodrigo Letelier</span>
     </a>
     <nav class="nav-links" aria-label="Secciones">
-      <a href="#servicios">Servicios</a>
+      <a href="#servicios">Cómo trabajo</a>
       <a href="#casos">Casos</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a class="nav-cta" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
@@ -276,31 +285,46 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 
     <section id="servicios" class="section services">
       <div class="container section-center narrow">
-        <p class="eyebrow reveal">Cómo te ayudo</p>
-        <h2 class="reveal">Una estrategia enfocada en generar reservas.</h2>
-        <p class="section-intro">Cada canal cumple una función clave dentro del sistema comercial y del recorrido del viajero.</p>
+        <p class="eyebrow reveal">Cómo trabajo</p>
+        <h2 class="reveal">Metodología en 4 etapas</h2>
       </div>
-      <div class="container service-grid">
+      <div class="container process-grid">
         <article class="service-card reveal">
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></div>
-          <h3>Atracción de viajeros</h3>
-          <p>Campañas en Google y Meta dirigidas a personas que ya están buscando experiencias similares a las tuyas.</p>
+          <span class="process-step-num">01 — Diagnóstico</span>
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M21 21l-5.2-5.2"/></svg></div>
+          <h3>Identifico dónde estás perdiendo reservas.</h3>
+          <p>Revisamos tu negocio, tu huésped ideal y tus canales actuales antes de tocar nada — para no gastar en lo que no tiene sentido.</p>
         </article>
         <article class="service-card reveal reveal-delay-1">
+          <span class="process-step-num">02 — Estrategia</span>
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
-          <h3>Conversión</h3>
-          <p>Landing pages y sitios optimizados para transformar visitas en consultas, solicitudes y reservas directas.</p>
+          <h3>Defino el plan antes que la plataforma.</h3>
+          <p>Elijo los canales, defino cómo mediremos cada resultado y dejo todo listo — sitio, tracking, páginas de reserva — antes de invertir en publicidad.</p>
         </article>
         <article class="service-card reveal reveal-delay-2">
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
-          <h3>Posicionamiento</h3>
-          <p>SEO y contenido para aumentar tu visibilidad en buscadores y depender menos de plataformas de terceros.</p>
+          <span class="process-step-num">03 — Activación</span>
+          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></div>
+          <h3>Aparece frente al viajero correcto.</h3>
+          <p>Lanzo las campañas y páginas que llevan a reservar directo contigo, no en Booking — midiendo desde el primer día, no al final del mes.</p>
         </article>
         <article class="service-card reveal reveal-delay-3">
+          <span class="process-step-num">04 — Optimización</span>
           <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
-          <h3>Medición</h3>
-          <p>Tracking avanzado y análisis para entender qué campañas generan oportunidades reales y dónde optimizar.</p>
+          <h3>Ajusto con datos, no con intuición.</h3>
+          <p>Reviso los números cada mes y corrijo lo que no funciona, para que el sistema mejore con el tiempo en vez de estancarse.</p>
         </article>
+      </div>
+      <div class="container">
+        <div class="advisory-card reveal">
+          <div class="advisory-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+          <div class="advisory-text">
+            <h3>+ Asesoría constante</h3>
+            <p>También soy la persona que te ayudará con otras decisiones de marketing, precios o temporadas, no solo ejecutando anuncios.</p>
+          </div>
+        </div>
+      </div>
+      <div class="container section-center method-cta">
+        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20agendar%20mi%20diagn%C3%B3stico%20inicial." target="_blank" rel="noreferrer">Agenda tu diagnóstico inicial</a>
       </div>
     </section>
 
@@ -342,22 +366,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
-    <section class="section capabilities">
-      <div class="container section-center narrow">
-        <p class="eyebrow reveal">Cómo trabajo</p>
-        <h2 class="reveal">El sistema que activo en tu negocio.</h2>
-        <p class="section-intro">Cada herramienta cumple una función específica dentro del recorrido del viajero. Juntas, construyen un sistema de captación que genera reservas directas en vez de depender de OTAs.</p>
-      </div>
-      <div class="container cap-grid">
-        <div class="cap-card reveal"><h4>Google Ads</h4><p>Aparece cuando un viajero busca tu tipo de experiencia. No después, cuando ya reservó en otro lado. Campañas segmentadas por mercado de origen, idioma y nivel de intención.</p></div>
-        <div class="cap-card reveal reveal-delay-1"><h4>Meta Ads</h4><p>Tu lodge en el feed del viajero antes de que sepa que existe. Usa Facebook e Instagram para inspirar al huésped correcto y traerlo de vuelta cuando esté listo para reservar.</p></div>
-        <div class="cap-card reveal reveal-delay-2"><h4>SEO y contenido turístico</h4><p>Aparece en Google todo el año sin pagar por cada clic. La diferencia entre depender de OTAs o construir tráfico propio que llega solo.</p></div>
-        <div class="cap-card reveal"><h4>Google Analytics 4</h4><p>Métricas que importan, no vanidades. Reportes que muestran qué campaña genera reservas reales, conclusiones claras y recomendaciones.</p></div>
-        <div class="cap-card reveal reveal-delay-1"><h4>Google Tag Manager</h4><p>Saber qué campaña, qué creativo y qué mercado generan cada reserva. Tracking avanzado de cada acción que realiza el viajero en tu sitio.</p></div>
-        <div class="cap-card reveal reveal-delay-2"><h4>Landing pages para reservas</h4><p>Una página pensada para tu tipo de viajero convierte mucho más que un sitio genérico. Diseño y desarrollo enfocados en que la visita se transforme en reserva.</p></div>
-      </div>
-    </section>
-
     <section id="sobre-mi" class="section about">
       <div class="container split-layout reveal">
         <div class="split-text">
@@ -381,7 +389,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div class="container">
         <div class="faq-list">
-          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué metodología usas?</span><span class="faq-icon">+</span></button><div class="faq-a">Trabajo en cuatro etapas: <strong>Diagnóstico</strong> del negocio, cliente ideal y canales actuales para identificar oportunidades. <strong>Estrategia y setup</strong> donde defino canales, métricas y configuro tracking y landing pages. <strong>Activación de campañas</strong> en Google Ads, Meta Ads y SEO, midiendo desde el primer día. <strong>Optimización continua</strong> con análisis mensual y ajustes basados en datos reales.</div></div>
+          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué metodología usas?</span><span class="faq-icon">+</span></button><div class="faq-a">Es el proceso de 4 etapas que ves más arriba — Diagnóstico, Estrategia, Activación y Optimización, mes a mes — sumado a asesoría constante durante toda la relación, no solo cuando lanzamos algo nuevo.</div></div>
+          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué herramientas usas o implementas en el sitio?</span><span class="faq-icon">+</span></button><div class="faq-a">Depende del objetivo, pero el stack habitual incluye Google Ads y Meta Ads para atraer viajeros, SEO y contenido para posicionar tu sitio sin depender solo de pauta paga, landing pages diseñadas para que la visita termine en consulta o reserva, y Google Analytics 4 junto con Google Tag Manager para medir qué campaña, canal o mercado genera cada reserva real. Elijo la combinación según tu propiedad — no aplico el mismo set de herramientas a un hotel de ciudad que a un lodge remoto.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Trabajas con negocios fuera de Chile?</span><span class="faq-icon">+</span></button><div class="faq-a">Sí. Trabajo con proyectos turísticos en distintos países de Latinoamérica. La metodología es la misma; lo que cambia es la configuración de campañas, mercados de origen e idiomas.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿En cuánto tiempo se ven resultados?</span><span class="faq-icon">+</span></button><div class="faq-a">Las primeras señales de captación llegan en las primeras semanas tras lanzar campañas. Los resultados sostenibles en reservas directas y SEO se consolidan en un horizonte de 3 a 6 meses, dependiendo del estado inicial del negocio.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo trabajas el presupuesto de medios?</span><span class="faq-icon">+</span></button><div class="faq-a">El presupuesto de medios (lo que se invierte en Google y Meta) es independiente del fee de gestión. Lo definimos juntos en función de los objetivos, la temporada y la capacidad del negocio para recibir reservas.</div></div>
@@ -417,18 +426,10 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div>
         <h4>Navegación</h4>
-        <a href="#servicios">Servicios</a>
+        <a href="#servicios">Cómo trabajo</a>
         <a href="#casos">Casos</a>
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#contacto">Contacto</a>
-      </div>
-      <div>
-        <h4>Servicios</h4>
-        <span>Google Ads</span>
-        <span>Meta Ads</span>
-        <span>SEO</span>
-        <span>Landing pages</span>
-        <span>Analytics &amp; Tracking</span>
       </div>
       <div>
         <h4>Hablemos</h4>
