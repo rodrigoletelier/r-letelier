@@ -63,6 +63,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 1px 1px, rgba(166, 184, 145, 0.04) 1px, transparent 0); background-size: 28px 28px; pointer-events: none; opacity: 0.6; z-index: 1; }
 .hero-content { position: relative; z-index: 2; max-width: 600px; margin-left: clamp(20px, 6vw, 80px); margin-right: auto; padding-right: 20px; }
 .eyebrow { margin: 0 0 18px; color: var(--sage); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.eyebrow-dark { color: var(--green-800); }
 h1, h2, h3 { margin-top: 0; }
 h1, h2 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 400; line-height: 1.0; letter-spacing: -0.025em; }
 h1 { max-width: 920px; margin-bottom: 28px; font-size: clamp(2.2rem, 5vw, 3.4rem); }
@@ -92,7 +93,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .services { background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.14), transparent 30%), var(--sand); }
 .section-intro { max-width: 720px; margin: 0 auto; color: var(--muted); font-size: 1.05rem; line-height: 1.65; }
 .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 56px; }
-.service-card { min-height: 260px; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.62); box-shadow: 0 10px 34px rgba(7, 26, 19, 0.04); transition: transform 240ms ease, box-shadow 240ms ease; }
+.service-card { padding: 30px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.62); box-shadow: 0 10px 34px rgba(7, 26, 19, 0.04); transition: transform 240ms ease, box-shadow 240ms ease; }
 .service-card:hover { transform: translateY(-3px); box-shadow: 0 18px 50px rgba(7, 26, 19, 0.08); }
 .service-card p { color: var(--muted); font-size: 0.94rem; line-height: 1.6; }
 .service-icon { width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 24px; border: 1px solid var(--line); border-radius: 50%; color: var(--green-500); }
@@ -147,11 +148,27 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .cta-card { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
 .cta-card h2 { margin-bottom: 14px; color: var(--white); }
 .cta-card p { max-width: 580px; margin-bottom: 0; color: rgba(255, 255, 255, 0.78); font-size: 1.06rem; line-height: 1.65; }
+.contact-form-wrap { max-width: 920px; margin: 40px auto 0; }
+.contact-form-lead { margin: 0 0 18px; text-align: center; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.contact-form { display: flex; flex-direction: column; gap: 18px; padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
+.form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.form-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.form-field label { font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+.form-field input, .form-field textarea { width: 100%; padding: 12px 14px; border: 1px solid var(--line); border-radius: var(--radius-md); font: inherit; color: var(--ink); background: var(--sand); }
+.form-field input:focus, .form-field textarea:focus { outline: 2px solid var(--sage); outline-offset: 1px; }
+.form-field textarea { resize: vertical; }
+.contact-form .btn { align-self: flex-start; border: none; cursor: pointer; }
+.contact-form .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.form-status { margin: 0; font-size: 0.85rem; color: var(--muted); min-height: 1.2em; }
+@media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
 .site-footer { padding: 64px 0 28px; background: var(--green-950); color: rgba(255, 255, 255, 0.7); }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 38px; }
 .site-footer h4 { color: var(--white); font-size: 0.86rem; margin: 0 0 12px; font-weight: 600; letter-spacing: 0.04em; }
 .site-footer a, .site-footer span { display: block; margin-top: 8px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; }
 .site-footer a:hover { color: var(--white); }
+.footer-social { display: inline-flex !important; align-items: center; justify-content: center; width: 34px; height: 34px; margin-top: 14px !important; border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 50%; color: rgba(255, 255, 255, 0.6); }
+.footer-social svg { width: 16px; height: 16px; }
+.footer-social:hover { color: var(--white); border-color: rgba(255, 255, 255, 0.4); }
 .footer-brand .brand-name { color: var(--white); }
 .footer-brand-tagline { margin-top: 14px; font-size: 0.88rem; color: rgba(255, 255, 255, 0.6); max-width: 280px; line-height: 1.6; }
 .copyright { margin-top: 48px; padding-top: 24px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 0.82rem; color: rgba(255, 255, 255, 0.45); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
@@ -245,12 +262,11 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <div class="hero-content">
         <p class="eyebrow">Marketing turístico para Latinoamérica</p>
         <h1>Más reservas directas <em>para lodges, hoteles boutique</em> y experiencias de naturaleza.</h1>
-        <p class="hero-text">Ayudo a empresas turísticas a atraer viajeros de alto valor, generar reservas directas y depender menos de las OTAs. Combino ocho años de marketing digital con una formación en ecoturismo.</p>
+        <p class="hero-text">Ayudo a empresas turísticas a atraer viajeros de alto valor, generar reservas directas y depender menos de las OTAs. Combino 8 años de Marketing Digital con una formación en Ecoturismo.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
           <a class="btn btn-secondary" href="#casos">Ver casos</a>
         </div>
-        <p class="microcopy">Diagnóstico inicial gratuito de 20 minutos.</p>
       </div>
     </section>
 
@@ -285,33 +301,29 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 
     <section id="servicios" class="section services">
       <div class="container section-center narrow">
-        <p class="eyebrow reveal">Cómo trabajo</p>
+        <p class="eyebrow reveal eyebrow-dark">Cómo trabajo</p>
         <h2 class="reveal">Metodología en 4 etapas</h2>
       </div>
       <div class="container process-grid">
         <article class="service-card reveal">
           <span class="process-step-num">01 — Diagnóstico</span>
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><path d="M21 21l-5.2-5.2"/></svg></div>
           <h3>Identifico dónde estás perdiendo reservas.</h3>
-          <p>Revisamos tu negocio, tu huésped ideal y tus canales actuales antes de tocar nada — para no gastar en lo que no tiene sentido.</p>
+          <p>Revisamos tu negocio, tu huésped ideal y tus canales actuales, sin tocar nada.</p>
         </article>
         <article class="service-card reveal reveal-delay-1">
           <span class="process-step-num">02 — Estrategia</span>
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
-          <h3>Defino el plan antes que la plataforma.</h3>
-          <p>Elijo los canales, defino cómo mediremos cada resultado y dejo todo listo — sitio, tracking, páginas de reserva — antes de invertir en publicidad.</p>
+          <h3>Un buen plan antes que la plataforma.</h3>
+          <p>Elegimos los canales, defino cómo mediremos cada resultado y dejo todo listo: sitio, tracking, anuncios y herramientas, antes de invertir en publicidad.</p>
         </article>
         <article class="service-card reveal reveal-delay-2">
           <span class="process-step-num">03 — Activación</span>
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z"/></svg></div>
           <h3>Aparece frente al viajero correcto.</h3>
-          <p>Lanzo las campañas y páginas que llevan a reservar directo contigo, no en Booking — midiendo desde el primer día, no al final del mes.</p>
+          <p>Lanzamiento de campañas que llevan a reservar directo desde tu página o a través de mensaje, midiendo desde el primer día.</p>
         </article>
         <article class="service-card reveal reveal-delay-3">
           <span class="process-step-num">04 — Optimización</span>
-          <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
           <h3>Ajusto con datos, no con intuición.</h3>
-          <p>Reviso los números cada mes y corrijo lo que no funciona, para que el sistema mejore con el tiempo en vez de estancarse.</p>
+          <p>Reviso los KPI constantemente y corrijo lo que no funciona, para que el sistema mejore con el tiempo en vez de estancarse.</p>
         </article>
       </div>
       <div class="container">
@@ -319,7 +331,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="advisory-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
           <div class="advisory-text">
             <h3>+ Asesoría constante</h3>
-            <p>También soy la persona que te ayudará con otras decisiones de marketing, precios o temporadas, no solo ejecutando anuncios.</p>
+            <p>Nos juntamos cada 2 semanas para revisar los resultados y ayudarte con otras decisiones de marketing.</p>
           </div>
         </div>
       </div>
@@ -332,7 +344,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <div class="container section-center narrow">
         <p class="eyebrow reveal">Casos</p>
         <h2 class="reveal">Proyectos turísticos reales.</h2>
-        <p class="section-intro" style="color: rgba(255,255,255,0.7);">Trabajo actual con dos empresas del rubro, con foco en captación digital y reservas directas.</p>
       </div>
       <div class="container case-stack">
         <article class="case-card reveal">
@@ -371,7 +382,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <div class="split-text">
           <p class="eyebrow">Sobre mí</p>
           <h2>Turismo primero. <span>Marketing después.</span></h2>
-          <p>Soy administrador en ecoturismo y llevo ocho años trabajando en marketing digital. Durante años los mantuve como mundos separados, hasta que entendí que se potencian uno al otro.</p>
+          <p>Soy administrador en Ecoturismo y llevo 8 años trabajando en Marketing Digital. Durante años los mantuve como mundos separados, hasta que entendí que se potencian uno al otro.</p>
           <p>Mi trabajo no parte desde la plataforma sino desde entender cómo se vende una experiencia turística: el destino, la temporada, el tipo de viajero, la confianza y el proceso real de reserva.</p>
           <p>Hoy trabajo desde Chile con proyectos turísticos en distintos países de Latinoamérica, ayudándolos a construir sistemas de captación propios.</p>
           <a class="text-link" href="#contacto">Conversemos sobre tu proyecto →</a>
@@ -405,11 +416,37 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <div class="container">
         <div class="cta-card reveal">
           <div>
-            <p class="eyebrow">Próximo paso</p>
-            <h2>¿Quieres aumentar tus reservas directas?</h2>
-            <p>Conversemos sobre tu proyecto turístico y revisemos oportunidades concretas de crecimiento. La primera conversación es gratuita y sin compromiso.</p>
+            <h2>Aumenta tus reservas directas.</h2>
+            <p>Conversemos sobre tu proyecto y revisemos oportunidades concretas para tu crecimiento. El primer diagnóstico es gratuito y sin compromiso.</p>
           </div>
           <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
+        </div>
+
+        <div class="contact-form-wrap reveal">
+          <p class="contact-form-lead">O escríbeme directo</p>
+          <!-- ⚠️ Reemplaza TU_ID_FORMSPREE por tu ID real de Formspree para que el formulario envíe a tu correo -->
+          <form id="contact-form" class="contact-form" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST">
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="cf-name">Nombre</label>
+                <input type="text" id="cf-name" name="name" required>
+              </div>
+              <div class="form-field">
+                <label for="cf-email">Correo</label>
+                <input type="email" id="cf-email" name="email" required>
+              </div>
+              <div class="form-field">
+                <label for="cf-company">Empresa</label>
+                <input type="text" id="cf-company" name="company" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="cf-message">Mensaje</label>
+              <textarea id="cf-message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar mensaje</button>
+            <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
@@ -436,6 +473,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <a href="mailto:hola@rodrigoletelier.cl">hola@rodrigoletelier.cl</a>
         <a href="https://wa.me/56966170884" target="_blank" rel="noreferrer">+56 9 6617 0884</a>
         <span style="margin-top: 12px; font-size: 0.82rem;">Santiago, Chile</span>
+        <a class="footer-social" href="https://www.linkedin.com/in/rodrigo-letelier-459b2982/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 110-4.12 2.06 2.06 0 010 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg></a>
       </div>
     </div>
     <div class="container copyright">
@@ -451,6 +489,36 @@ function toggleFaq(btn) {
   document.querySelectorAll('.faq-item.open').forEach(function(el) { el.classList.remove('open'); });
   if (!wasOpen) item.classList.add('open');
 }
+</script>
+
+<script>
+(function() {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var status = document.getElementById('cf-status');
+  var submitBtn = form.querySelector('button[type="submit"]');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    status.textContent = 'Enviando…';
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    }).then(function(res) {
+      if (res.ok) {
+        status.textContent = '¡Gracias! Te responderé a la brevedad.';
+        form.reset();
+      } else {
+        status.textContent = 'Hubo un problema al enviar. Escríbeme directo a rodrigo@esporadigital.cl';
+      }
+    }).catch(function() {
+      status.textContent = 'Hubo un problema al enviar. Escríbeme directo a rodrigo@esporadigital.cl';
+    }).finally(function() {
+      submitBtn.disabled = false;
+    });
+  });
+})();
 </script>
 
 <script>
