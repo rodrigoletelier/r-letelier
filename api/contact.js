@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Formulario rodrigoletelier.cl <onboarding@resend.dev>',
+        from: 'Formulario rodrigoletelier.cl <formulario@mail.rodrigoletelier.cl>',
         to: ['hola@rodrigoletelier.cl'],
         reply_to: email,
         subject: `Nuevo contacto de ${name}${company ? ' - ' + company : ''}`,
