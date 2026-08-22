@@ -424,8 +424,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 
         <div class="contact-form-wrap reveal">
           <p class="contact-form-lead">O escríbeme directo</p>
-          <!-- ⚠️ Reemplaza TU_ID_FORMSPREE por tu ID real de Formspree para que el formulario envíe a tu correo -->
-          <form id="contact-form" class="contact-form" action="https://formspree.io/f/TU_ID_FORMSPREE" method="POST">
+          <form id="contact-form" class="contact-form" action="/api/contact" method="POST">
             <div class="form-grid">
               <div class="form-field">
                 <label for="cf-name">Nombre</label>
@@ -501,10 +500,13 @@ function toggleFaq(btn) {
     e.preventDefault();
     submitBtn.disabled = true;
     status.textContent = 'Enviando…';
+    var formData = new FormData(form);
+    var payload = {};
+    formData.forEach(function(value, key) { payload[key] = value; });
     fetch(form.action, {
       method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
+      body: JSON.stringify(payload),
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }
     }).then(function(res) {
       if (res.ok) {
         status.textContent = '¡Gracias! Te responderé a la brevedad.';
