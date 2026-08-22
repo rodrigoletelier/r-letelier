@@ -519,6 +519,9 @@ function toggleFaq(btn) {
       if (res.ok) {
         status.textContent = '¡Gracias! Te responderé a la brevedad.';
         form.reset();
+        if (typeof gtag === 'function') {
+          gtag('event', 'generate_lead', { form_id: 'contact-form' });
+        }
       } else {
         status.textContent = 'Hubo un problema al enviar. Escríbeme directo a rodrigo@esporadigital.cl';
       }
@@ -528,6 +531,27 @@ function toggleFaq(btn) {
       submitBtn.disabled = false;
     });
   });
+})();
+</script>
+
+<script>
+(function() {
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link || typeof gtag !== 'function') return;
+    var href = link.getAttribute('href') || '';
+    var text = (link.textContent || '').trim().slice(0, 100);
+
+    if (href.indexOf('wa.me') !== -1 || href.indexOf('whatsapp.com') !== -1) {
+      gtag('event', 'whatsapp_click', { link_url: href, link_text: text });
+    } else if (href.indexOf('tel:') === 0) {
+      gtag('event', 'phone_click', { link_url: href, link_text: text });
+    } else if (href.indexOf('mailto:') === 0) {
+      gtag('event', 'email_click', { link_url: href, link_text: text });
+    } else if (href.indexOf('http') === 0 && link.hostname && link.hostname !== window.location.hostname) {
+      gtag('event', 'outbound_click', { link_url: href, link_text: text });
+    }
+  }, true);
 })();
 </script>
 
