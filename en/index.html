@@ -56,6 +56,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .section-dark { background: radial-gradient(circle at top left, rgba(111, 148, 100, 0.22), transparent 36%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
 .site-header { position: fixed; top: 18px; left: 20px; right: 20px; z-index: 100; display: flex; align-items: center; justify-content: space-between; width: min(var(--container), calc(100% - 40px)); margin: 0 auto; padding: 12px 16px 12px 22px; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 999px; background: rgba(7, 26, 19, 0.7); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); color: var(--white); }
 .brand { display: inline-flex; flex-direction: column; letter-spacing: 0.04em; text-transform: uppercase; }
+.brand-logo { width: 34px; height: 34px; border-radius: 9px; display: block; }
 .brand-name { font-weight: 700; font-size: 0.88rem; line-height: 1.05; }
 .brand-subtitle { margin-top: 3px; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--sage); }
 .nav-links { display: flex; align-items: center; gap: 22px; font-size: 0.88rem; }
@@ -66,7 +67,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .lang-switch:hover { opacity: 1; transform: scale(1.08); }
 .hero { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; padding: 156px 0 110px; color: var(--white); background: var(--green-950); }
 .hero-media { position: absolute; inset: 0; }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 80% 40%; filter: brightness(0.9); }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%; filter: brightness(0.9); }
 .hero-overlay { position: absolute; inset: 0; background: linear-gradient(95deg,
   rgba(7, 26, 19, 0.95) 0%,
   rgba(7, 26, 19, 0.82) 35%,
@@ -128,6 +129,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .case-content li { padding-left: 18px; position: relative; }
 .case-content li::before { content: ''; position: absolute; left: 0; top: 12px; width: 8px; height: 1px; background: var(--sage); }
 .case-brand { font-family: 'Source Serif 4', serif; font-size: 1.3rem; margin-bottom: 8px; color: var(--sage); font-weight: 400; letter-spacing: -0.02em; }
+.case-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--sage); font-weight: 600; font-size: 0.88rem; border-bottom: 1px solid rgba(166, 184, 145, 0.45); padding-bottom: 1px; transition: opacity 180ms ease; }
+.case-link:hover { opacity: 0.7; }
 .capabilities { background: var(--sand); }
 .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 50px; }
 .cap-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
@@ -263,7 +266,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--green-800);
+  background: #25D366;
   color: var(--white);
   opacity: 0.82;
   box-shadow: 0 8px 24px rgba(7, 26, 19, 0.28);
@@ -284,7 +287,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 <body>
   <header class="site-header" aria-label="Main navigation">
     <a class="brand" href="#inicio" aria-label="Go to home">
-      <span class="brand-name">Rodrigo Letelier</span>
+      <img class="brand-logo" src="/assets/rl-logo.png" alt="Rodrigo Letelier" />
     </a>
     <nav class="nav-links" aria-label="Sections">
       <a href="#servicios">How I work</a>
@@ -298,7 +301,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   <main id="inicio">
     <section class="hero">
       <div class="hero-media" aria-hidden="true">
-        <img src="/assets/rodrigo-tren.jpg" alt="" />
+        <img src="/assets/hero-lodge.jpg" alt="" />
       </div>
       <div class="hero-overlay"></div>
       <div class="hero-content">
@@ -401,6 +404,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
               <li>Advanced tracking for forms and WhatsApp.</li>
               <li>Strategy to reduce dependence on OTAs.</li>
             </ul>
+            <a class="case-link" href="https://wasai.com" target="_blank" rel="noreferrer">Visit wasai.com ↗</a>
           </div>
         </article>
         <article class="case-card reveal">
@@ -413,6 +417,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
               <li>Ongoing acquisition of new partners.</li>
               <li>Online positioning and brand work.</li>
             </ul>
+            <a class="case-link" href="https://wildtrip.cl" target="_blank" rel="noreferrer">Visit wildtrip.cl ↗</a>
           </div>
           <div class="case-image"><img src="/assets/wildtrip-expedicion.webp" alt="Wildtrip - mountain expedition" loading="lazy" /></div>
         </article>
