@@ -52,11 +52,11 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 ## Estructura de secciones
 
-1. **Hero** — foto de Rodrigo en tren panorámico como background, overlay verde oscuro (gradiente diagonal) para legibilidad del texto.
+1. **Hero** — imagen generada con IA (assets/hero-lodge.jpg): balcón de lodge de lujo en la selva, mujer en bata mirando la niebla sobre las montañas con desayuno servido en primer plano. Object-position ajustado (62% 40%) para que el overlay oscuro caiga sobre la esquina del dormitorio (poco relevante) y deje visible la vista + la mesa. Antes era una foto de stock de una cabaña junto a un lago (07-sep-2026), y antes de eso una foto de Rodrigo en tren. Se cambió a esta imagen (08-sep-2026) porque comunica mejor la experiencia aspiracional del huésped que el hero debe vender — la foto personal de Rodrigo se dejó solo en "Sobre mí". Nota: es una imagen generada con IA, no una foto real ni de ningún cliente — imagen genérica aspiracional, no atribuida a Wasai ni a otro cliente.
 2. **Problema** — 4 cards sobre fondo verde
 3. **Servicios** — 4 servicios numerados
 4. **Metodología** — proceso de 4 etapas (diagnóstico, estrategia, activación, optimización)
-5. **Casos** — Wasai y Wildtrip con fotos reales y logos
+5. **Casos** — Wasai y Wildtrip con fotos reales, logos y link "Visitar [sitio] ↗" a wasai.com y wildtrip.cl (se trackea solo como outbound_click, ya está cubierto por el listener genérico)
 6. **Stack & capacidades** — 6 cards de herramientas
 7. **Sobre mí** — texto + foto de Rodrigo en la cordillera (rodrigo-montana-naranja.jpg)
 8. **FAQ** — 6 preguntas con acordeón
@@ -64,7 +64,8 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 ## Decisiones de diseño importantes (NO revertir)
 
-- **Dos fotos personales en la web**: foto del tren panorámico en el hero (background con overlay) y foto en la cordillera en "Sobre mí" (con texto al lado).
+- **Una sola foto personal en la web**: foto de Rodrigo en la cordillera en "Sobre mí" (con texto al lado). El hero usa una imagen generada con IA (balcón de lodge, no una foto real ni de Rodrigo) — decisión tomada 07-sep-2026 tras feedback de un consultor de marketing turístico, para que el hero venda la experiencia/problema del cliente y no a Rodrigo. No volver a poner una foto personal en el hero.
+- El WhatsApp flotante usa el verde oficial de la marca WhatsApp (`#25D366`), no el verde del sitio — así se reconoce de inmediato como WhatsApp.
 - **Marca personal**, no estudio. Esto puede cambiar a futuro pero por ahora es Rodrigo Letelier como persona.
 - **Sin métricas atribuibles**. Rodrigo tiene pocos clientes y prefiere no exponer datos privados. Mostramos capacidades, no números.
 - **Tono profesional pero cálido**. Nada de jerga de agencia, nada de promesas exageradas tipo "10x ROI".
@@ -85,9 +86,9 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 ## Lo que NO hacer
 
-- No agregar más fotos personales de Rodrigo (evitar yoísmo)
+- No agregar más fotos personales de Rodrigo (evitar yoísmo) — la única foto personal que queda es la de "Sobre mí"
 - No inventar métricas ni testimonios
-- No usar fotos de stock genéricas
+- No usar fotos de stock genéricas para las secciones de Casos (esas llevan fotos reales de los clientes). El hero SÍ usa una foto de stock a propósito (ver "Decisiones de diseño importantes" arriba) — no revertir eso a la foto de Rodrigo en el tren.
 - No prometer resultados específicos sin respaldo
 - No revertir la marca a "Reserve Atelier" — ese fue un nombre anterior, ya descartado
 
