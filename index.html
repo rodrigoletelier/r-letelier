@@ -144,6 +144,51 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .advisory-text h3 { margin-bottom: 4px; }
 .advisory-text p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
 .method-cta { margin-top: 44px; }
+/* === SEO + AEO === */
+.seo { background: var(--sand-2); }
+.seo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 56px; }
+.seo-duo-card { padding: clamp(28px, 4vw, 40px); border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--white); }
+.seo-duo-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
+.seo-tag { display: inline-block; margin-bottom: 18px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
+.seo-duo-card.is-dark .seo-tag { background: rgba(166, 184, 145, 0.18); color: var(--sage); }
+.seo-duo-card h3 { font-family: 'Source Serif 4', serif; font-size: clamp(1.4rem, 2.4vw, 1.8rem); font-weight: 400; letter-spacing: -0.02em; }
+.seo-duo-card p { margin: 0; color: var(--muted); font-size: 0.96rem; line-height: 1.65; }
+.seo-duo-card.is-dark p { color: rgba(255, 255, 255, 0.76); }
+.seo-why { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; margin-top: 80px; }
+.seo-why h3 { font-family: 'Source Serif 4', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: -0.022em; line-height: 1.1; }
+.seo-why h3 span { color: var(--green-500); }
+.seo-why-lead { color: var(--muted); font-size: 1rem; line-height: 1.7; }
+.seo-why-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.seo-why-list li { padding: 22px 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.6); }
+.seo-why-list strong { display: block; margin-bottom: 4px; font-size: 0.98rem; color: var(--ink); }
+.seo-why-list span { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
+.seo-plan { margin-top: 80px; }
+.seo-plan-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
+.seo-plan-head h3 { margin: 0; font-family: 'Source Serif 4', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 400; letter-spacing: -0.02em; }
+.seo-plan-head p { margin: 0; max-width: 460px; color: var(--muted); font-size: 0.94rem; }
+.seo-monthly { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.seo-roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
+.seo-step { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
+.seo-step-num { display: block; margin-bottom: 12px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-500); }
+.seo-step h4 { margin: 0 0 6px; font-size: 0.98rem; font-weight: 600; color: var(--ink); }
+.seo-step p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+.seo-chips { display: flex; gap: 6px; margin-bottom: 10px; }
+.seo-chip { padding: 3px 9px; border-radius: 999px; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
+.seo-chip.aeo { background: rgba(31, 77, 58, 0.9); color: var(--sage-soft); }
+.seo-note { margin: 16px 0 0; color: var(--muted); font-size: 0.82rem; font-style: italic; }
+.seo-cta { margin-top: 44px; }
+
+/* === AUDITORÍA === */
+.audit { padding: 0 0 104px; background: var(--sand-2); }
+.audit-card { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 64px); align-items: center; padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at bottom left, rgba(111, 148, 100, 0.3), transparent 55%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
+.audit-card h2 { margin-bottom: 18px; color: var(--white); font-size: clamp(2rem, 3.8vw, 3.2rem); }
+.audit-card > div > p { margin: 0 0 28px; max-width: 560px; color: rgba(255, 255, 255, 0.78); font-size: 1.04rem; line-height: 1.65; }
+.audit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.audit-list li { display: flex; gap: 14px; padding: 18px 20px; border: 1px solid var(--line-dark); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.05); }
+.audit-list b { flex-shrink: 0; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: rgba(166, 184, 145, 0.18); color: var(--sage); font-size: 0.78rem; }
+.audit-list strong { display: block; font-size: 0.95rem; color: var(--white); }
+.audit-list span { color: rgba(255, 255, 255, 0.68); font-size: 0.88rem; line-height: 1.55; }
+
 .about { background: var(--sand-2); }
 .split-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 70px; }
 .split-text p { max-width: 580px; color: var(--muted); font-size: 1.04rem; line-height: 1.7; margin-bottom: 14px; }
@@ -198,6 +243,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .case-image { min-height: 280px; order: -1; }
   .cap-grid { grid-template-columns: repeat(2, 1fr); }
   .cta-card { flex-direction: column; align-items: flex-start; }
+  .seo-why, .audit-card { grid-template-columns: 1fr; gap: 32px; }
+  .seo-monthly, .seo-roadmap { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
   .container { width: min(100% - 28px, var(--container)); }
@@ -212,6 +259,9 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .hero-actions, .btn { width: 100%; }
   .problem-grid, .service-grid, .cap-grid, .process-grid { grid-template-columns: 1fr; }
   .advisory-card { padding: 26px; }
+  .seo-duo, .seo-monthly, .seo-roadmap { grid-template-columns: 1fr; }
+  .seo-why, .seo-plan { margin-top: 56px; }
+  .audit { padding-bottom: 76px; }
   .logos { flex-direction: column; gap: 24px; }
   .logos-wrap { flex-direction: column; gap: 22px; }
   .faq-q { font-size: 1.04rem; padding: 20px 0; }
@@ -291,6 +341,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
     </a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#servicios">Cómo trabajo</a>
+      <a href="#seo-aeo">SEO + IA</a>
       <a href="#casos">Casos</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a class="nav-cta" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
@@ -385,6 +436,125 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
+    <section id="seo-aeo" class="section seo">
+      <div class="container section-center narrow">
+        <p class="eyebrow reveal eyebrow-dark">SEO + AEO</p>
+        <h2 class="reveal">Que te encuentren en Google. <span>Y que la IA te recomiende.</span></h2>
+        <p class="section-intro reveal">Hoy muchos viajeros planifican preguntándole a ChatGPT, Gemini o Perplexity dónde alojarse o qué hacer. Esas respuestas no salen de la nada: se arman con lo que la IA encuentra en la web. Si tu sitio no está bien posicionado y bien explicado, la IA tampoco te va a nombrar.</p>
+      </div>
+
+      <div class="container seo-duo">
+        <article class="seo-duo-card reveal">
+          <span class="seo-tag">SEO</span>
+          <h3>Aparecer cuando el viajero busca en Google.</h3>
+          <p>Trabajo la base técnica de tu sitio, las palabras clave de tu destino y el contenido que responde lo que tu huésped busca antes de reservar. Visitas que llegan solas, sin pagar por cada clic.</p>
+        </article>
+        <article class="seo-duo-card is-dark reveal reveal-delay-1">
+          <span class="seo-tag">AEO</span>
+          <h3>Aparecer cuando el viajero le pregunta a la IA.</h3>
+          <p>Ordeno tu información para que ChatGPT, Gemini y Perplexity la lean, la entiendan y la citen: preguntas frecuentes reales, fichas claras de cada experiencia y una marca coherente en todos los sitios donde apareces.</p>
+        </article>
+      </div>
+
+      <div class="container seo-why">
+        <div class="reveal">
+          <h3>El SEO no pasó de moda. <span>Cambió de forma.</span></h3>
+          <p class="seo-why-lead">La IA no reemplaza a Google: se apoya en lo que ya está bien posicionado y bien escrito. Por eso el SEO sigue siendo la base, y el AEO es la capa que te pone dentro de la conversación.</p>
+        </div>
+        <ul class="seo-why-list reveal reveal-delay-1">
+          <li><strong>La IA lee lo que Google ya ordenó.</strong><span>Un sitio rápido, claro y con buen contenido es la fuente que las IA prefieren citar.</span></li>
+          <li><strong>Visitas que no dependen de la pauta.</strong><span>Cuando apagas las campañas, el posicionamiento sigue trabajando por ti.</span></li>
+          <li><strong>Un activo que se acumula mes a mes.</strong><span>Cada página y cada respuesta bien hecha suma. No se pierde al final del mes.</span></li>
+          <li><strong>Menos dependencia de las OTAs.</strong><span>Si el viajero te encuentra a ti primero, reserva contigo y no a través de un intermediario.</span></li>
+        </ul>
+      </div>
+
+      <div class="container seo-plan">
+        <div class="seo-plan-head reveal">
+          <h3>Cómo funciona el plan</h3>
+          <p>Cada mes trabajamos un foco distinto, sobre el contenido que tu equipo ya publica. Plan mensual, con un mínimo sugerido de 6 meses.</p>
+        </div>
+        <p class="eyebrow eyebrow-dark reveal">Todos los meses</p>
+        <div class="seo-monthly">
+          <article class="seo-step reveal">
+            <h4>Test de visibilidad en IA</h4>
+            <p>10 preguntas clave en ChatGPT, Gemini y Perplexity. Medimos si apareces tú y quién aparece más.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-1">
+            <h4>Pauta de contenido</h4>
+            <p>2 temas sugeridos al mes para tu equipo, con las preguntas que cada artículo debe responder.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-2">
+            <h4>Reporte y reunión</h4>
+            <p>Posiciones en Google, menciones en IA y una reunión mensual. WhatsApp para consultas.</p>
+          </article>
+        </div>
+
+        <p class="eyebrow eyebrow-dark reveal" style="margin-top: 44px;">El foco de cada mes</p>
+        <div class="seo-roadmap">
+          <article class="seo-step reveal">
+            <span class="seo-step-num">Mes 1</span>
+            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
+            <h4>Base técnica y punto de partida</h4>
+            <p>Search Console, Bing Webmaster Tools, acceso de los bots de IA, mapa de palabras clave y primera medición en IA.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-1">
+            <span class="seo-step-num">Mes 2</span>
+            <div class="seo-chips"><span class="seo-chip">SEO</span></div>
+            <h4>Blog visible y conectado</h4>
+            <p>Blog en el menú y en el home, cada artículo enlazado a su experiencia, títulos y descripciones optimizados.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-2">
+            <span class="seo-step-num">Mes 3</span>
+            <div class="seo-chips"><span class="seo-chip aeo">AEO</span></div>
+            <h4>Preguntas frecuentes</h4>
+            <p>Las preguntas reales de tus huéspedes, con respuestas directas y datos estructurados para que la IA las lea.</p>
+          </article>
+          <article class="seo-step reveal">
+            <span class="seo-step-num">Mes 4</span>
+            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
+            <h4>Fichas de cada experiencia</h4>
+            <p>Habitaciones, programas o tours con qué incluyen, temporada y precio desde, en un formato que Google y la IA puedan citar.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-1">
+            <span class="seo-step-num">Mes 5</span>
+            <div class="seo-chips"><span class="seo-chip aeo">AEO</span></div>
+            <h4>Una sola marca en todas partes</h4>
+            <p>Mismo nombre y descripción en Google Business, directorios turísticos y redes, más estrategia de reseñas.</p>
+          </article>
+          <article class="seo-step reveal reveal-delay-2">
+            <span class="seo-step-num">Mes 6</span>
+            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
+            <h4>Menciones y resultados</h4>
+            <p>Enlaces y menciones desde partners y sitios del rubro. Comparación con el mes 1 y plan para el siguiente semestre.</p>
+          </article>
+        </div>
+        <p class="seo-note">El orden puede cambiar según lo que muestre la medición del mes 1.</p>
+      </div>
+
+      <div class="container section-center seo-cta">
+        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20saber%20si%20mi%20negocio%20aparece%20en%20Google%20y%20en%20la%20IA." target="_blank" rel="noreferrer">¿Te recomienda la IA? Revisémoslo</a>
+      </div>
+    </section>
+
+    <section id="auditoria" class="audit">
+      <div class="container">
+        <div class="audit-card reveal">
+          <div>
+            <p class="eyebrow">Auditoría de campañas</p>
+            <h2>¿Ya tienes campañas activas? <span>Las audito.</span></h2>
+            <p>Si ya inviertes en Google Ads o Meta Ads, reviso tu cuenta con una mirada externa. Tu equipo sigue a cargo de las campañas; yo te digo qué está funcionando, qué no y qué cambiar primero.</p>
+            <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20ya%20tengo%20campa%C3%B1as%20activas%20y%20me%20interesa%20una%20auditor%C3%ADa." target="_blank" rel="noreferrer">Quiero auditar mis campañas</a>
+          </div>
+          <ol class="audit-list">
+            <li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, palabras clave, anuncios, mercados, seguimiento de conversiones (WhatsApp, formularios y motor de reservas) y páginas de destino.</span></div></li>
+            <li><b>2</b><div><strong>Sesión de trabajo con tu equipo</strong><span>Repasamos los hallazgos, aplicamos mejoras en la cuenta y dejamos próximos pasos claros.</span></div></li>
+            <li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>2 a 4 semanas después: revisión con datos reales y ajustes para la temporada.</span></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
     <section id="casos" class="section section-dark cases">
       <div class="container section-center narrow">
         <p class="eyebrow reveal">Casos</p>
@@ -449,6 +619,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <div class="faq-list">
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué metodología usas?</span><span class="faq-icon">+</span></button><div class="faq-a">Es el proceso de 4 etapas que ves más arriba — Diagnóstico, Estrategia, Activación y Optimización, mes a mes — sumado a asesoría constante durante toda la relación, no solo cuando lanzamos algo nuevo.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué herramientas usas o implementas en el sitio?</span><span class="faq-icon">+</span></button><div class="faq-a">Depende del objetivo, pero el stack habitual incluye Google Ads y Meta Ads para atraer viajeros, SEO y contenido para posicionar tu sitio sin depender solo de pauta paga, landing pages diseñadas para que la visita termine en consulta o reserva, y Google Analytics 4 junto con Google Tag Manager para medir qué campaña, canal o mercado genera cada reserva real. Elijo la combinación según tu propiedad — no aplico el mismo set de herramientas a un hotel de ciudad que a un lodge remoto.</div></div>
+          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué es AEO y en qué se diferencia del SEO?</span><span class="faq-icon">+</span></button><div class="faq-a">El SEO trabaja para que tu sitio aparezca en los resultados de Google. El AEO (Answer Engine Optimization) trabaja para que ChatGPT, Gemini o Perplexity te nombren cuando un viajero les pregunta dónde alojarse o qué hacer en tu destino. Se complementan: la IA se apoya en lo que encuentra bien posicionado y bien explicado en la web.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Trabajas con negocios fuera de Chile?</span><span class="faq-icon">+</span></button><div class="faq-a">Sí. Trabajo con proyectos turísticos en distintos países de Latinoamérica. La metodología es la misma; lo que cambia es la configuración de campañas, mercados de origen e idiomas.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿En cuánto tiempo se ven resultados?</span><span class="faq-icon">+</span></button><div class="faq-a">Las primeras señales de captación llegan en las primeras semanas tras lanzar campañas. Los resultados sostenibles en reservas directas y SEO se consolidan en un horizonte de 3 a 6 meses, dependiendo del estado inicial del negocio.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo trabajas el presupuesto de medios?</span><span class="faq-icon">+</span></button><div class="faq-a">El presupuesto de medios (lo que se invierte en Google y Meta) es independiente del fee de gestión. Lo definimos juntos en función de los objetivos, la temporada y la capacidad del negocio para recibir reservas.</div></div>
@@ -510,6 +681,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <div>
         <h4>Navegación</h4>
         <a href="#servicios">Cómo trabajo</a>
+        <a href="#seo-aeo">SEO + IA</a>
+        <a href="#auditoria">Auditoría de campañas</a>
         <a href="#casos">Casos</a>
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#contacto">Contacto</a>
