@@ -281,7 +281,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .case-image { min-height: 420px; background: linear-gradient(135deg, rgba(31, 77, 58, 0.5), rgba(7, 26, 19, 0.7)); display: grid; place-items: center; position: relative; overflow: hidden; }
 .case-image img { width: 100%; height: 100%; object-fit: cover; }
 .case-image-placeholder { text-align: center; padding: 40px; color: rgba(166, 184, 145, 0.55); font-family: 'Source Serif 4', serif; font-style: italic; font-size: 0.95rem; }
-.case-logo { object-fit: contain; display: block; }
+.case-logo { object-fit: contain; object-position: left center; display: block; }
+.case-logo-flashpacker { width: min(170px, 60%); max-height: 100px; margin: 0 0 26px; }
 .case-logo-wasai { width: min(280px, 90%); max-height: 80px; filter: brightness(0); opacity: 0.82; margin: 0 0 26px; }
 .case-logo-wildtrip { width: min(200px, 75%); max-height: 60px; filter: brightness(0); opacity: 0.82; margin: 0 0 26px; }
 .case-content { align-self: center; padding: clamp(34px, 5vw, 60px); }
@@ -294,12 +295,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .case-content .case-brand { font-family: 'Source Serif 4', serif; font-size: 1.9rem; margin: 0 0 18px; color: var(--green-800); font-weight: 400; letter-spacing: -0.02em; }
 .case-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 4px; color: var(--green-700); font-weight: 600; font-size: 0.88rem; border-bottom: 1px solid rgba(31, 77, 58, 0.35); padding-bottom: 1px; transition: opacity 180ms ease; }
 .case-link:hover { opacity: 0.7; }
-.case-image-route { background: radial-gradient(circle at top left, rgba(111, 148, 100, 0.3), transparent 45%), linear-gradient(135deg, var(--green-950), var(--green-800)); }
-.case-route { padding: 48px clamp(28px, 4vw, 56px); color: var(--white); }
-.case-route-label { margin: 0 0 22px; color: var(--sage); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
-.case-route-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
-.case-route-list li { font-family: 'Source Serif 4', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 300; line-height: 1.2; letter-spacing: -0.02em; }
-.case-route-list li:nth-child(even) { color: var(--sage); font-style: italic; }
 .capabilities { background: var(--sand); }
 .cap-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 50px; }
 .cap-card { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
@@ -521,6 +516,20 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div class="container case-stack">
         <article class="case-card reveal">
+          <div class="case-content">
+            <img src="assets/flashpacker-logo.png" alt="FlashpackerConnect" class="case-logo case-logo-flashpacker" />
+            <p class="case-kicker">Turismo aventura · Viajeros de EE.UU. hacia el mundo</p>
+            <h3>Campañas para llevar viajeros de EE.UU. a trekkings por el mundo.</h3>
+            <ul>
+              <li>Campañas para viajeros de Estados Unidos hacia trekkings en distintos continentes.</li>
+              <li>Auditoría del tracking existente en Google Ads, Meta Ads y OpenAI Ads.</li>
+              <li>Conversiones conectadas a ventas reales: reservas online con su valor y consultas del CRM.</li>
+            </ul>
+            <a class="case-link" href="https://www.flashpackerconnect.com" target="_blank" rel="noreferrer">Visitar flashpackerconnect.com ↗</a>
+          </div>
+          <div class="case-image"><img src="assets/flashpacker-trekking.webp" alt="FlashpackerConnect - trekking en montaña" loading="lazy" /></div>
+        </article>
+        <article class="case-card reveal">
           <div class="case-image"><img src="assets/wasai-lodge.webp" alt="Wasai Lodge Tambopata - piscina y selva amazónica" loading="lazy" /></div>
           <div class="case-content">
             <img src="assets/wasai-logo.png" alt="Wasai Lodge &amp; Expeditions" class="case-logo case-logo-wasai" />
@@ -549,33 +558,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
             <a class="case-link" href="https://wildtrip.cl" target="_blank" rel="noreferrer">Visitar wildtrip.cl ↗</a>
           </div>
           <div class="case-image"><img src="assets/wildtrip-expedicion.webp" alt="Wildtrip - expedición en montaña" loading="lazy" /></div>
-        </article>
-        <article class="case-card reveal">
-          <div class="case-image case-image-route">
-            <div class="case-route">
-              <p class="case-route-label">Trekkings por el mundo</p>
-              <ul class="case-route-list">
-                <li>Patagonia</li>
-                <li>Tour du Mont Blanc</li>
-                <li>Dolomitas</li>
-                <li>Perú</li>
-                <li>Nepal</li>
-              </ul>
-            </div>
-          </div>
-          <div class="case-content">
-            <p class="case-brand">FlashpackerConnect</p>
-            <p class="case-kicker">Turismo aventura · Viajeros de EE.UU. hacia el mundo</p>
-            <h3>Campañas que miden reservas reales, no solo clics.</h3>
-            <ul>
-              <li>Auditoría de Google Ads y del tracking existente.</li>
-              <li>Conversiones conectadas a ventas reales: reservas online con su valor y consultas del CRM.</li>
-              <li>Ajuste de la medición en Meta Ads para optimizar hacia reservas.</li>
-              <li>Campañas para viajeros de Estados Unidos hacia trekkings en distintos continentes.</li>
-              <li>Prioridad de presupuesto según los destinos que más venden.</li>
-            </ul>
-            <a class="case-link" href="https://www.flashpackerconnect.com" target="_blank" rel="noreferrer">Visitar flashpackerconnect.com ↗</a>
-          </div>
         </article>
       </div>
     </section>
