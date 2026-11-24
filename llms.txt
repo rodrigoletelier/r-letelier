@@ -8,6 +8,7 @@
 - Campañas en Google Ads y Meta Ads orientadas a viajeros de alto valor.
 - SEO y AEO: optimización del sitio para aparecer en Google y ser recomendado por asistentes de IA (ChatGPT, Gemini, Perplexity).
 - Medición con Google Analytics 4 y Google Tag Manager, y optimización continua.
+- Auditoría de campañas activas de Google Ads o Meta Ads: diagnóstico de la cuenta, sesión de trabajo con el equipo y seguimiento opcional.
 - Asesoría constante cada 2 semanas.
 
 ## Metodología

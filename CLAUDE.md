@@ -18,7 +18,7 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 **Mercado**: empresas turísticas en distintos países de Latinoamérica. Trabaja desde Chile pero apunta internacionalmente. Trabaja en español e inglés.
 
-**Clientes actuales**: Wasai Lodge & Expeditions (Tambopata, Perú), Wildtrip (turismo aventura) y FlashpackerConnect (trekkings por el mundo, viajeros de EE.UU.).
+**Clientes actuales**: Wasai Lodge & Expeditions (Tambopata, Perú), Wildtrip (turismo aventura) y FlashpackerConnect (trekkings por el mundo, viajeros de EE.UU.; caso aún no publicado en la web).
 
 ## Stack técnico
 
@@ -54,10 +54,10 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 1. **Hero** — imagen generada con IA (assets/hero-lodge.jpg): balcón de lodge de lujo en la selva, mujer en bata mirando la niebla sobre las montañas con desayuno servido en primer plano. Object-position ajustado (62% 40%) para que el overlay oscuro caiga sobre la esquina del dormitorio (poco relevante) y deje visible la vista + la mesa. Antes era una foto de stock de una cabaña junto a un lago (07-sep-2026), y antes de eso una foto de Rodrigo en tren. Se cambió a esta imagen (08-sep-2026) porque comunica mejor la experiencia aspiracional del huésped que el hero debe vender — la foto personal de Rodrigo se dejó solo en "Sobre mí". Nota: es una imagen generada con IA, no una foto real ni de ningún cliente — imagen genérica aspiracional, no atribuida a Wasai ni a otro cliente.
 2. **Problema** — 4 cards sobre fondo verde
-3. **Servicios** — 4 servicios numerados
-4. **Casos de éxito** (fondo claro, sin sobretítulo) — Wasai, Wildtrip y FlashpackerConnect en ese orden (Flashpacker con foto de su web y logo) con fotos reales, logos y link "Visitar [sitio] ↗" a wasai.com y wildtrip.cl (se trackea solo como outbound_click, ya está cubierto por el listener genérico)
-5. **Metodología / Cómo trabajo** (fondo verde oscuro, texto claro) — proceso de 4 etapas (diagnóstico, estrategia, activación, optimización). Debajo, dos tarjetas "+": SEO y AEO (aparecer en Google y en asistentes de IA) y Asesoría constante
-6. **Stack & capacidades** — 6 cards de herramientas
+3. **Metodología / Cómo trabajo** (fondo claro) — proceso de 4 etapas en formato línea de tiempo (círculos numerados unidos por una línea, sin tarjetas) para que no se parezca a las tarjetas de "Problema". Debajo, tarjeta "+ Asesoría constante"
+4. **SEO + AEO** (#seo-aeo) — explica por qué el SEO sigue importando con la IA, SEO vs AEO, lo que se hace todos los meses y "distintos focos para cada mes" (sin numerar meses ni cantidades, para no encasillar el servicio en 6 meses). CTA WhatsApp
+5. **Auditoría de campañas** (#auditoria) — caja verde "¿Ya tienes campañas activas? Las audito." con 3 pasos y CTA WhatsApp
+6. **Casos de éxito** (fondo claro, sin sobretítulo) — Wasai y Wildtrip con fotos reales, logos y link "Visitar [sitio] ↗" (se trackea como outbound_click). El caso FlashpackerConnect está pendiente hasta que Brandon lo apruebe (los assets flashpacker-* ya están en /assets/)
 7. **Sobre mí** — texto + foto de Rodrigo en la cordillera (rodrigo-montana-naranja.jpg)
 8. **FAQ** — 9 preguntas con acordeón (incluye "¿Qué es el AEO?"). El JSON-LD FAQPage del <head> replica estas preguntas: si cambias una, actualiza ambos
 9. **CTA final** — caja verde con botón WhatsApp
