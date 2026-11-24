@@ -164,10 +164,10 @@ function analyze(html, extraHtml, ctx) {
   const otas = OTAS.filter(([, re]) => re.test(all)).map(([n]) => n);
   out.push(otas.length
     ? check('ota', 'conversion', 0, 'Tu sitio envía viajeros a OTAs', 'Enlaces a ' + otas.join(', ') + '. Cada reserva por ahí paga comisión.')
-    : check('ota', 'conversion', 1, 'No envía viajeros a OTAs', ''));
+    : jsRendered ? check('ota', 'conversion', null, 'Enlaces a OTAs: no pudimos verlo (sitio cargado con JavaScript)', '') : check('ota', 'conversion', 1, 'No envía viajeros a OTAs', ''));
 
   const wa = /wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|web\.whatsapp\.com\/send/.test(all);
-  out.push(wa ? check('whatsapp', 'conversion', 1, 'Botón de WhatsApp', '') : check('whatsapp', 'conversion', 0, 'Sin botón de WhatsApp', 'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.'));
+  out.push(wa ? check('whatsapp', 'conversion', 1, 'Botón de WhatsApp', '') : jsRendered ? check('whatsapp', 'conversion', null, 'WhatsApp: no pudimos verlo (sitio cargado con JavaScript)', '') : check('whatsapp', 'conversion', 0, 'Sin botón de WhatsApp', 'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.'));
 
   const contact = /href=["'](tel:|mailto:)|<form[\s>]/.test(all);
   out.push(contact ? check('contact', 'conversion', 1, 'Teléfono, correo o formulario visibles', '') : jsRendered ? check('contact', 'conversion', null, 'Contacto: no pudimos verlo (sitio cargado con JavaScript)', '') : check('contact', 'conversion', 0, 'No encontramos datos de contacto directo', 'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.'));
