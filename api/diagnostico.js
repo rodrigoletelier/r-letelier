@@ -363,7 +363,7 @@ const handler = async (req, res) => {
       engine: result.engine,
       checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.2'
+      version: '1.3'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
