@@ -140,6 +140,88 @@ function findBookingLink(html, base) {
   return null;
 }
 
+const EN = {
+  'Motor de reservas detectado': 'Booking engine detected',
+  'Hay un camino a reservar, pero no identificamos el motor': 'There is a path to book, but we could not identify the engine',
+  'Revisa que el viajero pueda ver disponibilidad y pagar sin salir de tu marca.': 'Make sure travelers can check availability and pay without leaving your brand.',
+  'Motor de reservas: tu sitio carga con JavaScript y no pudimos verlo': 'Booking engine: your site loads with JavaScript and we could not see it',
+  'No encontramos un motor de reservas': 'We found no booking engine',
+  'El viajero no ve cómo reservar o pagar directo en tu sitio.': 'Travelers cannot see how to book or pay directly on your site.',
+  'Tu sitio envía viajeros a OTAs': 'Your site sends travelers to OTAs',
+  'Enlaces a OTAs: no pudimos verlo (sitio cargado con JavaScript)': 'OTA links: we could not check (site loads with JavaScript)',
+  'No envía viajeros a OTAs': 'Does not send travelers to OTAs',
+  'Botón de WhatsApp': 'WhatsApp button',
+  'WhatsApp: no pudimos verlo (sitio cargado con JavaScript)': 'WhatsApp: we could not check (site loads with JavaScript)',
+  'Sin botón de WhatsApp': 'No WhatsApp button',
+  'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.': 'Many travelers prefer to ask a quick question on WhatsApp before they book.',
+  'Teléfono, correo o formulario visibles': 'Phone, email or form visible',
+  'Contacto: no pudimos verlo (sitio cargado con JavaScript)': 'Contact details: we could not check (site loads with JavaScript)',
+  'No encontramos datos de contacto directo': 'We found no direct contact details',
+  'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.': 'A traveler with questions has no way to ask you without leaving the site.',
+  'Oferta identificable (habitaciones, tours o programas)': 'Clear offer (rooms, tours or programs)',
+  'No encontramos páginas de habitaciones, tours o programas': 'We found no pages for rooms, tours or programs',
+  'Cuesta entender qué vendes y qué incluye.': 'It is hard to tell what you sell and what is included.',
+  'Precios o tarifas de referencia visibles': 'Reference prices or rates visible',
+  'No vimos precios de referencia': 'We saw no reference prices',
+  'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.': 'A "from USD X" helps travelers decide and filters inquiries.',
+  'Reseñas o testimonios': 'Reviews or testimonials',
+  'No vimos reseñas ni testimonios en tu portada': 'We saw no reviews or testimonials on your home page',
+  'La confianza es clave para reservar directo y no en una OTA.': 'Trust is what makes travelers book direct instead of on an OTA.',
+  'Encontrado dentro de Google Tag Manager.': 'Found inside Google Tag Manager.',
+  'Google Analytics 4: no pudimos leer tu Google Tag Manager': 'Google Analytics 4: we could not read your Google Tag Manager',
+  'No encontramos Google Analytics 4': 'We found no Google Analytics 4',
+  'Sin analítica no sabes de dónde llegan tus reservas.': 'Without analytics you cannot tell where your bookings come from.',
+  'Píxel de Meta y etiqueta de Google Ads': 'Meta pixel and Google Ads tag',
+  'Tus campañas pueden aprender de las reservas.': 'Your campaigns can learn from bookings.',
+  'Píxel de Meta, pero sin etiqueta de Google Ads': 'Meta pixel, but no Google Ads tag',
+  'Etiqueta de Google Ads, pero sin píxel de Meta': 'Google Ads tag, but no Meta pixel',
+  'Sin ella, Google Ads no sabe qué clics terminan en reserva.': 'Without it, Google Ads cannot tell which clicks turn into bookings.',
+  'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.': 'Without the pixel, Instagram and Facebook cannot learn from the people who book.',
+  'Etiquetas de publicidad: no pudimos leer tu Google Tag Manager': 'Ad tags: we could not read your Google Tag Manager',
+  'Sin píxel de Meta ni etiqueta de Google Ads': 'No Meta pixel and no Google Ads tag',
+  'Tus campañas no pueden saber qué anuncios traen reservas.': 'Your campaigns cannot tell which ads bring bookings.',
+  'Enlaces a Instagram y Facebook': 'Links to Instagram and Facebook',
+  'Solo un perfil social enlazado': 'Only one social profile linked',
+  'Sin enlaces a redes sociales': 'No links to social media',
+  'La página no tiene título': 'The page has no title',
+  'Título poco descriptivo': 'Title is not descriptive',
+  'Título claro': 'Clear title',
+  'Sin meta descripción': 'No meta description',
+  'Google inventa el texto que muestra bajo tu enlace.': 'Google makes up the text it shows under your link.',
+  'Meta descripción muy corta o muy larga': 'Meta description too short or too long',
+  'Meta descripción': 'Meta description',
+  'La portada pide no aparecer en Google (noindex)': 'Your home page asks Google not to index it (noindex)',
+  'Es urgente revisarlo.': 'This needs fixing urgently.',
+  'Datos estructurados (schema)': 'Structured data (schema)',
+  'Ayudan a Google y a los asistentes de IA a entender qué ofreces.': 'It helps Google and AI assistants understand what you offer.',
+  'Datos estructurados genéricos': 'Generic structured data',
+  'No describen tu alojamiento o experiencia.': 'It does not describe your lodging or experience.',
+  'Sin datos estructurados': 'No structured data',
+  'Google y la IA tienen menos información para recomendarte.': 'Google and AI assistants have less information to recommend you.',
+  'Título principal (H1)': 'Main heading (H1)',
+  'Sin título principal (H1)': 'No main heading (H1)',
+  'Sitemap para Google': 'Sitemap for Google',
+  'No encontramos sitemap': 'We found no sitemap',
+  'Ayuda a Google a encontrar todas tus páginas.': 'It helps Google find all your pages.',
+  'Versión en otro idioma': 'Version in another language',
+  'Solo un idioma': 'Only one language',
+  'Si recibes viajeros extranjeros, una versión en inglés amplía tu alcance.': 'If you host travelers from abroad, a second language widens your reach.',
+  'Sitio seguro (HTTPS)': 'Secure site (HTTPS)',
+  'El sitio no usa HTTPS': 'The site does not use HTTPS',
+  'Los navegadores lo marcan como "no seguro".': 'Browsers flag it as "not secure".',
+  'Preparado para móvil': 'Mobile-ready',
+  'No está adaptado a móvil': 'Not adapted for mobile',
+  'La mayoría de los viajeros busca desde el teléfono.': 'Most travelers search from their phone.'
+};
+
+function toEnglish(s) {
+  if (!s) return s;
+  if (EN[s]) return EN[s];
+  const ota = s.match(/^Enlaces a (.+)\. Cada reserva por ahí paga comisión\.$/);
+  if (ota) return 'Links to ' + ota[1] + '. Every booking there pays a commission.';
+  return s;
+}
+
 function check(id, area, status, label, detail) {
   return { id, area, status, label, detail };
 }
@@ -233,6 +315,7 @@ const handler = async (req, res) => {
   hits.set(ip, recent);
 
   let raw = String((req.query && req.query.url) || '').trim();
+  const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
   if (!raw || raw.length > 200) { res.status(400).json({ error: 'bad_url' }); return; }
   if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
   let start;
@@ -278,9 +361,9 @@ const handler = async (req, res) => {
       host,
       title: result.title,
       engine: result.engine,
-      checks: result.checks,
+      checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.2'
+      version: '1.3'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
