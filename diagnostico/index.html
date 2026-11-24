@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1LSYRLK7EZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1LSYRLK7EZ');
+  </script>
+  <title>Autodiagnóstico gratis de reservas directas | Rodrigo Letelier</title>
+  <meta name="description" content="12 preguntas, 3 minutos. Descubre qué tan preparado está tu lodge, hotel boutique u operador de experiencias para vender directo: reservas, campañas, visibilidad en Google y la IA, y medición." />
+  <link rel="canonical" href="https://www.rodrigoletelier.cl/diagnostico/" />
+  <meta property="og:title" content="Autodiagnóstico gratis de reservas directas" />
+  <meta property="og:description" content="12 preguntas, 3 minutos. Descubre dónde está perdiendo reservas directas tu negocio turístico." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.rodrigoletelier.cl/diagnostico/" />
+  <meta property="og:image" content="https://www.rodrigoletelier.cl/assets/hero-lodge.jpg" />
+  <meta property="og:locale" content="es_CL" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23071a13'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='58' fill='%23a6b891' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300..600;1,8..60,300..600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --green-950: #071a13;
+  --green-900: #0d2b20;
+  --green-800: #143d2d;
+  --green-700: #1f4d3a;
+  --green-500: #6f9464;
+  --sage: #a6b891;
+  --sand: #f4f0e8;
+  --sand-2: #ebe3d5;
+  --white: #ffffff;
+  --ink: #1e2420;
+  --muted: #657168;
+  --line: rgba(31, 77, 58, 0.16);
+  --line-dark: rgba(166, 184, 145, 0.18);
+  --warn: #b5793a;
+  --low: #a2533f;
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --container: 880px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--sand); color: var(--ink); font-family: 'Inter', ui-sans-serif, system-ui, sans-serif; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+.container { width: min(var(--container), calc(100% - 40px)); margin-inline: auto; }
+h1, h2 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 400; letter-spacing: -0.025em; margin-top: 0; }
+h3 { margin-top: 0; }
+
+/* === HEADER === */
+.site-header { position: absolute; top: 18px; left: 0; right: 0; z-index: 10; display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 40px)); margin: 0 auto; padding: 12px 16px 12px 22px; border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 999px; background: rgba(7, 26, 19, 0.7); color: var(--white); }
+.brand-logo { width: 34px; height: 34px; border-radius: 9px; display: block; }
+.nav-back { font-size: 0.88rem; opacity: 0.85; }
+.nav-back:hover { opacity: 1; }
+
+/* === INTRO === */
+.intro { padding: 150px 0 64px; color: var(--white); background: radial-gradient(circle at top left, rgba(111, 148, 100, 0.22), transparent 40%), linear-gradient(135deg, var(--green-950), var(--green-800)); }
+.eyebrow { margin: 0 0 16px; color: var(--sage); font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; }
+.intro h1 { margin-bottom: 20px; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; }
+.intro h1 em { font-style: italic; color: var(--sage); font-weight: 300; }
+.intro p { max-width: 620px; margin: 0; color: rgba(255, 255, 255, 0.78); font-size: 1.08rem; line-height: 1.65; }
+.intro-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.intro-meta span { padding: 6px 14px; border-radius: 999px; font-size: 0.8rem; background: rgba(166, 184, 145, 0.16); border: 1px solid rgba(166, 184, 145, 0.28); color: var(--sage); }
+
+/* === CUESTIONARIO === */
+.quiz { padding: 56px 0 96px; }
+.progress { position: sticky; top: 0; z-index: 5; padding: 14px 0; background: rgba(244, 240, 232, 0.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.progress-row { display: flex; align-items: center; gap: 14px; font-size: 0.85rem; color: var(--muted); }
+.progress-bar { flex: 1; height: 6px; border-radius: 999px; background: var(--sand-2); overflow: hidden; }
+.progress-bar i { display: block; height: 100%; width: 0; background: var(--green-500); transition: width 300ms ease; }
+.business { margin: 40px 0 8px; }
+.business p { margin: 0 0 12px; font-weight: 600; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--white); font-size: 0.9rem; transition: background 180ms ease, color 180ms ease; }
+.chip[aria-pressed="true"] { background: var(--green-800); border-color: var(--green-800); color: var(--white); }
+.area { margin-top: 48px; }
+.area-head { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.area-num { width: 40px; height: 40px; flex-shrink: 0; display: grid; place-items: center; border-radius: 50%; background: var(--green-900); color: var(--sage); font-family: 'Source Serif 4', serif; }
+.area-head h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 1.9rem); line-height: 1.15; }
+.question { margin-bottom: 14px; padding: 22px 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
+.question legend { padding: 0; margin-bottom: 14px; font-weight: 600; line-height: 1.4; }
+.question fieldset { margin: 0; padding: 0; border: none; min-width: 0; }
+.question small { display: block; margin: -8px 0 14px; color: var(--muted); font-size: 0.86rem; }
+.options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.option { position: relative; }
+.option input { position: absolute; opacity: 0; pointer-events: none; }
+.option span { display: block; padding: 11px 10px; border: 1px solid var(--line); border-radius: var(--radius-md); text-align: center; font-size: 0.9rem; cursor: pointer; transition: background 180ms ease, border-color 180ms ease, color 180ms ease; }
+.option span:hover { border-color: var(--green-500); }
+.option input:focus-visible + span { outline: 2px solid var(--green-500); outline-offset: 2px; }
+.option input:checked + span { background: var(--green-800); border-color: var(--green-800); color: var(--white); }
+.submit-row { margin-top: 40px; text-align: center; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 14px 28px; border-radius: 999px; font-weight: 600; font-size: 0.98rem; line-height: 1.25; text-align: center; transition: transform 180ms ease, background 180ms ease, opacity 180ms ease; }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { color: var(--white); background: var(--green-500); box-shadow: 0 14px 36px rgba(7, 26, 19, 0.18); }
+.btn-primary:hover { background: #7da373; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-ghost { color: var(--green-700); border: 1px solid var(--line); background: transparent; }
+.submit-hint { margin: 12px 0 0; color: var(--muted); font-size: 0.86rem; }
+
+/* === RESULTADO === */
+.result { padding: 80px 0 96px; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 45%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
+.result[hidden] { display: none; }
+.score-wrap { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: center; }
+.ring { position: relative; width: 200px; height: 200px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 12; }
+.ring .track { stroke: rgba(255, 255, 255, 0.1); }
+.ring .value { stroke: var(--sage); stroke-linecap: round; transition: stroke-dashoffset 900ms ease; }
+.ring-label { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ring-label strong { font-family: 'Source Serif 4', serif; font-size: 3.4rem; font-weight: 400; line-height: 1; }
+.ring-label span { font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); }
+.score-text h2 { margin-bottom: 12px; font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.1; }
+.score-text p { margin: 0; color: rgba(255, 255, 255, 0.78); line-height: 1.65; }
+.bars { display: grid; gap: 16px; margin-top: 56px; }
+.bar-row { display: grid; grid-template-columns: 220px 1fr 48px; gap: 16px; align-items: center; font-size: 0.92rem; }
+.bar { height: 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.bar i { display: block; height: 100%; width: 0; border-radius: 999px; transition: width 900ms ease; }
+.bar-row b { text-align: right; font-weight: 600; }
+.fixes { margin-top: 64px; }
+.fixes h3 { margin-bottom: 18px; font-family: 'Source Serif 4', serif; font-size: 1.6rem; font-weight: 400; }
+.fix-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.fix { padding: 22px 24px; border: 1px solid var(--line-dark); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.05); }
+.fix-tag { display: inline-block; margin-bottom: 10px; padding: 4px 11px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(166, 184, 145, 0.18); color: var(--sage); }
+.fix h4 { margin: 0 0 6px; font-size: 1.02rem; }
+.fix p { margin: 0; color: rgba(255, 255, 255, 0.72); font-size: 0.94rem; line-height: 1.6; }
+.cta-box { margin-top: 56px; padding: clamp(28px, 5vw, 44px); border-radius: var(--radius-xl); background: var(--sand); color: var(--ink); }
+.cta-box h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 400; letter-spacing: -0.02em; }
+.cta-box > p { margin: 0 0 24px; color: var(--muted); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.lead-form { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 10px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.lead-form p { grid-column: 1 / -1; margin: 0 0 4px; font-size: 0.92rem; color: var(--muted); }
+.lead-form input { min-width: 0; min-height: 50px; padding: 12px 16px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); font: inherit; font-size: 0.94rem; color: var(--ink); }
+.lead-form input:focus { outline: 2px solid var(--green-500); outline-offset: 1px; }
+.form-status { grid-column: 1 / -1; margin: 4px 0 0; font-size: 0.9rem; color: var(--green-700); min-height: 1.2em; }
+.disclaimer { margin: 32px 0 0; color: rgba(255, 255, 255, 0.55); font-size: 0.84rem; line-height: 1.6; }
+.restart { margin-top: 20px; font-size: 0.88rem; color: var(--sage); text-decoration: underline; text-underline-offset: 3px; }
+
+/* === FOOTER === */
+.site-footer { padding: 32px 0; background: var(--green-950); color: rgba(255, 255, 255, 0.5); font-size: 0.82rem; }
+.site-footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.site-footer a:hover { color: var(--white); }
+
+.whatsapp-float { position: fixed; right: 20px; bottom: 20px; z-index: 999; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #25D366; color: var(--white); opacity: 0.82; box-shadow: 0 8px 24px rgba(7, 26, 19, 0.28); transition: opacity 200ms ease, transform 200ms ease; }
+.whatsapp-float svg { width: 24px; height: 24px; }
+.whatsapp-float:hover { opacity: 1; transform: translateY(-2px) scale(1.05); }
+
+@media (max-width: 760px) {
+  .score-wrap { grid-template-columns: 1fr; justify-items: center; text-align: center; gap: 28px; }
+  .bar-row { grid-template-columns: 1fr 44px; gap: 8px 12px; }
+  .bar-row span { grid-column: 1 / -1; }
+  .bar-row .bar { grid-column: 1; }
+  .lead-form { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .container { width: calc(100% - 32px); }
+  .site-header { top: 12px; width: calc(100% - 28px); padding: 11px 14px; }
+  .intro { padding: 120px 0 48px; }
+  .question { padding: 18px 16px; }
+  .options { grid-template-columns: 1fr; }
+  .btn, .cta-actions { width: 100%; }
+  .whatsapp-float { right: 16px; bottom: 16px; width: 44px; height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+  <header class="site-header" aria-label="Navegación principal">
+    <a href="/" aria-label="Ir al inicio">
+      <img class="brand-logo" src="/assets/rl-logo.png" alt="Rodrigo Letelier" />
+    </a>
+    <a class="nav-back" href="/">← Volver al sitio</a>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div class="container">
+        <p class="eyebrow">Autodiagnóstico gratis</p>
+        <h1>¿Cuántas reservas directas <em>estás dejando pasar?</em></h1>
+        <p>12 preguntas sobre cómo vendes hoy. Al final ves tu puntaje, en qué áreas estás bien y las 3 mejoras que más impacto pueden tener. Sin registrarte.</p>
+        <div class="intro-meta">
+          <span>3 minutos</span>
+          <span>Para lodges, hoteles boutique y operadores</span>
+          <span>Resultado inmediato</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="progress" aria-hidden="true">
+      <div class="container progress-row">
+        <span id="progress-text">0 de 12</span>
+        <div class="progress-bar"><i id="progress-fill"></i></div>
+      </div>
+    </div>
+
+    <section class="quiz">
+      <form id="quiz" class="container" novalidate>
+        <div class="business">
+          <p>¿Qué tipo de negocio tienes?</p>
+          <div class="chips" id="business-chips">
+            <button type="button" class="chip" aria-pressed="false" data-value="Lodge">Lodge</button>
+            <button type="button" class="chip" aria-pressed="false" data-value="Hotel boutique">Hotel boutique</button>
+            <button type="button" class="chip" aria-pressed="false" data-value="Operador de experiencias">Operador de experiencias</button>
+            <button type="button" class="chip" aria-pressed="false" data-value="Otro alojamiento">Otro</button>
+          </div>
+        </div>
+        <div id="areas"></div>
+        <div class="submit-row">
+          <button type="submit" class="btn btn-primary" id="submit-btn" disabled>Ver mi resultado</button>
+          <p class="submit-hint" id="submit-hint">Responde las 12 preguntas para ver tu resultado.</p>
+        </div>
+      </form>
+    </section>
+
+    <section class="result" id="result" hidden aria-live="polite">
+      <div class="container">
+        <p class="eyebrow">Tu resultado</p>
+        <div class="score-wrap">
+          <div class="ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="track" cx="100" cy="100" r="88" />
+              <circle class="value" id="ring-value" cx="100" cy="100" r="88" stroke-dasharray="553" stroke-dashoffset="553" />
+            </svg>
+            <div class="ring-label"><strong id="score-num">0</strong><span>de 100</span></div>
+          </div>
+          <div class="score-text">
+            <h2 id="score-title"></h2>
+            <p id="score-desc"></p>
+          </div>
+        </div>
+
+        <div class="bars" id="bars"></div>
+
+        <div class="fixes">
+          <h3>Tus 3 prioridades</h3>
+          <ol class="fix-list" id="fix-list"></ol>
+        </div>
+
+        <div class="cta-box">
+          <h3>Revisemos tu resultado juntos</h3>
+          <p>En 30 minutos vemos tu caso con tu sitio y tus campañas reales, y te digo por dónde partiría. Sin costo.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary" id="wa-cta" href="https://wa.me/56966170884" target="_blank" rel="noreferrer">Revisar mi resultado por WhatsApp</a>
+          </div>
+          <form class="lead-form" id="lead-form">
+            <p>¿Prefieres correo? Déjame tus datos y te escribo con comentarios sobre tu resultado.</p>
+            <input type="text" name="name" placeholder="Nombre" aria-label="Nombre" required />
+            <input type="email" name="email" placeholder="Correo" aria-label="Correo" required />
+            <input type="text" name="company" placeholder="Sitio web o negocio" aria-label="Sitio web o negocio" required />
+            <button type="submit" class="btn btn-ghost">Enviar</button>
+            <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <p class="disclaimer">Este autodiagnóstico es una orientación basada en tus respuestas. No revisa tu sitio ni tus cuentas, y no reemplaza una auditoría.</p>
+        <button type="button" class="restart" id="restart">Volver a responder</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 Rodrigo Letelier. Marketing turístico para reservas directas.</span>
+      <a href="/">rodrigoletelier.cl</a>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  var AREAS = [
+    {
+      id: 'directa', title: 'Venta directa', service: 'Conversión y tecnología',
+      questions: [
+        { id: 'q1', text: '¿Un viajero puede reservar o pagar en tu sitio sin pasar por Booking, Expedia u otra OTA?', hint: 'Motor de reservas, pago online o cotización directa.',
+          fix: ['Habilita la reserva directa en tu sitio', 'Si el viajero no puede reservar ni pagar en tu sitio, termina en una OTA y pagas comisión. Un motor de reservas o un flujo de pago simple es la base de todo lo demás.'] },
+        { id: 'q2', text: '¿Respondes las consultas de WhatsApp o correo en menos de 2 horas, en horario laboral?', hint: '',
+          fix: ['Responde más rápido las consultas', 'El viajero suele consultar a varios alojamientos a la vez. Quien responde primero, y con claridad, se queda con la reserva. Plantillas y automatizaciones ayudan mucho.'] },
+        { id: 'q3', text: '¿Ofreces algún beneficio por reservar directo?', hint: 'Mejor precio, upgrade, traslado, desayuno, flexibilidad.',
+          fix: ['Dale una razón para reservar directo', 'Si tu precio y condiciones son iguales que en la OTA, el viajero reserva donde ya tiene cuenta. Un beneficio visible para quien reserva directo cambia esa decisión.'] }
+      ]
+    },
+    {
+      id: 'campanas', title: 'Campañas en Google y Meta', service: 'Adquisición',
+      questions: [
+        { id: 'q4', text: '¿Tienes campañas de Google Ads activas que llevan a tu propio sitio?', hint: '',
+          fix: ['Aparece cuando el viajero te busca en Google', 'Si no tienes campañas, las OTAs pagan por aparecer arriba incluso cuando buscan tu nombre. Una campaña de marca y destino bien armada recupera esas reservas.'] },
+        { id: 'q5', text: '¿Haces anuncios en Instagram o Facebook dirigidos a viajeros de tus mercados prioritarios?', hint: 'No solo "promocionar publicación".',
+          fix: ['Llega a viajeros en sus mercados de origen', 'Las redes sirven para que el viajero te descubra antes de decidir. Segmentar por país, intereses y temporada rinde mucho más que promocionar publicaciones sueltas.'] },
+        { id: 'q6', text: '¿Revisas al menos una vez al mes qué campañas traen consultas o reservas, no solo clics?', hint: '',
+          fix: ['Mide campañas por reservas, no por clics', 'Una campaña con muchos clics puede no traer ninguna reserva. Revisar cada mes qué trae consultas y ventas reales permite mover el presupuesto a lo que funciona.'] }
+      ]
+    },
+    {
+      id: 'visibilidad', title: 'Visibilidad en Google y en la IA', service: 'Visibilidad',
+      questions: [
+        { id: 'q7', text: '¿Tu sitio aparece en Google cuando alguien busca tu tipo de alojamiento o experiencia en tu destino?', hint: 'Por ejemplo, "lodge en Tambopata" o "trekking en Torres del Paine".',
+          fix: ['Trabaja el SEO de tu destino', 'Si no apareces en las búsquedas de tu destino, ese viajero solo encuentra a tu competencia y a las OTAs. El SEO local trae visitas que no pagas por clic.'] },
+        { id: 'q8', text: '¿Tu sitio responde con claridad las dudas típicas del viajero?', hint: 'Cómo llegar, qué incluye, temporada, qué llevar.',
+          fix: ['Responde en tu sitio lo que el viajero pregunta', 'Google y asistentes como ChatGPT usan ese contenido para recomendar lugares. Una buena sección de preguntas frecuentes también te ahorra consultas repetidas.'] },
+        { id: 'q9', text: '¿Tu ficha de Google (Google Business Profile) está completa y tiene reseñas recientes?', hint: '',
+          fix: ['Completa y activa tu ficha de Google', 'Es lo primero que ve el viajero en Maps y en el buscador. Fotos actuales, datos correctos y reseñas recientes generan confianza antes de que entre a tu sitio.'] }
+      ]
+    },
+    {
+      id: 'medicion', title: 'Medición y seguimiento', service: 'Conversión y tecnología',
+      questions: [
+        { id: 'q10', text: '¿Sabes cuántas de tus reservas del último mes fueron directas y cuántas vinieron de OTAs?', hint: '',
+          fix: ['Conoce tu mezcla de canales', 'Sin saber cuánto vendes directo y cuánto por OTAs, no puedes saber cuánto pagas en comisiones ni si tus esfuerzos están funcionando.'] },
+        { id: 'q11', text: '¿Tienes Google Analytics 4 midiendo las reservas o consultas como conversiones?', hint: '',
+          fix: ['Conecta la medición a tus reservas', 'Sin conversiones bien configuradas, Google y Meta optimizan a ciegas. Medir consultas y reservas reales es lo que permite que las campañas aprendan.'] },
+        { id: 'q12', text: '¿Haces seguimiento a quienes consultan y no reservan?', hint: 'Un correo o WhatsApp días después.',
+          fix: ['Haz seguimiento a las consultas', 'Muchas reservas se pierden solo porque nadie volvió a escribir. Un seguimiento simple, incluso automatizado, recupera parte de esas consultas.'] }
+      ]
+    }
+  ];
+  var CHOICES = [
+    { value: 2, label: 'Sí' },
+    { value: 1, label: 'A medias / no sé' },
+    { value: 0, label: 'No' }
+  ];
+  var TOTAL = 12;
+  var started = false;
+  var business = '';
+  var lastResult = null;
+
+  var areasEl = document.getElementById('areas');
+  var form = document.getElementById('quiz');
+  var submitBtn = document.getElementById('submit-btn');
+  var hint = document.getElementById('submit-hint');
+
+  function track(name, params) {
+    if (typeof gtag === 'function') gtag('event', name, params || {});
+  }
+
+  AREAS.forEach(function (area, i) {
+    var html = '<div class="area"><div class="area-head"><span class="area-num">' + (i + 1) + '</span><h2>' + area.title + '</h2></div>';
+    area.questions.forEach(function (q) {
+      html += '<div class="question"><fieldset><legend>' + q.text + '</legend>' + (q.hint ? '<small>' + q.hint + '</small>' : '') + '<div class="options">';
+      CHOICES.forEach(function (c) {
+        html += '<label class="option"><input type="radio" name="' + q.id + '" value="' + c.value + '" /><span>' + c.label + '</span></label>';
+      });
+      html += '</div></fieldset></div>';
+    });
+    areasEl.insertAdjacentHTML('beforeend', html + '</div>');
+  });
+
+  document.getElementById('business-chips').addEventListener('click', function (e) {
+    var chip = e.target.closest('.chip');
+    if (!chip) return;
+    this.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
+    chip.setAttribute('aria-pressed', 'true');
+    business = chip.getAttribute('data-value');
+  });
+
+  function answered() {
+    return form.querySelectorAll('input[type="radio"]:checked').length;
+  }
+
+  form.addEventListener('change', function () {
+    var n = answered();
+    if (!started) { started = true; track('diagnostico_start'); }
+    document.getElementById('progress-text').textContent = n + ' de ' + TOTAL;
+    document.getElementById('progress-fill').style.width = (n / TOTAL * 100) + '%';
+    submitBtn.disabled = n < TOTAL;
+    hint.textContent = n < TOTAL ? 'Te faltan ' + (TOTAL - n) + ' preguntas.' : 'Listo. Mira tu resultado.';
+  });
+
+  function level(score) {
+    if (score >= 70) return ['Tienes una base sólida', 'Tu negocio ya hace bien lo esencial para vender directo. El crecimiento ahora está en afinar: mejores campañas, más visibilidad y aprovechar cada consulta.'];
+    if (score >= 40) return ['Vas bien, pero hay fugas', 'Tienes piezas importantes funcionando, pero hay áreas donde probablemente se te escapan reservas hacia las OTAs o la competencia.'];
+    return ['Hay mucho espacio para crecer', 'Hoy es probable que gran parte de tus reservas dependa de las OTAs. La buena noticia: con pocas mejoras bien elegidas el cambio se nota.'];
+  }
+
+  function colorFor(pct) {
+    if (pct >= 70) return 'var(--sage)';
+    if (pct >= 40) return 'var(--warn)';
+    return 'var(--low)';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (answered() < TOTAL) return;
+    var total = 0;
+    var areaScores = [];
+    var gaps = [];
+    AREAS.forEach(function (area) {
+      var sum = 0;
+      area.questions.forEach(function (q, idx) {
+        var v = parseInt(form.querySelector('input[name="' + q.id + '"]:checked').value, 10);
+        sum += v;
+        if (v < 2) gaps.push({ v: v, order: gaps.length, q: q, area: area });
+      });
+      total += sum;
+      areaScores.push({ area: area, pct: Math.round(sum / 6 * 100) });
+    });
+    var score = Math.round(total / (TOTAL * 2) * 100);
+    var lv = level(score);
+
+    gaps.sort(function (a, b) { return a.v - b.v || a.order - b.order; });
+    var top = gaps.slice(0, 3);
+
+    document.getElementById('score-title').textContent = lv[0];
+    document.getElementById('score-desc').textContent = lv[1];
+    document.getElementById('ring-value').style.stroke = colorFor(score);
+
+    document.getElementById('bars').innerHTML = areaScores.map(function (a) {
+      return '<div class="bar-row"><span>' + a.area.title + '</span><div class="bar"><i data-w="' + a.pct + '" style="background:' + colorFor(a.pct) + '"></i></div><b>' + a.pct + '%</b></div>';
+    }).join('');
+
+    document.getElementById('fix-list').innerHTML = top.length ? top.map(function (g) {
+      return '<li class="fix"><span class="fix-tag">' + g.area.service + '</span><h4>' + g.q.fix[0] + '</h4><p>' + g.q.fix[1] + '</p></li>';
+    }).join('') : '<li class="fix"><h4>No marcaste brechas claras</h4><p>Tu siguiente paso es medir con datos reales qué canal trae las reservas más rentables y escalar ese.</p></li>';
+
+    var weakest = areaScores.slice().sort(function (a, b) { return a.pct - b.pct; })[0];
+    var msg = 'Hola Rodrigo, hice el autodiagnóstico en tu web. ' +
+      (business ? 'Mi negocio: ' + business + '. ' : '') +
+      'Mi puntaje fue ' + score + '/100 y mi área más débil es "' + weakest.area.title + '". Me gustaría revisarlo contigo.';
+    document.getElementById('wa-cta').href = 'https://wa.me/56966170884?text=' + encodeURIComponent(msg);
+
+    lastResult = { score: score, business: business, areas: areaScores, top: top };
+
+    var result = document.getElementById('result');
+    result.hidden = false;
+    var scoreEl = document.getElementById('score-num');
+    scoreEl.textContent = score;
+    requestAnimationFrame(function () {
+      document.getElementById('ring-value').style.strokeDashoffset = 553 - 553 * score / 100;
+      document.querySelectorAll('#bars i').forEach(function (i) { i.style.width = i.getAttribute('data-w') + '%'; });
+    });
+    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    track('diagnostico_complete', { score: score, business_type: business || 'sin indicar', weakest_area: weakest.area.id });
+  });
+
+  document.getElementById('restart').addEventListener('click', function () {
+    form.reset();
+    document.getElementById('result').hidden = true;
+    form.dispatchEvent(new Event('change'));
+    started = true;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.getElementById('lead-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target;
+    var status = document.getElementById('lead-status');
+    if (!f.reportValidity() || !lastResult) return;
+    var lines = ['Autodiagnóstico desde rodrigoletelier.cl/diagnostico', '',
+      'Tipo de negocio: ' + (lastResult.business || 'sin indicar'),
+      'Puntaje: ' + lastResult.score + '/100', ''];
+    lastResult.areas.forEach(function (a) { lines.push(a.area.title + ': ' + a.pct + '%'); });
+    lines.push('', 'Prioridades:');
+    lastResult.top.forEach(function (g, i) { lines.push((i + 1) + '. ' + g.q.fix[0]); });
+    status.textContent = 'Enviando…';
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: f.name.value, email: f.email.value, company: f.company.value, message: lines.join('\n') })
+    }).then(function (r) {
+      if (!r.ok) throw new Error();
+      status.textContent = 'Listo. Te escribo pronto.';
+      f.reset();
+      track('generate_lead', { form_id: 'diagnostico', score: lastResult.score });
+    }).catch(function () {
+      status.textContent = 'No se pudo enviar. Escríbeme por WhatsApp, por favor.';
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    var link = e.target.closest('a');
+    if (!link) return;
+    var href = link.getAttribute('href') || '';
+    if (href.indexOf('wa.me') !== -1) track('whatsapp_click', { link_url: href, link_text: link.textContent.trim(), page: 'diagnostico' });
+  });
+})();
+</script>
+
+<a class="whatsapp-float" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20estoy%20haciendo%20el%20autodiagn%C3%B3stico%20y%20tengo%20una%20duda." target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.412-.074-.124-.272-.198-.57-.347z"/><path d="M12.05 2C6.526 2 2.05 6.477 2.05 12c0 1.867.502 3.617 1.376 5.121L2 22l5.09-1.375A9.955 9.955 0 0012.05 22c5.523 0 10-4.477 10-10S17.573 2 12.05 2zm0 18.09c-1.68 0-3.24-.474-4.573-1.293l-.328-.198-3.02.816.812-2.98-.213-.313A8.06 8.06 0 013.95 12c0-4.474 3.626-8.1 8.1-8.1 4.473 0 8.099 3.626 8.099 8.1 0 4.473-3.626 8.09-8.099 8.09z"/></svg>
+</a>
+</body>
+</html>
