@@ -172,12 +172,12 @@ function analyze(html, extraHtml, ctx) {
   const contact = /href=["'](tel:|mailto:)|<form[\s>]/.test(all);
   out.push(contact ? check('contact', 'conversion', 1, 'Teléfono, correo o formulario visibles', '') : jsRendered ? check('contact', 'conversion', null, 'Contacto: no pudimos verlo (sitio cargado con JavaScript)', '') : check('contact', 'conversion', 0, 'No encontramos datos de contacto directo', 'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.'));
 
-  const offer = /href=["'][^"']*(habitacion|rooms?|suites?|cabanas|cabañas|tours?|experiencias|experiences|programas|expedici|itinerar|paquetes|packages|actividades|activities)/.test(all);
+  const offer = /href=["'][^"']*(habitacion|rooms?|suites?|villas?|tents?|casitas?|cabins?|cabanas|cabañas|accommodation|alojamiento|stay|tours?|experiencias|experiences|programas|expedici|itinerar|paquetes|packages|actividades|activities)/.test(all);
   out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.5, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
   const price = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|desde\s+\$|from\s+\$|per night|por noche|por persona|per person/.test(textOf(all).toLowerCase());
   out.push(price ? check('price', 'propuesta', 1, 'Precios o tarifas de referencia visibles', '') : check('price', 'propuesta', 0.5, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
   const reviews = /tripadvisor\.|google\.com\/maps|g\.page|testimoni|reseñas|opiniones|reviews|guest stories/.test(all);
-  out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0, 'Sin reseñas ni testimonios', 'La confianza es clave para reservar directo y no en una OTA.'));
+  out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0.5, 'No vimos reseñas ni testimonios en tu portada', 'La confianza es clave para reservar directo y no en una OTA.'));
 
   const gtm = /googletagmanager\.com\/gtm\.js|gtm-[a-z0-9]{4,}/.test(lower);
   const hidden = gtm && !gtmRead;
@@ -249,6 +249,7 @@ const handler = async (req, res) => {
         home = await safeFetch(start.href, 4000);
       } else throw e;
     }
+    if (home.status === 401 || home.status === 403 || home.status === 429) { res.status(422).json({ error: 'blocked', status: home.status }); return; }
     if (home.status >= 400 || !home.body) { res.status(422).json({ error: 'unreachable', status: home.status }); return; }
 
     const finalUrl = new URL(home.url);
