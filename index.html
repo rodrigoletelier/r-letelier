@@ -263,7 +263,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .section-center { text-align: center; }
 .narrow { max-width: 880px; margin-inline: auto; }
 /* === CÓMO TRABAJO (línea de tiempo) === */
-.services { background: var(--sand); }
 .services .process-grid { position: relative; gap: 32px; }
 .services .process-grid::before { content: ''; position: absolute; top: 22px; left: 22px; right: 12%; height: 1px; background: linear-gradient(90deg, var(--green-500), rgba(111, 148, 100, 0.15)); }
 .services .service-card { position: relative; padding: 0; border: none; border-radius: 0; background: none; box-shadow: none; }
@@ -312,58 +311,98 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .advisory-text h3 { margin-bottom: 4px; }
 .advisory-text p { margin: 0; color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
 .method-cta { margin-top: 44px; }
-/* === SEO + AEO === */
-.seo { background: var(--sand-2); }
-.seo-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 56px; }
-.seo-duo-card { padding: clamp(28px, 4vw, 40px); border-radius: var(--radius-lg); border: 1px solid var(--line); background: var(--white); }
-.seo-duo-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
-.seo-tag { display: inline-block; margin-bottom: 18px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
-.seo-duo-card.is-dark .seo-tag { background: rgba(166, 184, 145, 0.18); color: var(--sage); }
-.seo-duo-card h3 { font-family: 'Source Serif 4', serif; font-size: clamp(1.4rem, 2.4vw, 1.8rem); font-weight: 400; letter-spacing: -0.02em; }
-.seo-duo-card p { margin: 0; color: var(--muted); font-size: 0.96rem; line-height: 1.65; }
-.seo-duo-card.is-dark p { color: rgba(255, 255, 255, 0.76); }
-.seo-why { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: start; margin-top: 80px; }
-.seo-why h3 { font-family: 'Source Serif 4', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: -0.022em; line-height: 1.1; }
-.seo-why h3 span { color: var(--green-500); }
-.seo-why-lead { color: var(--muted); font-size: 1rem; line-height: 1.7; }
-.seo-why-list { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
-.seo-why-list li { padding: 22px 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.6); }
-.seo-why-list strong { display: block; margin-bottom: 4px; font-size: 0.98rem; color: var(--ink); }
-.seo-why-list span { color: var(--muted); font-size: 0.92rem; line-height: 1.6; }
-.seo-plan { margin-top: 80px; }
-.seo-plan-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 28px; }
-.seo-plan-head h3 { margin: 0; font-family: 'Source Serif 4', serif; font-size: clamp(1.6rem, 2.8vw, 2.2rem); font-weight: 400; letter-spacing: -0.02em; }
-.seo-plan-head p { margin: 0; max-width: 460px; color: var(--muted); font-size: 0.94rem; }
-.seo-monthly { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-.seo-roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 14px; }
-.seo-step { padding: 24px; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--white); }
-.seo-step h4 { margin: 0 0 6px; font-size: 0.98rem; font-weight: 600; color: var(--ink); }
-.seo-step p { margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
-.seo-chips { display: flex; gap: 6px; margin-bottom: 10px; }
-.seo-chip { padding: 3px 9px; border-radius: 999px; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
-.seo-chip.aeo { background: rgba(31, 77, 58, 0.9); color: var(--sage-soft); }
-.seo-note { margin: 16px 0 0; color: var(--muted); font-size: 0.82rem; font-style: italic; }
-.seo-cta { margin-top: 44px; }
+/* === SOLUCIONES === */
+.solutions { background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.14), transparent 32%), var(--sand); }
+.journey { margin-top: 56px; }
+.journey-sources { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.journey-node { padding: 26px 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); text-align: center; box-shadow: 0 10px 34px rgba(7, 26, 19, 0.05); }
+.journey-icon { width: 52px; height: 52px; display: grid; place-items: center; margin: 0 auto 14px; border-radius: 50%; background: var(--sand); color: var(--green-700); }
+.journey-icon svg { width: 22px; height: 22px; }
+.journey-node strong { display: block; margin-bottom: 12px; font-family: 'Source Serif 4', serif; font-size: 1.25rem; font-weight: 400; color: var(--ink); }
+.journey-chips { display: flex; justify-content: center; gap: 6px; flex-wrap: wrap; }
+.journey-chips span { padding: 4px 11px; border-radius: 999px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
+.journey-chips span.is-ai { background: var(--green-800); color: var(--sage-soft); }
+.journey-lines { display: block; width: 100%; height: 110px; }
+.journey-lines path { fill: none; stroke: rgba(111, 148, 100, 0.55); stroke-width: 2; stroke-dasharray: 6 8; vector-effect: non-scaling-stroke; }
+.journey-target { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+.journey-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 16px 30px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; color: var(--ink); }
+.journey-pill.is-final { background: linear-gradient(135deg, var(--green-950), var(--green-800)); border-color: transparent; color: var(--white); box-shadow: var(--shadow); }
+.journey-pill small { margin-top: 2px; font-size: 0.76rem; font-weight: 400; color: var(--sage); }
+.journey-arrow { color: var(--green-500); font-size: 1.4rem; }
+.solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 72px; }
+.solution-card { padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
+.solution-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
+.solution-tag { display: inline-block; margin-bottom: 16px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
+.solution-card.is-dark .solution-tag { background: rgba(166, 184, 145, 0.18); color: var(--sage); }
+.solution-card h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400; letter-spacing: -0.02em; }
+.solution-card > p { margin: 0 0 20px; color: var(--muted); }
+.solution-card.is-dark > p { color: rgba(255, 255, 255, 0.74); }
+.check-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.check-list li { position: relative; padding-left: 30px; font-size: 0.95rem; }
+.check-list li::before { content: ''; position: absolute; left: 0; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: rgba(111, 148, 100, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f4d3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center / 11px no-repeat; }
+.solution-card.is-dark .check-list li::before { background-color: rgba(166, 184, 145, 0.22); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a6b891' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E"); }
+.seo-chain-wrap { margin-top: 88px; text-align: center; }
+.seo-chain-wrap h3 { margin-bottom: 40px; font-family: 'Source Serif 4', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: -0.022em; }
+.seo-chain-wrap h3 span { color: var(--green-500); }
+.seo-chain { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; align-items: start; gap: 10px; }
+.chain-step { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.chain-icon { width: 64px; height: 64px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--line); background: var(--white); color: var(--green-700); }
+.chain-icon svg { width: 26px; height: 26px; }
+.chain-step.is-final .chain-icon { background: var(--green-800); border-color: transparent; color: var(--sage); }
+.chain-step strong { max-width: 170px; font-size: 0.95rem; font-weight: 600; line-height: 1.35; color: var(--ink); }
+.chain-arrow { position: relative; width: clamp(28px, 6vw, 80px); height: 2px; margin-top: 31px; background: rgba(111, 148, 100, 0.3); overflow: hidden; }
+.chain-arrow::after { content: ''; position: absolute; top: -2px; left: -12px; width: 12px; height: 6px; border-radius: 3px; background: var(--green-500); }
+.chain-note { max-width: 560px; margin: 32px auto 0; color: var(--muted); }
+.seo-how { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 18px; margin-top: 72px; }
+.seo-how-col { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.6); }
+.seo-how-col h4 { margin: 0 0 6px; font-family: 'Source Serif 4', serif; font-size: 1.35rem; font-weight: 400; color: var(--ink); }
+.seo-how-col > p { margin: 0 0 18px; color: var(--muted); font-size: 0.9rem; }
+.focus-trail { display: flex; flex-wrap: wrap; gap: 8px 0; margin: 0; padding: 0; list-style: none; }
+.focus-trail li { display: inline-flex; align-items: center; font-size: 0.86rem; font-weight: 500; color: var(--green-800); }
+.focus-trail li span { padding: 7px 13px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); }
+.focus-trail li:not(:last-child)::after { content: ''; width: 18px; height: 1px; background: var(--green-500); }
+.pill-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pill-list li { display: flex; align-items: center; gap: 10px; font-size: 0.92rem; color: var(--ink); }
+.pill-list li::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--green-500); box-shadow: 0 0 0 4px rgba(111, 148, 100, 0.18); }
+.solutions-cta { margin-top: 48px; }
 
 /* === AUDITORÍA === */
-.audit { padding: 0 0 104px; background: var(--sand-2); }
-.audit-card { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 64px); align-items: center; padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at bottom left, rgba(111, 148, 100, 0.3), transparent 55%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
-.audit-card h2 { margin-bottom: 18px; color: var(--white); font-size: clamp(2rem, 3.8vw, 3.2rem); }
-.audit-card > div > p { margin: 0 0 28px; max-width: 560px; color: rgba(255, 255, 255, 0.78); font-size: 1.04rem; line-height: 1.65; }
-.audit-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.audit-list li { display: flex; gap: 14px; padding: 18px 20px; border: 1px solid var(--line-dark); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.05); }
-.audit-list b { flex-shrink: 0; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: rgba(166, 184, 145, 0.18); color: var(--sage); font-size: 0.78rem; }
-.audit-list strong { display: block; font-size: 0.95rem; color: var(--white); }
-.audit-list span { color: rgba(255, 255, 255, 0.68); font-size: 0.88rem; line-height: 1.55; }
+.audit { background: var(--sand); }
+.audit-layout { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(36px, 6vw, 80px); align-items: center; }
+.audit-layout h2 { margin-bottom: 18px; }
+.audit-layout h2 span { color: var(--green-500); }
+.audit-layout > div > p { margin: 0 0 28px; max-width: 520px; color: var(--muted); font-size: 1.04rem; line-height: 1.65; }
+.audit-steps { position: relative; display: grid; gap: 26px; margin: 0; padding: 0; list-style: none; }
+.audit-steps::before { content: ''; position: absolute; top: 22px; bottom: 22px; left: 21px; width: 1px; background: linear-gradient(var(--green-500), rgba(111, 148, 100, 0.15)); }
+.audit-steps li { position: relative; display: flex; gap: 20px; align-items: flex-start; }
+.audit-steps b { flex-shrink: 0; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--green-900); color: var(--sage); font-family: 'Source Serif 4', serif; font-weight: 400; box-shadow: 0 0 0 6px var(--sand); }
+.audit-steps strong { display: block; margin: 9px 0 2px; font-size: 1rem; color: var(--ink); }
+.audit-steps span { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
 
-.about { background: var(--sand-2); }
+/* === FONDOS VERDES (alternancia) === */
+.services .process-grid::before { background: linear-gradient(90deg, var(--sage), rgba(166, 184, 145, 0.12)); }
+.services .process-dot { background: var(--sage); color: var(--green-950); box-shadow: 0 0 0 6px var(--green-900); }
+.services .process-step-num { color: var(--sage); }
+.services .service-card h3 { color: var(--white); }
+.services .service-card p, .services .advisory-text p { color: rgba(255, 255, 255, 0.72); }
+.services .advisory-card { border-color: rgba(166, 184, 145, 0.28); background: linear-gradient(135deg, rgba(166, 184, 145, 0.12), rgba(166, 184, 145, 0.04)); }
+.services .advisory-icon { border-color: rgba(166, 184, 145, 0.4); color: var(--sage); }
+.about.section-dark .split-text p { color: rgba(255, 255, 255, 0.74); }
+.about.section-dark .text-link { color: var(--sage); }
+.about.section-dark .portrait-card { background: var(--green-800); }
+.faq.section-dark .eyebrow { color: var(--sage); }
+.faq.section-dark .faq-list, .faq.section-dark .faq-item { border-color: var(--line-dark); }
+.faq.section-dark .faq-q { color: var(--white); }
+.faq.section-dark .faq-q:hover { color: var(--sage); }
+.faq.section-dark .faq-icon { border-color: var(--line-dark); color: var(--sage); }
+.faq.section-dark .faq-a { color: rgba(255, 255, 255, 0.7); }
+
 .split-layout { display: grid; grid-template-columns: 1.15fr 0.85fr; align-items: center; gap: 70px; }
 .split-text p { max-width: 580px; color: var(--muted); font-size: 1.04rem; line-height: 1.7; margin-bottom: 14px; }
 .text-link { display: inline-flex; margin-top: 14px; color: var(--green-700); font-weight: 600; border-bottom: 1px solid currentColor; padding-bottom: 1px; transition: opacity 180ms ease; }
 .text-link:hover { opacity: 0.7; }
 .portrait-card { position: relative; overflow: hidden; margin: 0; border-radius: var(--radius-xl); box-shadow: var(--shadow); background: var(--sand-2); aspect-ratio: 4 / 5; }
 .portrait-card img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
-.faq { background: var(--sand); }
 .faq-list { margin-top: 54px; border-top: 1px solid var(--line); max-width: 920px; margin-inline: auto; }
 .faq-item { border-bottom: 1px solid var(--line); }
 .faq-q { width: 100%; padding: 26px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; font-family: 'Source Serif 4', serif; font-size: 1.18rem; color: var(--ink); font-weight: 400; text-align: left; letter-spacing: -0.01em; transition: color 200ms ease; }
@@ -411,8 +450,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .cap-grid { grid-template-columns: repeat(2, 1fr); }
   .cta-card { flex-direction: column; align-items: flex-start; }
   .services .process-grid::before { display: none; }
-  .seo-why, .audit-card { grid-template-columns: 1fr; gap: 32px; }
-  .seo-monthly, .seo-roadmap { grid-template-columns: repeat(2, 1fr); }
+  .solution-grid, .seo-how, .audit-layout { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .container { width: min(100% - 28px, var(--container)); }
@@ -427,15 +465,34 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .hero-actions, .btn { width: 100%; }
   .problem-grid, .service-grid, .cap-grid, .process-grid { grid-template-columns: 1fr; }
   .advisory-card { padding: 26px; }
-  .seo-duo, .seo-monthly, .seo-roadmap { grid-template-columns: 1fr; }
-  .seo-why, .seo-plan { margin-top: 56px; }
-  .audit { padding-bottom: 76px; }
+  .journey-sources { grid-template-columns: 1fr; gap: 12px; }
+  .journey-lines { height: 48px; }
+  .journey-lines path:not(:nth-child(2)) { display: none; }
+  .journey-target { flex-direction: column; gap: 6px; }
+  .journey-arrow { transform: rotate(90deg); }
+  .seo-chain { grid-template-columns: 1fr; gap: 6px; }
+  .chain-arrow { width: 2px; height: 28px; margin: 0 auto; }
+  .chain-arrow::after { display: none; }
+  .seo-chain-wrap, .seo-how, .solution-grid { margin-top: 56px; }
   .advisory-text { min-width: 100%; }
   .logos { flex-direction: column; gap: 24px; }
   .logos-wrap { flex-direction: column; gap: 22px; }
   .faq-q { font-size: 1.04rem; padding: 20px 0; }
   .copyright { flex-direction: column; align-items: flex-start; }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .journey-lines path { animation: flow 1.6s linear infinite; }
+  .chain-arrow::after { animation: travel 2.4s ease-in-out infinite; }
+  .seo-chain .chain-arrow:nth-of-type(4)::after { animation-delay: 0.6s; }
+  .seo-chain .chain-arrow:nth-of-type(6)::after { animation-delay: 1.2s; }
+  .journey-pill.is-final { animation: glow 3s ease-in-out infinite; }
+  .process-dot, .audit-steps b { transition: transform 300ms ease; }
+  .service-card:hover .process-dot, .audit-steps li:hover b { transform: scale(1.1); }
+}
+@keyframes flow { to { stroke-dashoffset: -28; } }
+@keyframes travel { 0% { left: -12px; } 60%, 100% { left: 100%; } }
+@keyframes glow { 0%, 100% { box-shadow: var(--shadow); } 50% { box-shadow: 0 0 0 8px rgba(111, 148, 100, 0.18), var(--shadow); } }
 
 /* === ANIMACIONES DE SCROLL === */
 @keyframes fadeUp {
@@ -509,8 +566,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <img class="brand-logo" src="assets/rl-logo.png" alt="Rodrigo Letelier" />
     </a>
     <nav class="nav-links" aria-label="Secciones">
+      <a href="#soluciones">Soluciones</a>
       <a href="#servicios">Cómo trabajo</a>
-      <a href="#seo-aeo">SEO + IA</a>
       <a href="#casos">Casos</a>
       <a href="#sobre-mi">Sobre mí</a>
       <a class="nav-cta" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
@@ -564,9 +621,71 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
-    <section id="servicios" class="section services">
+    <section id="soluciones" class="section solutions">
       <div class="container section-center narrow">
-        <p class="eyebrow reveal eyebrow-dark">Cómo trabajo</p>
+        <p class="eyebrow eyebrow-dark reveal">La solución</p>
+        <h2 class="reveal">Aparece donde el viajero busca. <span>Y que reserve contigo.</span></h2>
+      </div>
+      <div class="container journey reveal">
+        <div class="journey-sources">
+          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><strong>Busca en Google</strong><div class="journey-chips"><span>Google Ads</span><span>SEO</span></div></div>
+          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></span><strong>Se inspira en redes</strong><div class="journey-chips"><span>Meta Ads</span></div></div>
+          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>Le pregunta a la IA</strong><div class="journey-chips"><span class="is-ai">AEO</span></div></div>
+        </div>
+        <svg class="journey-lines" viewBox="0 0 900 110" preserveAspectRatio="none" aria-hidden="true"><path d="M150 0 C150 70 450 40 450 110"/><path d="M450 0 L450 110"/><path d="M750 0 C750 70 450 40 450 110"/></svg>
+        <div class="journey-target">
+          <span class="journey-pill">Tu sitio web</span>
+          <span class="journey-arrow" aria-hidden="true">→</span>
+          <span class="journey-pill is-final">Reserva directa<small>sin comisión de OTA</small></span>
+        </div>
+      </div>
+      <div class="container solution-grid">
+        <article class="solution-card reveal">
+          <span class="solution-tag">Campañas</span>
+          <h3>Google Ads y Meta Ads</h3>
+          <p>Viajeros que llegan desde las primeras semanas.</p>
+          <ul class="check-list"><li>Segmentadas por mercado de origen</li><li>Anuncios que llevan a reservar directo</li><li>Cada reserva medida</li></ul>
+        </article>
+        <article id="seo-aeo" class="solution-card is-dark reveal reveal-delay-1">
+          <span class="solution-tag">SEO + AEO</span>
+          <h3>Google y la IA</h3>
+          <p>Visibilidad que se acumula mes a mes, sin pagar por clic.</p>
+          <ul class="check-list"><li>Aparecer en Google cuando te buscan</li><li>Que ChatGPT, Gemini y Perplexity te recomienden</li><li>Visitas que no dependen solo de medios pagados</li></ul>
+        </article>
+      </div>
+      <div class="container seo-chain-wrap">
+        <h3 class="reveal">El SEO no pasó de moda. <span>Cambió de forma.</span></h3>
+        <div class="seo-chain reveal">
+          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6M7 16h4"/></svg></span><strong>Tu sitio claro y rápido</strong></div>
+          <span class="chain-arrow" aria-hidden="true"></span>
+          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><strong>Google lo posiciona</strong></div>
+          <span class="chain-arrow" aria-hidden="true"></span>
+          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>La IA lo cita</strong></div>
+          <span class="chain-arrow" aria-hidden="true"></span>
+          <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>El viajero reserva contigo</strong></div>
+        </div>
+        <p class="chain-note reveal">La IA se apoya en lo que ya está bien posicionado. Por eso el SEO sigue siendo la base.</p>
+      </div>
+      <div class="container seo-how">
+        <div class="seo-how-col reveal">
+          <h4>Todos los meses</h4>
+          <p>Lo fijo del plan SEO + AEO.</p>
+          <ul class="pill-list"><li>Test de visibilidad en IA</li><li>Pauta de contenido</li><li>Reporte y reunión</li></ul>
+        </div>
+        <div class="seo-how-col reveal reveal-delay-1">
+          <h4>Distintos focos para cada mes</h4>
+          <p>El orden se define según la primera medición.</p>
+          <ol class="focus-trail"><li><span>Base técnica</span></li><li><span>Blog conectado</span></li><li><span>Preguntas frecuentes</span></li><li><span>Fichas de experiencias</span></li><li><span>Una sola marca</span></li><li><span>Menciones</span></li></ol>
+        </div>
+      </div>
+      <div class="container section-center solutions-cta">
+        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20saber%20si%20mi%20negocio%20aparece%20en%20Google%20y%20en%20la%20IA." target="_blank" rel="noreferrer">¿Te recomienda la IA? Revisémoslo</a>
+      </div>
+    </section>
+
+    <section id="servicios" class="section section-dark services">
+      <div class="container section-center narrow">
+        <p class="eyebrow reveal">Cómo trabajo</p>
         <h2 class="reveal">Metodología en 4 etapas</h2>
       </div>
       <div class="container process-grid">
@@ -609,118 +728,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
-    <section id="seo-aeo" class="section seo">
-      <div class="container section-center narrow">
-        <p class="eyebrow reveal eyebrow-dark">SEO + AEO</p>
-        <h2 class="reveal">Que te encuentren en Google. <span>Y que la IA te recomiende.</span></h2>
-        <p class="section-intro reveal">Hoy muchos viajeros planifican preguntándole a ChatGPT, Gemini o Perplexity dónde alojarse o qué hacer. Esas respuestas no salen de la nada, se arman con lo que la IA encuentra en la web. Si tu sitio no está bien posicionado y bien explicado, la IA tampoco te va a nombrar.</p>
-      </div>
-
-      <div class="container seo-duo">
-        <article class="seo-duo-card reveal">
-          <span class="seo-tag">SEO</span>
-          <h3>Aparecer cuando el viajero busca en Google.</h3>
-          <p>Trabajo la base técnica de tu sitio, las palabras clave de tu destino y el contenido que responde lo que tu huésped busca antes de reservar. Visitas que llegan solas, sin pagar por clic.</p>
-        </article>
-        <article class="seo-duo-card is-dark reveal reveal-delay-1">
-          <span class="seo-tag">AEO</span>
-          <h3>Aparecer cuando el viajero le pregunta a la IA.</h3>
-          <p>Ordeno tu información para que ChatGPT, Gemini y Perplexity la lean, la entiendan y la citen. Preguntas frecuentes reales, fichas claras de cada experiencia y una marca coherente en todos los sitios donde apareces.</p>
-        </article>
-      </div>
-
-      <div class="container seo-why">
-        <div class="reveal">
-          <h3>El SEO no pasó de moda. <span>Cambió de forma.</span></h3>
-          <p class="seo-why-lead">La IA no reemplaza a Google, se apoya en lo que ya está bien posicionado y bien escrito. Por eso el SEO sigue siendo la base, y el AEO es la capa que te pone dentro de la conversación.</p>
-        </div>
-        <ul class="seo-why-list reveal reveal-delay-1">
-          <li><strong>La IA lee lo que Google ya ordenó.</strong><span>Las IA prefieren citar un sitio rápido, claro y con buen contenido.</span></li>
-          <li><strong>Visitas que no dependen solo de medios pagados.</strong><span>Cuando apagas las campañas, el posicionamiento sigue trabajando por ti.</span></li>
-          <li><strong>Un activo que se acumula mes a mes.</strong><span>Cada página y cada respuesta bien hecha suma. No se pierde al final del mes.</span></li>
-          <li><strong>Menos dependencia de las OTAs.</strong><span>Si el viajero te encuentra a ti primero, reserva contigo y no a través de un intermediario.</span></li>
-        </ul>
-      </div>
-
-      <div class="container seo-plan">
-        <div class="seo-plan-head reveal">
-          <h3>Cómo funciona</h3>
-        </div>
-        <p class="eyebrow eyebrow-dark reveal">Todos los meses</p>
-        <div class="seo-monthly">
-          <article class="seo-step reveal">
-            <h4>Test de visibilidad en IA</h4>
-            <p>Preguntas clave en ChatGPT, Gemini y Perplexity. Medimos si apareces tú y quién aparece más.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-1">
-            <h4>Pauta de contenido</h4>
-            <p>Temas sugeridos para tu equipo, con las preguntas que cada artículo debe responder.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-2">
-            <h4>Reporte y reunión</h4>
-            <p>Posiciones en Google, menciones en IA y una reunión mensual. WhatsApp para consultas.</p>
-          </article>
-        </div>
-
-        <p class="eyebrow eyebrow-dark reveal" style="margin-top: 44px;">Distintos focos para cada mes</p>
-        <div class="seo-roadmap">
-          <article class="seo-step reveal">
-            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
-            <h4>Base técnica y punto de partida</h4>
-            <p>Search Console, Bing Webmaster Tools, acceso de los bots de IA, mapa de palabras clave y primera medición en IA.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-1">
-            <div class="seo-chips"><span class="seo-chip">SEO</span></div>
-            <h4>Blog visible y conectado</h4>
-            <p>Blog en el menú y en el home, cada artículo enlazado a su experiencia, títulos y descripciones optimizados.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-2">
-            <div class="seo-chips"><span class="seo-chip aeo">AEO</span></div>
-            <h4>Preguntas frecuentes</h4>
-            <p>Las preguntas reales de tus huéspedes, con respuestas directas y datos estructurados para que la IA las lea.</p>
-          </article>
-          <article class="seo-step reveal">
-            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
-            <h4>Fichas de cada experiencia</h4>
-            <p>Habitaciones, programas o tours con qué incluyen, temporada y precio desde, en un formato que Google y la IA puedan citar.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-1">
-            <div class="seo-chips"><span class="seo-chip aeo">AEO</span></div>
-            <h4>Una sola marca en todas partes</h4>
-            <p>Mismo nombre y descripción en Google Business, directorios turísticos y redes, más estrategia de reseñas.</p>
-          </article>
-          <article class="seo-step reveal reveal-delay-2">
-            <div class="seo-chips"><span class="seo-chip">SEO</span><span class="seo-chip aeo">AEO</span></div>
-            <h4>Menciones y resultados</h4>
-            <p>Enlaces y menciones desde partners y sitios del rubro. Comparación con la primera medición y plan para la siguiente etapa.</p>
-          </article>
-        </div>
-        <p class="seo-note">El orden se define según lo que muestre la primera medición.</p>
-      </div>
-
-      <div class="container section-center seo-cta">
-        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20saber%20si%20mi%20negocio%20aparece%20en%20Google%20y%20en%20la%20IA." target="_blank" rel="noreferrer">¿Te recomienda la IA? Revisémoslo</a>
-      </div>
-    </section>
-
-    <section id="auditoria" class="audit">
-      <div class="container">
-        <div class="audit-card reveal">
-          <div>
-            <p class="eyebrow">Auditoría de campañas</p>
-            <h2>¿Ya tienes campañas activas? <span>Las audito.</span></h2>
-            <p>Si ya inviertes en Google Ads o Meta Ads, reviso tu cuenta con una mirada externa. Tu equipo sigue a cargo de las campañas; yo te digo qué está funcionando, qué no y qué cambiar primero.</p>
-            <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20ya%20tengo%20campa%C3%B1as%20activas%20y%20me%20interesa%20una%20auditor%C3%ADa." target="_blank" rel="noreferrer">Quiero auditar mis campañas</a>
-          </div>
-          <ol class="audit-list">
-            <li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, palabras clave, anuncios, mercados, seguimiento de conversiones (WhatsApp, formularios y motor de reservas) y páginas de destino.</span></div></li>
-            <li><b>2</b><div><strong>Sesión de trabajo con tu equipo</strong><span>Repasamos los hallazgos, aplicamos mejoras en la cuenta y dejamos próximos pasos claros.</span></div></li>
-            <li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>Revisión con datos reales 2 a 4 semanas después y ajustes para la temporada.</span></div></li>
-          </ol>
-        </div>
-      </div>
-    </section>
-
     <section id="casos" class="section cases">
       <div class="container section-center narrow">
         <h2 class="reveal">Casos de éxito</h2>
@@ -759,7 +766,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
-    <section id="sobre-mi" class="section about">
+    <section id="sobre-mi" class="section section-dark about">
       <div class="container split-layout reveal">
         <div class="split-text">
           <p class="eyebrow">Sobre mí</p>
@@ -775,7 +782,19 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
     </section>
 
-    <section class="section faq">
+    <section id="auditoria" class="section audit">
+      <div class="container audit-layout">
+        <div class="reveal">
+          <p class="eyebrow eyebrow-dark">Auditoría de campañas</p>
+          <h2>¿Ya tienes campañas activas? <span>Las audito.</span></h2>
+          <p>Reviso tu cuenta de Google Ads o Meta Ads con una mirada externa. Tu equipo sigue a cargo, yo te digo qué funciona, qué no y qué cambiar primero.</p>
+          <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20ya%20tengo%20campa%C3%B1as%20activas%20y%20me%20interesa%20una%20auditor%C3%ADa." target="_blank" rel="noreferrer">Quiero auditar mis campañas</a>
+        </div>
+        <ol class="audit-steps reveal reveal-delay-1"><li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, anuncios, mercados, conversiones y páginas de destino.</span></div></li><li><b>2</b><div><strong>Sesión con tu equipo</strong><span>Repasamos hallazgos y aplicamos mejoras.</span></div></li><li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>Revisión con datos reales semanas después.</span></div></li></ol>
+      </div>
+    </section>
+
+    <section class="section section-dark faq">
       <div class="container section-center narrow">
         <p class="eyebrow reveal">Preguntas frecuentes</p>
         <h2 class="reveal">Lo que más me preguntan.</h2>
@@ -845,10 +864,10 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div>
         <h4>Navegación</h4>
+        <a href="#soluciones">Soluciones</a>
         <a href="#servicios">Cómo trabajo</a>
-        <a href="#seo-aeo">SEO + IA</a>
-        <a href="#auditoria">Auditoría de campañas</a>
         <a href="#casos">Casos</a>
+        <a href="#auditoria">Auditoría de campañas</a>
         <a href="#sobre-mi">Sobre mí</a>
         <a href="#contacto">Contacto</a>
       </div>
