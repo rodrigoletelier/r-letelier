@@ -11,11 +11,11 @@
     gtag('js', new Date());
     gtag('config', 'G-1LSYRLK7EZ');
   </script>
-  <title>Autodiagnóstico gratis de reservas directas | Rodrigo Letelier</title>
-  <meta name="description" content="12 preguntas, 3 minutos. Descubre qué tan preparado está tu lodge, hotel boutique u operador de experiencias para vender directo: reservas, campañas, visibilidad en Google y la IA, y medición." />
+  <title>Diagnóstico gratis de tu web turística | Rodrigo Letelier</title>
+  <meta name="description" content="Escribe la web de tu lodge, hotel boutique u operador y recibe un diagnóstico gratis: reservas directas, visibilidad en Google y la IA, medición, propuesta y velocidad móvil." />
   <link rel="canonical" href="https://www.rodrigoletelier.cl/diagnostico/" />
-  <meta property="og:title" content="Autodiagnóstico gratis de reservas directas" />
-  <meta property="og:description" content="12 preguntas, 3 minutos. Descubre dónde está perdiendo reservas directas tu negocio turístico." />
+  <meta property="og:title" content="Diagnóstico gratis de tu web turística" />
+  <meta property="og:description" content="Escribe tu web y descubre dónde estás perdiendo reservas directas." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.rodrigoletelier.cl/diagnostico/" />
   <meta property="og:image" content="https://www.rodrigoletelier.cl/assets/hero-lodge.jpg" />
@@ -172,6 +172,35 @@ h3 { margin-top: 0; }
   * { transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* === FORMULARIO DE WEB === */
+.url-form { display: flex; gap: 10px; max-width: 640px; margin-top: 32px; padding: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(166, 184, 145, 0.3); }
+.url-form input { flex: 1; min-width: 0; padding: 12px 18px; border: none; border-radius: 999px; background: transparent; color: var(--white); font: inherit; font-size: 1rem; }
+.url-form input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.url-form input:focus { outline: none; }
+.url-form:focus-within { border-color: var(--sage); }
+.url-error { min-height: 1.4em; margin: 12px 0 0; color: #f1c6b6; font-size: 0.92rem; }
+.loading { padding: 72px 0; text-align: center; }
+.loading[hidden] { display: none; }
+.spinner { width: 44px; height: 44px; margin: 0 auto 20px; border: 3px solid var(--sand-2); border-top-color: var(--green-500); border-radius: 50%; animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading p { margin: 0; color: var(--muted); }
+.result-host { margin: 0 0 28px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; word-break: break-all; }
+.bar-row small { display: block; color: rgba(255, 255, 255, 0.5); font-size: 0.78rem; }
+.details { margin-top: 28px; }
+.details summary { cursor: pointer; color: var(--sage); font-size: 0.92rem; }
+.detail-group { margin-top: 20px; }
+.detail-group h4 { margin: 0 0 8px; font-size: 0.86rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage); }
+.detail-group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
+.detail-group li { display: flex; gap: 10px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8); }
+.detail-group li i { flex-shrink: 0; width: 10px; height: 10px; margin-top: 6px; border-radius: 50%; }
+.extra { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--line); }
+.extra > p { margin: 0 0 14px; font-weight: 600; }
+.extra .question { padding: 16px 18px; }
+@media (max-width: 640px) {
+  .url-form { flex-direction: column; border-radius: var(--radius-lg); }
+  .url-form .btn { width: 100%; }
+}
 </style>
 </head>
 <body>
@@ -185,46 +214,33 @@ h3 { margin-top: 0; }
   <main>
     <section class="intro">
       <div class="container">
-        <p class="eyebrow">Autodiagnóstico gratis</p>
-        <h1>¿Cuántas reservas directas <em>estás dejando pasar?</em></h1>
-        <p>12 preguntas sobre cómo vendes hoy. Al final ves tu puntaje, en qué áreas estás bien y las 3 mejoras que más impacto pueden tener. Sin registrarte.</p>
+        <p class="eyebrow">Diagnóstico gratis</p>
+        <h1>¿Tu web está lista para <em>vender directo?</em></h1>
+        <p>Escribe la web de tu lodge, hotel u operador. En menos de un minuto revisamos cómo te encuentran en Google y en la IA, si el viajero puede reservar contigo, qué estás midiendo y qué tan rápido carga en el teléfono.</p>
+        <form class="url-form" id="url-form" novalidate>
+          <input type="text" id="url-input" inputmode="url" autocomplete="url" placeholder="tulodge.com" aria-label="Dirección de tu sitio web" required />
+          <button type="submit" class="btn btn-primary" id="url-btn">Analizar mi web</button>
+        </form>
+        <p class="url-error" id="url-error" role="alert"></p>
         <div class="intro-meta">
-          <span>3 minutos</span>
+          <span>Gratis y sin registro</span>
           <span>Para lodges, hoteles boutique y operadores</span>
           <span>Resultado inmediato</span>
         </div>
       </div>
     </section>
 
-    <div class="progress" aria-hidden="true">
-      <div class="container progress-row">
-        <span id="progress-text">0 de 12</span>
-        <div class="progress-bar"><i id="progress-fill"></i></div>
+    <section class="loading" id="loading" hidden aria-live="polite">
+      <div class="container">
+        <div class="spinner" aria-hidden="true"></div>
+        <p id="loading-text">Revisando tu sitio…</p>
       </div>
-    </div>
-
-    <section class="quiz">
-      <form id="quiz" class="container" novalidate>
-        <div class="business">
-          <p>¿Qué tipo de negocio tienes?</p>
-          <div class="chips" id="business-chips">
-            <button type="button" class="chip" aria-pressed="false" data-value="Lodge">Lodge</button>
-            <button type="button" class="chip" aria-pressed="false" data-value="Hotel boutique">Hotel boutique</button>
-            <button type="button" class="chip" aria-pressed="false" data-value="Operador de experiencias">Operador de experiencias</button>
-            <button type="button" class="chip" aria-pressed="false" data-value="Otro alojamiento">Otro</button>
-          </div>
-        </div>
-        <div id="areas"></div>
-        <div class="submit-row">
-          <button type="submit" class="btn btn-primary" id="submit-btn" disabled>Ver mi resultado</button>
-          <p class="submit-hint" id="submit-hint">Responde las 12 preguntas para ver tu resultado.</p>
-        </div>
-      </form>
     </section>
 
     <section class="result" id="result" hidden aria-live="polite">
       <div class="container">
-        <p class="eyebrow">Tu resultado</p>
+        <p class="eyebrow">Tu diagnóstico</p>
+        <p class="result-host" id="result-host"></p>
         <div class="score-wrap">
           <div class="ring">
             <svg viewBox="0 0 200 200" aria-hidden="true">
@@ -246,24 +262,34 @@ h3 { margin-top: 0; }
           <ol class="fix-list" id="fix-list"></ol>
         </div>
 
+        <details class="details">
+          <summary>Ver todo lo que revisamos</summary>
+          <div id="detail-list"></div>
+        </details>
+
         <div class="cta-box">
           <h3>Revisemos tu resultado juntos</h3>
-          <p>En 30 minutos vemos tu caso con tu sitio y tus campañas reales, y te digo por dónde partiría. Sin costo.</p>
+          <p>En 30 minutos vemos tu caso con tus campañas y tus reservas reales, y te digo por dónde partiría. Sin costo.</p>
           <div class="cta-actions">
             <a class="btn btn-primary" id="wa-cta" href="https://wa.me/56966170884" target="_blank" rel="noreferrer">Revisar mi resultado por WhatsApp</a>
           </div>
+
+          <div class="extra" id="extra">
+            <p>Opcional: 3 preguntas sobre lo que tu web no muestra</p>
+          </div>
+
           <form class="lead-form" id="lead-form">
             <p>¿Prefieres correo? Déjame tus datos y te escribo con comentarios sobre tu resultado.</p>
             <input type="text" name="name" placeholder="Nombre" aria-label="Nombre" required />
             <input type="email" name="email" placeholder="Correo" aria-label="Correo" required />
-            <input type="text" name="company" placeholder="Sitio web o negocio" aria-label="Sitio web o negocio" required />
+            <input type="text" name="company" id="lead-company" placeholder="Negocio" aria-label="Negocio" required />
             <button type="submit" class="btn btn-ghost">Enviar</button>
             <p class="form-status" id="lead-status" role="status" aria-live="polite"></p>
           </form>
         </div>
 
-        <p class="disclaimer">Este autodiagnóstico es una orientación basada en tus respuestas. No revisa tu sitio ni tus cuentas, y no reemplaza una auditoría.</p>
-        <button type="button" class="restart" id="restart">Volver a responder</button>
+        <p class="disclaimer" id="disclaimer"></p>
+        <button type="button" class="restart" id="restart">Analizar otra web</button>
       </div>
     </section>
   </main>
@@ -278,189 +304,218 @@ h3 { margin-top: 0; }
 <script>
 (function () {
   var AREAS = [
-    {
-      id: 'directa', title: 'Venta directa', service: 'Conversión y tecnología',
-      questions: [
-        { id: 'q1', text: '¿Un viajero puede reservar o pagar en tu sitio sin pasar por Booking, Expedia u otra OTA?', hint: 'Motor de reservas, pago online o cotización directa.',
-          fix: ['Habilita la reserva directa en tu sitio', 'Si el viajero no puede reservar ni pagar en tu sitio, termina en una OTA y pagas comisión. Un motor de reservas o un flujo de pago simple es la base de todo lo demás.'] },
-        { id: 'q2', text: '¿Respondes las consultas de WhatsApp o correo en menos de 2 horas, en horario laboral?', hint: '',
-          fix: ['Responde más rápido las consultas', 'El viajero suele consultar a varios alojamientos a la vez. Quien responde primero, y con claridad, se queda con la reserva. Plantillas y automatizaciones ayudan mucho.'] },
-        { id: 'q3', text: '¿Ofreces algún beneficio por reservar directo?', hint: 'Mejor precio, upgrade, traslado, desayuno, flexibilidad.',
-          fix: ['Dale una razón para reservar directo', 'Si tu precio y condiciones son iguales que en la OTA, el viajero reserva donde ya tiene cuenta. Un beneficio visible para quien reserva directo cambia esa decisión.'] }
-      ]
-    },
-    {
-      id: 'campanas', title: 'Campañas en Google y Meta', service: 'Adquisición',
-      questions: [
-        { id: 'q4', text: '¿Tienes campañas de Google Ads activas que llevan a tu propio sitio?', hint: '',
-          fix: ['Aparece cuando el viajero te busca en Google', 'Si no tienes campañas, las OTAs pagan por aparecer arriba incluso cuando buscan tu nombre. Una campaña de marca y destino bien armada recupera esas reservas.'] },
-        { id: 'q5', text: '¿Haces anuncios en Instagram o Facebook dirigidos a viajeros de tus mercados prioritarios?', hint: 'No solo "promocionar publicación".',
-          fix: ['Llega a viajeros en sus mercados de origen', 'Las redes sirven para que el viajero te descubra antes de decidir. Segmentar por país, intereses y temporada rinde mucho más que promocionar publicaciones sueltas.'] },
-        { id: 'q6', text: '¿Revisas al menos una vez al mes qué campañas traen consultas o reservas, no solo clics?', hint: '',
-          fix: ['Mide campañas por reservas, no por clics', 'Una campaña con muchos clics puede no traer ninguna reserva. Revisar cada mes qué trae consultas y ventas reales permite mover el presupuesto a lo que funciona.'] }
-      ]
-    },
-    {
-      id: 'visibilidad', title: 'Visibilidad en Google y en la IA', service: 'Visibilidad',
-      questions: [
-        { id: 'q7', text: '¿Tu sitio aparece en Google cuando alguien busca tu tipo de alojamiento o experiencia en tu destino?', hint: 'Por ejemplo, "lodge en Tambopata" o "trekking en Torres del Paine".',
-          fix: ['Trabaja el SEO de tu destino', 'Si no apareces en las búsquedas de tu destino, ese viajero solo encuentra a tu competencia y a las OTAs. El SEO local trae visitas que no pagas por clic.'] },
-        { id: 'q8', text: '¿Tu sitio responde con claridad las dudas típicas del viajero?', hint: 'Cómo llegar, qué incluye, temporada, qué llevar.',
-          fix: ['Responde en tu sitio lo que el viajero pregunta', 'Google y asistentes como ChatGPT usan ese contenido para recomendar lugares. Una buena sección de preguntas frecuentes también te ahorra consultas repetidas.'] },
-        { id: 'q9', text: '¿Tu ficha de Google (Google Business Profile) está completa y tiene reseñas recientes?', hint: '',
-          fix: ['Completa y activa tu ficha de Google', 'Es lo primero que ve el viajero en Maps y en el buscador. Fotos actuales, datos correctos y reseñas recientes generan confianza antes de que entre a tu sitio.'] }
-      ]
-    },
-    {
-      id: 'medicion', title: 'Medición y seguimiento', service: 'Conversión y tecnología',
-      questions: [
-        { id: 'q10', text: '¿Sabes cuántas de tus reservas del último mes fueron directas y cuántas vinieron de OTAs?', hint: '',
-          fix: ['Conoce tu mezcla de canales', 'Sin saber cuánto vendes directo y cuánto por OTAs, no puedes saber cuánto pagas en comisiones ni si tus esfuerzos están funcionando.'] },
-        { id: 'q11', text: '¿Tienes Google Analytics 4 midiendo las reservas o consultas como conversiones?', hint: '',
-          fix: ['Conecta la medición a tus reservas', 'Sin conversiones bien configuradas, Google y Meta optimizan a ciegas. Medir consultas y reservas reales es lo que permite que las campañas aprendan.'] },
-        { id: 'q12', text: '¿Haces seguimiento a quienes consultan y no reservan?', hint: 'Un correo o WhatsApp días después.',
-          fix: ['Haz seguimiento a las consultas', 'Muchas reservas se pierden solo porque nadie volvió a escribir. Un seguimiento simple, incluso automatizado, recupera parte de esas consultas.'] }
-      ]
-    }
+    { id: 'visibilidad', title: 'Visibilidad en Google y la IA', weight: 25, service: 'Visibilidad' },
+    { id: 'conversion', title: 'Reserva directa', weight: 25, service: 'Conversión y tecnología' },
+    { id: 'propuesta', title: 'Propuesta para el viajero', weight: 20, service: 'Conversión y tecnología' },
+    { id: 'rendimiento', title: 'Velocidad y móvil', weight: 15, service: 'Conversión y tecnología' },
+    { id: 'tracking', title: 'Medición y redes', weight: 15, service: 'Adquisición' }
   ];
-  var CHOICES = [
-    { value: 2, label: 'Sí' },
-    { value: 1, label: 'A medias / no sé' },
-    { value: 0, label: 'No' }
+  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'ads', 'pixel', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
+  var EXTRA = [
+    { id: 'x1', text: '¿Qué parte de tus reservas llega directo, sin OTAs?', options: ['Más de la mitad', 'Menos de la mitad', 'No lo sé'] },
+    { id: 'x2', text: '¿Cuánto tardas en responder una consulta?', options: ['Menos de 2 horas', 'El mismo día', 'Más de un día'] },
+    { id: 'x3', text: '¿Haces seguimiento a quienes consultan y no reservan?', options: ['Sí', 'A veces', 'No'] }
   ];
-  var TOTAL = 12;
-  var started = false;
-  var business = '';
-  var lastResult = null;
 
-  var areasEl = document.getElementById('areas');
-  var form = document.getElementById('quiz');
-  var submitBtn = document.getElementById('submit-btn');
-  var hint = document.getElementById('submit-hint');
+  var data = null;
+  var speed = null;
+  var current = null;
+  var $ = function (id) { return document.getElementById(id); };
 
   function track(name, params) {
     if (typeof gtag === 'function') gtag('event', name, params || {});
   }
-
-  AREAS.forEach(function (area, i) {
-    var html = '<div class="area"><div class="area-head"><span class="area-num">' + (i + 1) + '</span><h2>' + area.title + '</h2></div>';
-    area.questions.forEach(function (q) {
-      html += '<div class="question"><fieldset><legend>' + q.text + '</legend>' + (q.hint ? '<small>' + q.hint + '</small>' : '') + '<div class="options">';
-      CHOICES.forEach(function (c) {
-        html += '<label class="option"><input type="radio" name="' + q.id + '" value="' + c.value + '" /><span>' + c.label + '</span></label>';
-      });
-      html += '</div></fieldset></div>';
-    });
-    areasEl.insertAdjacentHTML('beforeend', html + '</div>');
-  });
-
-  document.getElementById('business-chips').addEventListener('click', function (e) {
-    var chip = e.target.closest('.chip');
-    if (!chip) return;
-    this.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', 'false'); });
-    chip.setAttribute('aria-pressed', 'true');
-    business = chip.getAttribute('data-value');
-  });
-
-  function answered() {
-    return form.querySelectorAll('input[type="radio"]:checked').length;
+  function esc(s) {
+    return String(s || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; });
   }
-
-  form.addEventListener('change', function () {
-    var n = answered();
-    if (!started) { started = true; track('diagnostico_start'); }
-    document.getElementById('progress-text').textContent = n + ' de ' + TOTAL;
-    document.getElementById('progress-fill').style.width = (n / TOTAL * 100) + '%';
-    submitBtn.disabled = n < TOTAL;
-    hint.textContent = n < TOTAL ? 'Te faltan ' + (TOTAL - n) + ' preguntas.' : 'Listo. Mira tu resultado.';
-  });
-
-  function level(score) {
-    if (score >= 70) return ['Tienes una base sólida', 'Tu negocio ya hace bien lo esencial para vender directo. El crecimiento ahora está en afinar: mejores campañas, más visibilidad y aprovechar cada consulta.'];
-    if (score >= 40) return ['Vas bien, pero hay fugas', 'Tienes piezas importantes funcionando, pero hay áreas donde probablemente se te escapan reservas hacia las OTAs o la competencia.'];
-    return ['Hay mucho espacio para crecer', 'Hoy es probable que gran parte de tus reservas dependa de las OTAs. La buena noticia: con pocas mejoras bien elegidas el cambio se nota.'];
-  }
-
   function colorFor(pct) {
-    if (pct >= 70) return 'var(--sage)';
-    if (pct >= 40) return 'var(--warn)';
-    return 'var(--low)';
+    return pct >= 70 ? 'var(--sage)' : pct >= 40 ? 'var(--warn)' : 'var(--low)';
+  }
+  function level(score) {
+    if (score >= 70) return ['Tu web tiene una base sólida', 'Lo esencial para vender directo está en su lugar. El crecimiento ahora está en afinar campañas, contenido y seguimiento.'];
+    if (score >= 40) return ['Vas bien, pero hay fugas', 'Tu web tiene piezas importantes, pero hay puntos donde es probable que se te escapen reservas hacia las OTAs o la competencia.'];
+    return ['Hay mucho espacio para crecer', 'Hoy tu web le pone trabas al viajero para encontrarte o reservar contigo. Con pocas mejoras bien elegidas, el cambio se nota.'];
   }
 
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (answered() < TOTAL) return;
-    var total = 0;
-    var areaScores = [];
-    var gaps = [];
-    AREAS.forEach(function (area) {
-      var sum = 0;
-      area.questions.forEach(function (q, idx) {
-        var v = parseInt(form.querySelector('input[name="' + q.id + '"]:checked').value, 10);
-        sum += v;
-        if (v < 2) gaps.push({ v: v, order: gaps.length, q: q, area: area });
-      });
-      total += sum;
-      areaScores.push({ area: area, pct: Math.round(sum / 6 * 100) });
+  EXTRA.forEach(function (q) {
+    var html = '<div class="question"><fieldset><legend>' + q.text + '</legend><div class="options">';
+    q.options.forEach(function (o) {
+      html += '<label class="option"><input type="radio" name="' + q.id + '" value="' + esc(o) + '" /><span>' + o + '</span></label>';
     });
-    var score = Math.round(total / (TOTAL * 2) * 100);
-    var lv = level(score);
+    $('extra').insertAdjacentHTML('beforeend', html + '</div></fieldset></div>');
+  });
+  $('extra').addEventListener('change', function () { updateWhatsApp(); track('diagnostico_extra'); });
 
-    gaps.sort(function (a, b) { return a.v - b.v || a.order - b.order; });
-    var top = gaps.slice(0, 3);
+  function speedCheck() {
+    if (speed === null) return { id: 'speed', area: 'rendimiento', status: null, label: 'Velocidad en móvil: midiendo…', detail: '' };
+    if (speed === false) return { id: 'speed', area: 'rendimiento', status: null, label: 'No pudimos medir la velocidad en móvil', detail: 'Google PageSpeed no respondió a tiempo.' };
+    var st = speed.score >= 90 ? 1 : speed.score >= 50 ? 0.5 : 0;
+    return { id: 'speed', area: 'rendimiento', status: st,
+      label: st === 1 ? 'Carga rápida en móvil (' + speed.score + '/100)' : 'Carga lenta en móvil (' + speed.score + '/100)',
+      detail: 'Medido con Google PageSpeed' + (speed.lcp ? '. El contenido principal aparece en ' + speed.lcp : '') + '. Cada segundo de espera hace que más viajeros se vayan.' };
+  }
 
-    document.getElementById('score-title').textContent = lv[0];
-    document.getElementById('score-desc').textContent = lv[1];
-    document.getElementById('ring-value').style.stroke = colorFor(score);
+  function compute() {
+    var checks = data.checks.concat([speedCheck()]);
+    var total = 0;
+    var complete = true;
+    var areas = AREAS.map(function (a) {
+      var all = checks.filter(function (c) { return c.area === a.id; });
+      var ev = all.filter(function (c) { return c.status !== null; });
+      var sum = ev.reduce(function (s, c) { return s + c.status; }, 0);
+      var ok = ev.length >= 2 && ev.length / all.length >= 0.7;
+      var pct = ev.length ? Math.round(sum / ev.length * 100) : 0;
+      if (ok) total += pct * a.weight / 100; else complete = false;
+      return { area: a, pct: pct, ok: ok, coverage: Math.round(ev.length / all.length * 100) };
+    });
+    var gaps = checks.filter(function (c) { return c.status !== null && c.status < 1; });
+    gaps.sort(function (a, b) {
+      return (a.status - b.status) || (PRIORITY.indexOf(a.id) - PRIORITY.indexOf(b.id));
+    });
+    return { checks: checks, areas: areas, complete: complete, score: complete ? Math.round(total) : null, top: gaps.slice(0, 3) };
+  }
 
-    document.getElementById('bars').innerHTML = areaScores.map(function (a) {
-      return '<div class="bar-row"><span>' + a.area.title + '</span><div class="bar"><i data-w="' + a.pct + '" style="background:' + colorFor(a.pct) + '"></i></div><b>' + a.pct + '%</b></div>';
+  function render(animate) {
+    current = compute();
+    var lv = current.complete ? level(current.score) : speed === null
+      ? ['Calculando tu índice…', 'Ya revisamos tu sitio. Falta medir la velocidad en móvil con Google PageSpeed; suele tardar entre 10 y 40 segundos.']
+      : ['Diagnóstico parcial', 'No encontramos evidencia suficiente para calcular el índice completo. Igual te mostramos lo que sí pudimos revisar y tus prioridades.'];
+    $('score-title').textContent = lv[0];
+    $('score-desc').textContent = lv[1];
+    $('score-num').textContent = current.complete ? current.score : '–';
+    $('ring-value').style.stroke = current.complete ? colorFor(current.score) : 'rgba(255,255,255,0.25)';
+    $('result-host').textContent = data.host + ' · analizado el ' + new Date(data.analyzedAt).toLocaleDateString('es-CL');
+
+    $('bars').innerHTML = current.areas.map(function (a) {
+      var note = a.ok ? 'Peso ' + a.area.weight + '%' : (a.area.id === 'rendimiento' && speed === null ? 'Midiendo…' : 'Sin evidencia suficiente (' + a.coverage + '% revisado)');
+      var w = a.ok ? a.pct : 0;
+      return '<div class="bar-row"><span>' + a.area.title + '<small>' + note + '</small></span><div class="bar"><i data-w="' + w + '" style="background:' + colorFor(a.pct) + ';width:' + (animate ? 0 : w) + '%"></i></div><b>' + (a.ok ? a.pct + '%' : '–') + '</b></div>';
     }).join('');
 
-    document.getElementById('fix-list').innerHTML = top.length ? top.map(function (g) {
-      return '<li class="fix"><span class="fix-tag">' + g.area.service + '</span><h4>' + g.q.fix[0] + '</h4><p>' + g.q.fix[1] + '</p></li>';
-    }).join('') : '<li class="fix"><h4>No marcaste brechas claras</h4><p>Tu siguiente paso es medir con datos reales qué canal trae las reservas más rentables y escalar ese.</p></li>';
+    $('fix-list').innerHTML = current.top.length ? current.top.map(function (c) {
+      var area = AREAS.filter(function (a) { return a.id === c.area; })[0];
+      return '<li class="fix"><span class="fix-tag">' + area.service + '</span><h4>' + esc(c.label) + '</h4><p>' + esc(c.detail || 'Vale la pena revisarlo.') + '</p></li>';
+    }).join('') : '<li class="fix"><h4>No encontramos brechas evidentes</h4><p>El siguiente paso es mirar datos reales: qué canal trae las reservas más rentables y cómo escalarlo.</p></li>';
 
-    var weakest = areaScores.slice().sort(function (a, b) { return a.pct - b.pct; })[0];
-    var msg = 'Hola Rodrigo, hice el autodiagnóstico en tu web. ' +
-      (business ? 'Mi negocio: ' + business + '. ' : '') +
-      'Mi puntaje fue ' + score + '/100 y mi área más débil es "' + weakest.area.title + '". Me gustaría revisarlo contigo.';
-    document.getElementById('wa-cta').href = 'https://wa.me/56966170884?text=' + encodeURIComponent(msg);
+    $('detail-list').innerHTML = AREAS.map(function (a) {
+      var items = current.checks.filter(function (c) { return c.area === a.id; });
+      return '<div class="detail-group"><h4>' + a.title + '</h4><ul>' + items.map(function (c) {
+        var col = c.status === null ? 'rgba(255,255,255,0.3)' : colorFor(c.status * 100);
+        return '<li><i style="background:' + col + '"></i><span>' + esc(c.label) + (c.status === 1 && c.detail ? ' · ' + esc(c.detail) : '') + '</span></li>';
+      }).join('') + '</ul></div>';
+    }).join('');
 
-    lastResult = { score: score, business: business, areas: areaScores, top: top };
+    $('disclaimer').textContent = 'Este diagnóstico revisa señales públicas de tu portada y de tu página de reservas en la fecha indicada. No ve tus visitas, reservas ni campañas, y algunas etiquetas cargadas con Google Tag Manager pueden no ser visibles desde fuera. Es una orientación, no una auditoría. Versión ' + data.version + '.';
 
-    var result = document.getElementById('result');
-    result.hidden = false;
-    var scoreEl = document.getElementById('score-num');
-    scoreEl.textContent = score;
-    requestAnimationFrame(function () {
-      document.getElementById('ring-value').style.strokeDashoffset = 553 - 553 * score / 100;
-      document.querySelectorAll('#bars i').forEach(function (i) { i.style.width = i.getAttribute('data-w') + '%'; });
+    var offset = 553 - 553 * (current.complete ? current.score : 0) / 100;
+    if (animate) {
+      requestAnimationFrame(function () { requestAnimationFrame(function () {
+        $('ring-value').style.strokeDashoffset = offset;
+        document.querySelectorAll('#bars i').forEach(function (i) { i.style.width = i.getAttribute('data-w') + '%'; });
+      }); });
+    } else {
+      $('ring-value').style.strokeDashoffset = offset;
+    }
+    updateWhatsApp();
+  }
+
+  function answers() {
+    return EXTRA.map(function (q) {
+      var c = document.querySelector('input[name="' + q.id + '"]:checked');
+      return c ? q.text + ' ' + c.value : null;
+    }).filter(Boolean);
+  }
+
+  function updateWhatsApp() {
+    if (!current) return;
+    var weakest = current.areas.filter(function (a) { return a.ok; }).sort(function (a, b) { return a.pct - b.pct; })[0];
+    var msg = 'Hola Rodrigo, analicé mi web (' + data.host + ') en tu diagnóstico. ' +
+      (current.complete ? 'Me dio ' + current.score + '/100' : 'Me salió un diagnóstico parcial') +
+      (weakest ? ' y el área más débil es "' + weakest.area.title + '".' : '.');
+    var a = answers();
+    if (a.length) msg += ' ' + a.join(' ');
+    msg += ' Me gustaría revisarlo contigo.';
+    $('wa-cta').href = 'https://wa.me/56966170884?text=' + encodeURIComponent(msg);
+  }
+
+  function runSpeed(url) {
+    var api = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?strategy=mobile&category=performance&url=' + encodeURIComponent(url);
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 50000);
+    return fetch(api, ctrl ? { signal: ctrl.signal } : {}).then(function (r) {
+      if (!r.ok) throw new Error();
+      return r.json();
+    }).then(function (j) {
+      var lh = j.lighthouseResult;
+      var lcp = lh.audits && lh.audits['largest-contentful-paint'];
+      return { score: Math.round(lh.categories.performance.score * 100), lcp: lcp ? lcp.displayValue : '' };
+    }).catch(function () { return false; }).then(function (v) { clearTimeout(timer); return v; });
+  }
+
+  var ERRORS = {
+    bad_url: 'Revisa la dirección. Escribe algo como tulodge.com.',
+    unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.',
+    rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.'
+  };
+
+  $('url-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var raw = $('url-input').value.trim();
+    $('url-error').textContent = '';
+    if (!/^(https?:\/\/)?[^\s\/]+\.[^\s]{2,}/i.test(raw)) { $('url-error').textContent = ERRORS.bad_url; return; }
+    $('url-btn').disabled = true;
+    $('result').hidden = true;
+    $('loading').hidden = false;
+    $('loading-text').textContent = 'Revisando tu sitio…';
+    $('loading').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    track('diagnostico_start');
+    data = null; speed = null;
+
+    fetch('/api/diagnostico?url=' + encodeURIComponent(raw)).then(function (r) {
+      return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'unreachable'); return j; });
+    }).then(function (j) {
+      data = j;
+      $('loading').hidden = true;
+      $('result').hidden = false;
+      $('lead-company').value = j.host;
+      render(true);
+      $('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      track('diagnostico_complete', { site: j.host });
+      return runSpeed(j.url).then(function (s) {
+        if (data !== j) return;
+        speed = s;
+        render(false);
+        track('diagnostico_score', { site: j.host, speed_ok: !!s, complete: current.complete, score: current.score });
+      });
+    }).catch(function (err) {
+      $('loading').hidden = true;
+      $('url-error').textContent = ERRORS[err.message] || ERRORS.unreachable;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      track('diagnostico_error', { reason: err.message });
+    }).then(function () {
+      $('url-btn').disabled = false;
     });
-    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    track('diagnostico_complete', { score: score, business_type: business || 'sin indicar', weakest_area: weakest.area.id });
   });
 
-  document.getElementById('restart').addEventListener('click', function () {
-    form.reset();
-    document.getElementById('result').hidden = true;
-    form.dispatchEvent(new Event('change'));
-    started = true;
+  $('restart').addEventListener('click', function () {
+    $('result').hidden = true;
+    $('url-input').value = '';
+    document.querySelectorAll('#extra input').forEach(function (i) { i.checked = false; });
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    $('url-input').focus();
   });
 
-  document.getElementById('lead-form').addEventListener('submit', function (e) {
+  $('lead-form').addEventListener('submit', function (e) {
     e.preventDefault();
     var f = e.target;
-    var status = document.getElementById('lead-status');
-    if (!f.reportValidity() || !lastResult) return;
-    var lines = ['Autodiagnóstico desde rodrigoletelier.cl/diagnostico', '',
-      'Tipo de negocio: ' + (lastResult.business || 'sin indicar'),
-      'Puntaje: ' + lastResult.score + '/100', ''];
-    lastResult.areas.forEach(function (a) { lines.push(a.area.title + ': ' + a.pct + '%'); });
+    var status = $('lead-status');
+    if (!f.reportValidity() || !current) return;
+    var lines = ['Diagnóstico desde rodrigoletelier.cl/diagnostico', '', 'Sitio: ' + data.url, 'Índice: ' + (current.complete ? current.score + '/100' : 'parcial'), ''];
+    current.areas.forEach(function (a) { lines.push(a.area.title + ': ' + (a.ok ? a.pct + '%' : 'sin evidencia suficiente')); });
     lines.push('', 'Prioridades:');
-    lastResult.top.forEach(function (g, i) { lines.push((i + 1) + '. ' + g.q.fix[0]); });
+    current.top.forEach(function (c, i) { lines.push((i + 1) + '. ' + c.label); });
+    var a = answers();
+    if (a.length) lines.push('', 'Respuestas:', a.join('\n'));
     status.textContent = 'Enviando…';
     fetch('/api/contact', {
       method: 'POST',
@@ -469,8 +524,7 @@ h3 { margin-top: 0; }
     }).then(function (r) {
       if (!r.ok) throw new Error();
       status.textContent = 'Listo. Te escribo pronto.';
-      f.reset();
-      track('generate_lead', { form_id: 'diagnostico', score: lastResult.score });
+      track('generate_lead', { form_id: 'diagnostico', complete: current.complete, score: current.score });
     }).catch(function () {
       status.textContent = 'No se pudo enviar. Escríbeme por WhatsApp, por favor.';
     });
@@ -482,10 +536,13 @@ h3 { margin-top: 0; }
     var href = link.getAttribute('href') || '';
     if (href.indexOf('wa.me') !== -1) track('whatsapp_click', { link_url: href, link_text: link.textContent.trim(), page: 'diagnostico' });
   });
+
+  var preset = new URLSearchParams(location.search).get('web');
+  if (preset) { $('url-input').value = preset; }
 })();
 </script>
 
-<a class="whatsapp-float" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20estoy%20haciendo%20el%20autodiagn%C3%B3stico%20y%20tengo%20una%20duda." target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
+<a class="whatsapp-float" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20estoy%20en%20tu%20diagn%C3%B3stico%20y%20tengo%20una%20duda." target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.412-.074-.124-.272-.198-.57-.347z"/><path d="M12.05 2C6.526 2 2.05 6.477 2.05 12c0 1.867.502 3.617 1.376 5.121L2 22l5.09-1.375A9.955 9.955 0 0012.05 22c5.523 0 10-4.477 10-10S17.573 2 12.05 2zm0 18.09c-1.68 0-3.24-.474-4.573-1.293l-.328-.198-3.02.816.812-2.98-.213-.313A8.06 8.06 0 013.95 12c0-4.474 3.626-8.1 8.1-8.1 4.473 0 8.099 3.626 8.099 8.1 0 4.473-3.626 8.09-8.099 8.09z"/></svg>
 </a>
 </body>
