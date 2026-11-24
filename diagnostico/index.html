@@ -310,7 +310,7 @@ h3 { margin-top: 0; }
     { id: 'rendimiento', title: 'Velocidad y móvil', weight: 15, service: 'Conversión y tecnología' },
     { id: 'tracking', title: 'Medición y redes', weight: 15, service: 'Adquisición' }
   ];
-  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'ads', 'pixel', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
+  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
   var EXTRA = [
     { id: 'x1', text: '¿Qué parte de tus reservas llega directo, sin OTAs?', options: ['Más de la mitad', 'Menos de la mitad', 'No lo sé'] },
     { id: 'x2', text: '¿Cuánto tardas en responder una consulta?', options: ['Menos de 2 horas', 'El mismo día', 'Más de un día'] },
@@ -405,7 +405,7 @@ h3 { margin-top: 0; }
       }).join('') + '</ul></div>';
     }).join('');
 
-    $('disclaimer').textContent = 'Este diagnóstico revisa señales públicas de tu portada y de tu página de reservas en la fecha indicada. No ve tus visitas, reservas ni campañas, y algunas etiquetas cargadas con Google Tag Manager pueden no ser visibles desde fuera. Es una orientación, no una auditoría. Versión ' + data.version + '.';
+    $('disclaimer').textContent = 'Este diagnóstico revisa señales públicas de tu portada y de tu página de reservas en la fecha indicada. No ve tus visitas, reservas ni campañas, y si una señal no se puede verificar desde fuera la marcamos como no evaluable en vez de darla por ausente. Es una orientación, no una auditoría. Versión ' + data.version + '.';
 
     var offset = 553 - 553 * (current.complete ? current.score : 0) / 100;
     if (animate) {

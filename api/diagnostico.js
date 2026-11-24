@@ -117,7 +117,10 @@ function meta(html, name) {
 }
 
 function textOf(s) {
-  return (s || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+  return (s || '').replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'")
+    .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n))
+    .replace(/\s+/g, ' ').trim();
 }
 
 function findBookingLink(html, base) {
@@ -143,6 +146,8 @@ function check(id, area, status, label, detail) {
 
 function analyze(html, extraHtml, ctx) {
   const lower = html.toLowerCase();
+  const tags = (lower + ' ' + (ctx.gtmJs || '').toLowerCase());
+  const gtmRead = !!ctx.gtmJs;
   const all = (html + ' ' + (extraHtml || '')).toLowerCase();
   const out = [];
 
@@ -171,18 +176,18 @@ function analyze(html, extraHtml, ctx) {
   const reviews = /tripadvisor\.|google\.com\/maps|g\.page|testimoni|reseñas|opiniones|reviews|guest stories/.test(all);
   out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0, 'Sin reseñas ni testimonios', 'La confianza es clave para reservar directo y no en una OTA.'));
 
-  const ga4 = /gtag\/js\?id=g-|['"]g-[a-z0-9]{6,}['"]/.test(lower);
   const gtm = /googletagmanager\.com\/gtm\.js|gtm-[a-z0-9]{4,}/.test(lower);
-  out.push(ga4 ? check('ga4', 'tracking', 1, 'Google Analytics 4', '')
-    : gtm ? check('ga4', 'tracking', 0.5, 'Google Tag Manager instalado', 'No pudimos confirmar GA4 desde fuera; puede estar dentro de GTM.')
+  const hidden = gtm && !gtmRead;
+  const ga4 = /gtag\/js\?id=g-|['"]g-[a-z0-9]{6,}['"]|\bg-[a-z0-9]{8,10}\b/.test(tags);
+  out.push(ga4 ? check('ga4', 'tracking', 1, 'Google Analytics 4', gtmRead ? 'Encontrado dentro de Google Tag Manager.' : '')
+    : hidden ? check('ga4', 'tracking', null, 'Google Analytics 4: no pudimos leer tu Google Tag Manager', '')
       : check('ga4', 'tracking', 0, 'No encontramos Google Analytics 4', 'Sin analítica no sabes de dónde llegan tus reservas.'));
-  const pixel = /connect\.facebook\.net\/[^"']*fbevents\.js|fbq\(\s*['"]init/.test(lower);
-  out.push(pixel ? check('pixel', 'tracking', 1, 'Píxel de Meta', '')
-    : check('pixel', 'tracking', gtm ? null : 0, gtm ? 'Píxel de Meta: no visible (puede estar en GTM)' : 'No encontramos el píxel de Meta', 'Sin píxel, Instagram y Facebook no pueden encontrar a viajeros parecidos a los que ya reservan.'));
-  const ads = /['"]aw-\d{6,}['"]|googleadservices\.com\/pagead\/conversion/.test(lower);
-  out.push(ads ? check('ads', 'tracking', 1, 'Etiqueta de Google Ads', '')
-    : check('ads', 'tracking', gtm ? null : 0, gtm ? 'Etiqueta de Google Ads: no visible (puede estar en GTM)' : 'No encontramos la etiqueta de Google Ads', 'Sin ella, las campañas de Google no saben qué clics terminan en reserva.'));
-
+  const pixel = /connect\.facebook\.net\/[^"']*fbevents\.js|fbq\(\s*\\?['"]init/.test(tags);
+  const ads = /aw-\d{6,}|googleadservices\.com\/pagead\/conversion/.test(tags);
+  out.push(pixel && ads ? check('adtags', 'tracking', 1, 'Píxel de Meta y etiqueta de Google Ads', 'Tus campañas pueden aprender de las reservas.')
+    : pixel || ads ? check('adtags', 'tracking', 0.5, pixel ? 'Píxel de Meta, pero sin etiqueta de Google Ads' : 'Etiqueta de Google Ads, pero sin píxel de Meta', pixel ? 'Sin ella, Google Ads no sabe qué clics terminan en reserva.' : 'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.')
+      : hidden ? check('adtags', 'tracking', null, 'Etiquetas de publicidad: no pudimos leer tu Google Tag Manager', '')
+        : check('adtags', 'tracking', 0, 'Sin píxel de Meta ni etiqueta de Google Ads', 'Tus campañas no pueden saber qué anuncios traen reservas.'));
   const social = ['instagram.com', 'facebook.com'].filter((d) => all.includes(d));
   out.push(social.length === 2 ? check('social', 'tracking', 1, 'Enlaces a Instagram y Facebook', '') : check('social', 'tracking', social.length ? 0.5 : 0, social.length ? 'Solo un perfil social enlazado' : 'Sin enlaces a redes sociales', ''));
 
@@ -248,16 +253,19 @@ const handler = async (req, res) => {
     const bookingLink = findBookingLink(home.body, finalUrl);
     const sameHost = bookingLink && new URL(bookingLink).hostname === host;
 
-    const [extra, robots, sitemap] = await Promise.all([
+    const gtmId = (home.body.match(/GTM-[A-Z0-9]{4,10}/) || [])[0];
+    const [extra, robots, sitemap, gtmJs] = await Promise.all([
       sameHost && bookingLink !== finalUrl.href ? safeFetch(bookingLink, 3500).catch(() => null) : null,
       safeFetch(finalUrl.origin + '/robots.txt', 2500).catch(() => null),
-      safeFetch(finalUrl.origin + '/sitemap.xml', 2500, false).catch(() => null)
+      safeFetch(finalUrl.origin + '/sitemap.xml', 2500, false).catch(() => null),
+      gtmId ? safeFetch('https://www.googletagmanager.com/gtm.js?id=' + gtmId, 3500).catch(() => null) : null
     ]);
     const robotsSitemap = robots && robots.status < 400 && /^sitemap:/im.test(robots.body);
     const hasSitemap = robotsSitemap || (sitemap && sitemap.status < 400) || /sitemap/i.test(home.body.match(/<link[^>]+rel=["']sitemap["'][^>]*>/i) || '');
 
     const result = analyze(home.body, extra && extra.status < 400 ? extra.body : '', {
-      host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap
+      host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap,
+      gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : ''
     });
 
     res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
@@ -268,7 +276,7 @@ const handler = async (req, res) => {
       engine: result.engine,
       checks: result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.0'
+      version: '1.1'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
