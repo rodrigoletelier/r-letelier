@@ -154,8 +154,11 @@ function analyze(html, extraHtml, ctx) {
   const engine = ENGINES.find(([, re]) => re.test(all));
   const dateInputs = /<input[^>]+type=["']date["']/i.test(all);
   const bookingLinkExternal = ctx.bookingLink && new URL(ctx.bookingLink).hostname !== ctx.host;
+  const bookText = /book now|book your stay|check availability|reserva ahora|reservar ahora|ver disponibilidad|consultar disponibilidad|reserve now|reservar/.test(textOf(all).toLowerCase());
+  const jsRendered = textOf(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '')).length < 600;
   if (engine) out.push(check('engine', 'conversion', 1, 'Motor de reservas detectado', engine[0]));
-  else if (dateInputs || bookingLinkExternal) out.push(check('engine', 'conversion', 0.5, 'Hay un camino a reservar, pero no identificamos el motor', 'Revisa que el viajero pueda ver disponibilidad y pagar sin salir de tu marca.'));
+  else if (dateInputs || bookingLinkExternal || ctx.bookingLink || bookText) out.push(check('engine', 'conversion', 0.5, 'Hay un camino a reservar, pero no identificamos el motor', 'Revisa que el viajero pueda ver disponibilidad y pagar sin salir de tu marca.'));
+  else if (jsRendered) out.push(check('engine', 'conversion', null, 'Motor de reservas: tu sitio carga con JavaScript y no pudimos verlo', ''));
   else out.push(check('engine', 'conversion', 0, 'No encontramos un motor de reservas', 'El viajero no ve cómo reservar o pagar directo en tu sitio.'));
 
   const otas = OTAS.filter(([, re]) => re.test(all)).map(([n]) => n);
@@ -167,7 +170,7 @@ function analyze(html, extraHtml, ctx) {
   out.push(wa ? check('whatsapp', 'conversion', 1, 'Botón de WhatsApp', '') : check('whatsapp', 'conversion', 0, 'Sin botón de WhatsApp', 'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.'));
 
   const contact = /href=["'](tel:|mailto:)|<form[\s>]/.test(all);
-  out.push(contact ? check('contact', 'conversion', 1, 'Teléfono, correo o formulario visibles', '') : check('contact', 'conversion', 0, 'No encontramos datos de contacto directo', 'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.'));
+  out.push(contact ? check('contact', 'conversion', 1, 'Teléfono, correo o formulario visibles', '') : jsRendered ? check('contact', 'conversion', null, 'Contacto: no pudimos verlo (sitio cargado con JavaScript)', '') : check('contact', 'conversion', 0, 'No encontramos datos de contacto directo', 'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.'));
 
   const offer = /href=["'][^"']*(habitacion|rooms?|suites?|cabanas|cabañas|tours?|experiencias|experiences|programas|expedici|itinerar|paquetes|packages|actividades|activities)/.test(all);
   out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.5, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
@@ -276,7 +279,7 @@ const handler = async (req, res) => {
       engine: result.engine,
       checks: result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.1'
+      version: '1.2'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
