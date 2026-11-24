@@ -86,15 +86,15 @@
         "itemOffered": {
           "@type": "Service",
           "name": "SEO y AEO",
-          "description": "Optimización del sitio para aparecer en Google y ser recomendado por asistentes de IA como ChatGPT, Gemini o Perplexity."
+          "description": "Optimización del sitio para aparecer en Google y aumentar las posibilidades de ser mencionado por asistentes de IA como ChatGPT, Gemini o Perplexity."
         }
       },
       {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "Medición y optimización",
-          "description": "Tracking con Google Analytics 4 y Google Tag Manager y ajustes continuos según resultados."
+          "name": "Conversión y tecnología",
+          "description": "CRO, tracking conectado al motor de reservas y al equipo comercial, automatizaciones e IA para convertir visitas en viajeros."
         }
       }
     ]
@@ -331,13 +331,14 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .journey-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 16px 30px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; color: var(--ink); }
 .journey-pill.is-final { background: linear-gradient(135deg, var(--green-950), var(--green-800)); border-color: transparent; color: var(--white); box-shadow: var(--shadow); }
 .journey-pill small { margin-top: 2px; font-size: 0.76rem; font-weight: 400; color: var(--sage); }
+.journey-pill:not(.is-final) small { color: var(--green-500); }
 .journey-arrow { color: var(--green-500); font-size: 1.4rem; }
-.solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 72px; }
+.solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 72px; }
 .solution-card { padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
 .solution-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
 .solution-tag { display: inline-block; margin-bottom: 16px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
 .solution-card.is-dark .solution-tag { background: rgba(166, 184, 145, 0.18); color: var(--sage); }
-.solution-card h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400; letter-spacing: -0.02em; }
+.solution-card h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.35rem, 2vw, 1.6rem); font-weight: 400; letter-spacing: -0.02em; }
 .solution-card > p { margin: 0 0 20px; color: var(--muted); }
 .solution-card.is-dark > p { color: rgba(255, 255, 255, 0.74); }
 .check-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
@@ -637,23 +638,29 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         </div>
         <svg class="journey-lines" viewBox="0 0 900 110" preserveAspectRatio="none" aria-hidden="true"><path d="M150 0 C150 70 450 40 450 110"/><path d="M450 0 L450 110"/><path d="M750 0 C750 70 450 40 450 110"/></svg>
         <div class="journey-target">
-          <span class="journey-pill">Tu sitio web</span>
+          <span class="journey-pill">Tu sitio web<small>CRO · Tracking · Automatización</small></span>
           <span class="journey-arrow" aria-hidden="true">→</span>
           <span class="journey-pill is-final">Reserva directa<small>sin comisión de OTA</small></span>
         </div>
       </div>
       <div class="container solution-grid">
         <article class="solution-card reveal">
-          <span class="solution-tag">Campañas</span>
+          <span class="solution-tag">Adquisición</span>
           <h3>Google Ads y Meta Ads</h3>
-          <p>Viajeros que llegan desde las primeras semanas.</p>
-          <ul class="check-list"><li>Segmentadas por mercado de origen</li><li>Anuncios que llevan a reservar directo</li><li>Cada reserva medida</li></ul>
+          <p>Atraer al viajero correcto.</p>
+          <ul class="check-list"><li>Segmentadas por mercado de origen</li><li>Anuncios que llevan a reservar directo</li><li>Medición conectada al motor de reservas y al equipo comercial</li></ul>
         </article>
         <article id="seo-aeo" class="solution-card is-dark reveal reveal-delay-1">
-          <span class="solution-tag">SEO + AEO</span>
-          <h3>Google y la IA</h3>
-          <p>Visibilidad que se acumula mes a mes, sin pagar por clic.</p>
-          <ul class="check-list"><li>Aparecer en Google cuando te buscan</li><li>Que ChatGPT, Gemini y Perplexity te recomienden</li><li>Visitas que no dependen solo de medios pagados</li></ul>
+          <span class="solution-tag">Visibilidad</span>
+          <h3>SEO + AEO</h3>
+          <p>Ser descubierto y recomendado.</p>
+          <ul class="check-list"><li>Aparecer en Google cuando te buscan</li><li>Información clara para que ChatGPT, Gemini y Perplexity puedan citarte</li><li>Visitas que no dependen solo de medios pagados</li></ul>
+        </article>
+        <article id="conversion" class="solution-card reveal reveal-delay-2">
+          <span class="solution-tag">Conversión y tecnología</span>
+          <h3>CRO · Tracking · Automatización · IA</h3>
+          <p>Transformar visitantes en viajeros y conectar marketing con el proceso comercial.</p>
+          <ul class="check-list"><li>Páginas que convierten visitas en consultas y reservas</li><li>Del primer clic a la venta, con WhatsApp, formularios y motor de reservas conectados</li><li>Automatizaciones e IA para responder y hacer seguimiento a tiempo</li></ul>
         </article>
       </div>
       <div class="container seo-chain-wrap">
@@ -663,11 +670,11 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <span class="chain-arrow" aria-hidden="true"></span>
           <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><strong>Google lo posiciona</strong></div>
           <span class="chain-arrow" aria-hidden="true"></span>
-          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>La IA lo cita</strong></div>
+          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>La IA puede citarlo</strong></div>
           <span class="chain-arrow" aria-hidden="true"></span>
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>El viajero reserva contigo</strong></div>
         </div>
-        <p class="chain-note reveal">La IA se apoya en lo que ya está bien posicionado. Por eso el SEO sigue siendo la base.</p>
+        <p class="chain-note reveal">Un buen posicionamiento ayuda, pero no garantiza aparecer en la IA. Por eso el SEO es la base y el AEO ordena tu información para que sea fácil de citar.</p>
       </div>
       <div class="container seo-how">
         <div class="seo-how-col reveal">

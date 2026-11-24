@@ -86,7 +86,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "SEO and AEO",
-          "description": "Site optimization to show up on Google and be recommended by AI assistants like ChatGPT, Gemini or Perplexity."
+          "description": "Site optimization to show up on Google and improve the chances of being mentioned by AI assistants like ChatGPT, Gemini or Perplexity."
         }
       },
       {
@@ -331,13 +331,14 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .journey-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 16px 30px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; color: var(--ink); }
 .journey-pill.is-final { background: linear-gradient(135deg, var(--green-950), var(--green-800)); border-color: transparent; color: var(--white); box-shadow: var(--shadow); }
 .journey-pill small { margin-top: 2px; font-size: 0.76rem; font-weight: 400; color: var(--sage); }
+.journey-pill:not(.is-final) small { color: var(--green-500); }
 .journey-arrow { color: var(--green-500); font-size: 1.4rem; }
-.solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 72px; }
+.solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 72px; }
 .solution-card { padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
 .solution-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
 .solution-tag { display: inline-block; margin-bottom: 16px; padding: 5px 12px; border-radius: 999px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(111, 148, 100, 0.16); color: var(--green-700); }
 .solution-card.is-dark .solution-tag { background: rgba(166, 184, 145, 0.18); color: var(--sage); }
-.solution-card h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 400; letter-spacing: -0.02em; }
+.solution-card h3 { margin-bottom: 8px; font-family: 'Source Serif 4', serif; font-size: clamp(1.35rem, 2vw, 1.6rem); font-weight: 400; letter-spacing: -0.02em; }
 .solution-card > p { margin: 0 0 20px; color: var(--muted); }
 .solution-card.is-dark > p { color: rgba(255, 255, 255, 0.74); }
 .check-list { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
@@ -637,23 +638,29 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         </div>
         <svg class="journey-lines" viewBox="0 0 900 110" preserveAspectRatio="none" aria-hidden="true"><path d="M150 0 C150 70 450 40 450 110"/><path d="M450 0 L450 110"/><path d="M750 0 C750 70 450 40 450 110"/></svg>
         <div class="journey-target">
-          <span class="journey-pill">Your website</span>
+          <span class="journey-pill">Your website<small>CRO · Tracking · Automation</small></span>
           <span class="journey-arrow" aria-hidden="true">→</span>
           <span class="journey-pill is-final">Direct booking<small>no OTA commission</small></span>
         </div>
       </div>
       <div class="container solution-grid">
         <article class="solution-card reveal">
-          <span class="solution-tag">Campaigns</span>
+          <span class="solution-tag">Acquisition</span>
           <h3>Google Ads and Meta Ads</h3>
-          <p>Travelers arriving within the first weeks.</p>
-          <ul class="check-list"><li>Segmented by source market</li><li>Ads that lead to direct bookings</li><li>Every booking measured</li></ul>
+          <p>Attract the right traveler.</p>
+          <ul class="check-list"><li>Segmented by source market</li><li>Ads that lead to direct bookings</li><li>Measurement connected to your booking engine and sales team</li></ul>
         </article>
         <article id="seo-aeo" class="solution-card is-dark reveal reveal-delay-1">
-          <span class="solution-tag">SEO + AEO</span>
-          <h3>Google and AI</h3>
-          <p>Visibility that builds month after month, without paying per click.</p>
-          <ul class="check-list"><li>Show up on Google when people search</li><li>Get recommended by ChatGPT, Gemini and Perplexity</li><li>Visits that don’t depend only on paid media</li></ul>
+          <span class="solution-tag">Visibility</span>
+          <h3>SEO + AEO</h3>
+          <p>Get discovered and recommended.</p>
+          <ul class="check-list"><li>Show up on Google when people search</li><li>Clear information that ChatGPT, Gemini and Perplexity can cite</li><li>Visits that don’t depend only on paid media</li></ul>
+        </article>
+        <article id="conversion" class="solution-card reveal reveal-delay-2">
+          <span class="solution-tag">Conversion and technology</span>
+          <h3>CRO · Tracking · Automation · AI</h3>
+          <p>Turn visitors into travelers and connect marketing with your sales process.</p>
+          <ul class="check-list"><li>Pages that turn visits into inquiries and bookings</li><li>From first click to sale, with WhatsApp, forms and booking engine connected</li><li>Automation and AI to reply and follow up on time</li></ul>
         </article>
       </div>
       <div class="container seo-chain-wrap">
@@ -663,11 +670,11 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <span class="chain-arrow" aria-hidden="true"></span>
           <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><strong>Google ranks it</strong></div>
           <span class="chain-arrow" aria-hidden="true"></span>
-          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>AI cites it</strong></div>
+          <div class="chain-step"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>AI can cite it</strong></div>
           <span class="chain-arrow" aria-hidden="true"></span>
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>The traveler books with you</strong></div>
         </div>
-        <p class="chain-note reveal">AI relies on what’s already well ranked. That’s why SEO is still the foundation.</p>
+        <p class="chain-note reveal">Good rankings help, but they don’t guarantee showing up in AI. That’s why SEO is the foundation and AEO organizes your information so it’s easy to cite.</p>
       </div>
       <div class="container seo-how">
         <div class="seo-how-col reveal">
