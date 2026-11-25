@@ -6,7 +6,7 @@
   var T = en ? {
     areas: ['Visibility on Google and AI', 'Direct booking', 'Offer for travelers', 'Speed and mobile', 'Tracking and social'],
     services: { visibilidad: 'Visibility', conversion: 'Conversion and technology', propuesta: 'Conversion and technology', rendimiento: 'Conversion and technology', tracking: 'Acquisition' },
-    loading: 'Checking your site…', measuring: 'Measuring mobile speed…', of: 'out of 100', partial: 'Partial results',
+    loading: 'Checking your site…', measuring: 'Measuring mobile speed…', wait: 'Measuring mobile speed with Google. It takes up to a minute', of: 'out of 100', partial: 'Partial results',
     levels: ['There is a lot of room to grow', 'You are on track, but there are leaks', 'Your website has a solid base'],
     noEvidence: 'Not enough evidence', top: 'Your top 3 priorities', none: 'We found no obvious gaps',
     full: 'See full report', send: 'Send report', email: 'Your email', ask: 'Leave your email and I will send you the full report, with everything we checked and what to fix first.', sending: 'Sending…', sent: function (e) { return 'Done. The full report is on its way to ' + e + '. If you do not see it in a few minutes, check your spam folder.'; }, sendError: 'We could not send it. Check the email address and try again.',
@@ -15,7 +15,7 @@
   } : {
     areas: ['Visibilidad en Google y la IA', 'Reserva directa', 'Propuesta para el viajero', 'Velocidad y móvil', 'Medición y redes'],
     services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Adquisición' },
-    loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', of: 'de 100', partial: 'Diagnóstico parcial',
+    loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', wait: 'Midiendo la velocidad en móvil con Google. Tarda hasta un minuto', of: 'de 100', partial: 'Diagnóstico parcial',
     levels: ['Hay mucho espacio para crecer', 'Vas bien, pero hay fugas', 'Tu web tiene una base sólida'],
     noEvidence: 'Sin evidencia suficiente', top: 'Tus 3 prioridades', none: 'No encontramos brechas evidentes',
     full: 'Ver informe completo', send: 'Enviar informe', email: 'Tu correo', ask: 'Deja tu correo y te envío el informe completo, con todo lo que revisamos y qué conviene corregir primero.', sending: 'Enviando…', sent: function (e) { return 'Listo. El informe completo va camino a ' + e + '. Si no lo ves en unos minutos, revisa la carpeta de spam.'; }, sendError: 'No pudimos enviarlo. Revisa el correo e inténtalo de nuevo.',
@@ -26,7 +26,7 @@
   var WEIGHTS = [25, 25, 20, 15, 15];
   var MAX_PCT = 90;
   var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
-  var data = null, speed = null;
+  var data = null, speed = null, waitStart = 0, waitTimer = null;
 
   function esc(s) { return String(s || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function track(n, p) { if (typeof gtag === 'function') gtag('event', n, p || {}); }
@@ -64,8 +64,10 @@
       '<div class="di-head"><div class="di-score"><strong>' + (r.score !== null ? r.score : '–') + '</strong><span>' + T.of + '</span></div>' +
       '<div><p class="di-host">' + esc(data.host) + '</p><h3>' + esc(title) + '</h3></div></div>' +
       '<div class="di-bars">' + r.areas.map(function (a) {
-        return '<div class="di-bar"><span>' + a.title + '</span><i><b style="width:' + (a.ok ? a.pct : 0) + '%;background:' + color(a.pct) + '"></b></i><em>' + (a.ok ? a.pct + '%' : (a.title === T.areas[3] && speed === null ? '…' : '–')) + '</em></div>';
+        var waiting = a.title === T.areas[3] && speed === null;
+        return '<div class="di-bar"><span>' + a.title + '</span><i' + (waiting ? ' class="is-loading"' : '') + '><b style="width:' + (a.ok ? a.pct : 0) + '%;background:' + color(a.pct) + '"></b></i><em>' + (a.ok ? a.pct + '%' : waiting ? '<span class="di-dots"><i></i><i></i><i></i></span>' : '–') + '</em></div>';
       }).join('') + '</div>' +
+      (speed === null ? '<p class="di-wait"><span class="di-spin" aria-hidden="true"></span>' + T.wait + ' <b class="di-sec">' + Math.round((Date.now() - waitStart) / 1000) + ' s</b></p>' : '') +
       '<h4>' + T.top + '</h4><ol class="di-top">' + (r.top.length ? r.top.map(function (c) {
         return '<li><small>' + T.services[c.area] + '</small>' + esc(c.label) + '</li>';
       }).join('') : '<li>' + T.none + '</li>') + '</ol>' +
@@ -123,14 +125,18 @@
     btn.disabled = true;
     box.hidden = false;
     box.innerHTML = '<p class="di-msg"><span class="di-spin" aria-hidden="true"></span>' + T.loading + '</p>';
-    data = null; speed = null;
+    data = null; speed = null; clearInterval(waitTimer);
     track('diagnostico_start', { place: 'home' });
     getJson('/api/diagnostico?' + (en ? 'lang=en&' : '') + 'url=' + encodeURIComponent(raw), 20000).then(function (j) {
       data = j;
+      waitStart = Date.now();
+      clearInterval(waitTimer);
+      waitTimer = setInterval(function () { var el = box.querySelector('.di-sec'); if (el) el.textContent = Math.round((Date.now() - waitStart) / 1000) + ' s'; }, 1000);
       render();
       track('diagnostico_complete', { site: j.host, place: 'home' });
       return getJson('/api/velocidad?url=' + encodeURIComponent(j.url), 65000).catch(function () { return false; }).then(function (s) {
         if (data !== j) return;
+        clearInterval(waitTimer);
         speed = s;
         var r = render();
         track('diagnostico_score', { site: j.host, place: 'home', speed_ok: !!s, score: r.score });
