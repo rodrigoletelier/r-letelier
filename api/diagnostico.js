@@ -199,7 +199,7 @@ const EN = {
   'Tus campañas pueden aprender de las reservas.': 'Your campaigns can learn from bookings.',
   'Píxel de Meta, pero sin etiqueta de Google Ads': 'Meta pixel, but no Google Ads tag',
   'Etiqueta de Google Ads, pero sin píxel de Meta': 'Google Ads tag, but no Meta pixel',
-  'Sin ella, Google Ads no sabe qué clics terminan en reserva.': 'Without it, Google Ads cannot tell which clicks turn into bookings.',
+  'Sin ella, Google Ads no sabe qué clics terminan en reserva. Si importas conversiones desde Analytics, puede estar cubierto.': 'Without it, Google Ads cannot tell which clicks turn into bookings. If you import conversions from Analytics, this may be covered.',
   'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.': 'Without the pixel, Instagram and Facebook cannot learn from the people who book.',
   'Etiquetas de publicidad: no pudimos leer tu Google Tag Manager': 'Ad tags: we could not read your Google Tag Manager',
   'Sin píxel de Meta ni etiqueta de Google Ads': 'No Meta pixel and no Google Ads tag',
@@ -336,9 +336,9 @@ function analyze(html, extraHtml, ctx) {
     : hidden ? check('ga4', 'tracking', null, 'Google Analytics 4: no pudimos leer tu Google Tag Manager', '')
       : check('ga4', 'tracking', 0, 'No encontramos Google Analytics 4', 'Sin analítica no sabes de dónde llegan tus reservas.'));
   const pixel = /connect\.facebook\.net[^"']{0,40}fbevents|fbq\(\s*\\?['"]init|facebook\.com\/tr\?id=|pixelyoursite|facebook-for-wordpress|official-facebook-pixel|pixel-caffeine|facebook-pixel/.test(tags);
-  const ads = /aw-\d{6,}|googleadservices\.com\/pagead\/conversion/.test(tags);
+  const ads = /aw-\d{6,}|googleadservices\.com\/pagead\/conversion|"__awct"|"__sp"|"__gclidw"|vtp_conversionid|google_conversion_id/.test(tags);
   out.push(pixel && ads ? check('adtags', 'tracking', 1, 'Píxel de Meta y etiqueta de Google Ads', 'Tus campañas pueden aprender de las reservas.')
-    : pixel || ads ? check('adtags', 'tracking', 0.5, pixel ? 'Píxel de Meta, pero sin etiqueta de Google Ads' : 'Etiqueta de Google Ads, pero sin píxel de Meta', pixel ? 'Sin ella, Google Ads no sabe qué clics terminan en reserva.' : 'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.')
+    : pixel || ads ? check('adtags', 'tracking', 0.5, pixel ? 'Píxel de Meta, pero sin etiqueta de Google Ads' : 'Etiqueta de Google Ads, pero sin píxel de Meta', pixel ? 'Sin ella, Google Ads no sabe qué clics terminan en reserva. Si importas conversiones desde Analytics, puede estar cubierto.' : 'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.')
       : hidden ? check('adtags', 'tracking', null, 'Etiquetas de publicidad: no pudimos leer tu Google Tag Manager', '')
         : check('adtags', 'tracking', 0, 'Sin píxel de Meta ni etiqueta de Google Ads', 'Tus campañas no pueden saber qué anuncios traen reservas.'));
   const social = ['instagram.com', 'facebook.com'].filter((d) => all.includes(d));
@@ -426,12 +426,14 @@ async function runDiagnosis(input, lang) {
       const more = await Promise.all(deeper.map((u) => safeFetch(u, 3000, true, ua).catch(() => null)));
       offerBodies = offerBodies.concat(more.filter((o) => o && o.status < 400 && o.body).map((o) => o.body));
     }
+    const gtagId = ((home.body + ' ' + (gtmJs && gtmJs.status < 400 ? gtmJs.body : '')).match(/\bG-[A-Z0-9]{6,12}\b/) || [])[0];
+    const gtagJs = gtagId ? await safeFetch('https://www.googletagmanager.com/gtag/js?id=' + gtagId, 3000).catch(() => null) : null;
     const robotsSitemap = robots && robots.status < 400 && /^sitemap:/im.test(robots.body);
     const hasSitemap = robotsSitemap || (sitemap && sitemap.status < 400) || /sitemap/i.test(home.body.match(/<link[^>]+rel=["']sitemap["'][^>]*>/i) || '');
 
     const result = analyze(home.body, extra && extra.status < 400 ? extra.body : '', {
       host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap,
-      gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : '',
+      gtmJs: (gtmJs && gtmJs.status < 400 ? gtmJs.body : '') + (gtagJs && gtagJs.status < 400 ? ' ' + gtagJs.body : ''),
       offerHtml: offerBodies.join('\n')
     });
 
@@ -444,7 +446,7 @@ async function runDiagnosis(input, lang) {
         engine: result.engine,
         checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
         analyzedAt: new Date().toISOString(),
-        version: '1.10'
+        version: '1.11'
       }
     };
   } catch (e) {
