@@ -132,6 +132,14 @@
     },
     {
       "@type": "Question",
+      "name": "What does the SEO + AEO plan include each month?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Every month includes an AI visibility test, a content brief and a report with a meeting. On top of that, each month has a different focus: technical foundation, a connected blog, FAQs, experience pages, one consistent brand across channels and mentions on other sites. The order is set by the first measurement."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Do you work with businesses outside Chile?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -326,12 +334,16 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .journey-chips span { display: inline-flex; align-items: center; gap: 5px; }
 .journey-lines { display: block; width: 100%; height: 110px; }
 .journey-lines path { fill: none; stroke: rgba(111, 148, 100, 0.55); stroke-width: 2; stroke-dasharray: 6 8; vector-effect: non-scaling-stroke; }
-.journey-target { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+.journey-target { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
 .journey-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 16px 30px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; color: var(--ink); }
 .journey-pill.is-final { background: linear-gradient(135deg, var(--green-950), var(--green-800)); border-color: transparent; color: var(--white); box-shadow: var(--shadow); }
 .journey-pill small { margin-top: 2px; font-size: 0.76rem; font-weight: 400; color: var(--sage); }
 .journey-pill:not(.is-final) small { color: var(--green-500); }
-.journey-arrow { color: var(--green-500); font-size: 1.4rem; }
+.journey-arrow { color: var(--green-500); font-size: 1.4rem; transform: rotate(90deg); }
+.journey-pill.is-final { position: relative; }
+.jp-badge { position: absolute; top: -14px; right: -18px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px 5px 8px; border-radius: 999px; background: var(--white); color: var(--green-700); font-size: 0.7rem; font-weight: 700; white-space: nowrap; box-shadow: 0 8px 20px rgba(7, 26, 19, 0.14); opacity: 0; transform: scale(0.6) translateY(6px); }
+.jp-badge svg { width: 14px; height: 14px; fill: none; stroke: var(--green-500); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; }
+.journey-pill.is-final::before { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--sage); opacity: 0; pointer-events: none; }
 .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 72px; }
 .solution-card { padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
 .solution-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
@@ -626,11 +638,17 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .seo-chain .chain-arrow:nth-of-type(4)::after { animation-delay: 0.6s; }
   .seo-chain .chain-arrow:nth-of-type(6)::after { animation-delay: 1.2s; }
   .journey-pill.is-final { animation: glow 3s ease-in-out infinite; }
+  .journey-pill.is-final::before { animation: ripple 3s ease-out infinite; }
+  .jp-badge { animation: badge-pop 6s ease-in-out infinite; }
+  .jp-badge svg { animation: check-draw 6s ease-in-out infinite; }
   .process-dot, .audit-steps b { transition: transform 300ms ease; }
   .service-card:hover .process-dot, .audit-steps li:hover b { transform: scale(1.1); }
 }
 @keyframes flow { to { stroke-dashoffset: -28; } }
 @keyframes travel { 0% { left: -12px; } 60%, 100% { left: 100%; } }
+@keyframes ripple { 0% { opacity: 0.7; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.18, 1.45); } }
+@keyframes badge-pop { 0%, 15% { opacity: 0; transform: scale(0.6) translateY(6px); } 22% { opacity: 1; transform: scale(1.08) translateY(0); } 26%, 80% { opacity: 1; transform: scale(1) translateY(0); } 88%, 100% { opacity: 0; transform: scale(0.9) translateY(-4px); } }
+@keyframes check-draw { 0%, 20% { stroke-dashoffset: 24; } 32%, 100% { stroke-dashoffset: 0; } }
 @keyframes glow { 0%, 100% { box-shadow: var(--shadow); } 50% { box-shadow: 0 0 0 8px rgba(111, 148, 100, 0.18), var(--shadow); } }
 
 /* === ANIMACIONES DE SCROLL === */
@@ -775,7 +793,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <div class="journey-target">
           <span class="journey-pill">Your website<small>CRO · Tracking · Automation</small></span>
           <span class="journey-arrow" aria-hidden="true">→</span>
-          <span class="journey-pill is-final">Direct booking<small>no OTA commission</small></span>
+          <span class="journey-pill is-final"><span class="jp-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Booking confirmed</span>Direct booking<small>no OTA commission</small></span>
         </div>
       </div>
       <div class="container solution-grid">
@@ -810,20 +828,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>The traveler books with you</strong></div>
         </div>
       </div>
-      <div class="container seo-how">
-        <div class="seo-how-col reveal">
-          <h4>Every month</h4>
-          <p>The fixed part of the SEO + AEO plan.</p>
-          <ul class="pill-list"><li>AI visibility test</li><li>Content brief</li><li>Report and meeting</li></ul>
-        </div>
-        <div class="seo-how-col reveal reveal-delay-1">
-          <h4>A different focus each month</h4>
-          <p>The order is set by the first measurement.</p>
-          <ol class="focus-trail"><li><span>Technical foundation</span></li><li><span>Connected blog</span></li><li><span>FAQs</span></li><li><span>Experience pages</span></li><li><span>One consistent brand</span></li><li><span>Mentions</span></li></ol>
-        </div>
-      </div>
       <div class="container section-center solutions-cta">
-        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hi%20Rodrigo%2C%20I%27d%20like%20to%20know%20if%20my%20business%20shows%20up%20on%20Google%20and%20AI." target="_blank" rel="noreferrer">Does AI recommend you? Let’s check</a>
+        <a class="btn btn-primary reveal" href="/en/#diagnostic">Check your website for free</a>
       </div>
     </section>
 
@@ -965,6 +971,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>What methodology do you use?</span><span class="faq-icon">+</span></button><div class="faq-a">It's the 4-stage process shown above — Diagnosis, Strategy, Activation and Optimization, month after month — plus ongoing advisory throughout the whole relationship, not just when we launch something new.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>What tools do you use or implement on the site?</span><span class="faq-icon">+</span></button><div class="faq-a">It depends on the goal, but the usual stack includes Google Ads and Meta Ads to attract travelers, SEO and AEO to rank your site on Google and in AI assistants without relying only on paid media, landing pages designed to turn visits into inquiries or bookings, and Google Analytics 4 together with Google Tag Manager to measure which campaign, channel or market generates each real booking. I choose the combination based on your property — I don't apply the same set of tools to a city hotel as to a remote lodge.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>What is AEO and why does it matter for a lodge or hotel?</span><span class="faq-icon">+</span></button><div class="faq-a">AEO (Answer Engine Optimization) means preparing your site so AI assistants like ChatGPT, Gemini, Perplexity or Google's AI answers mention you when a traveler asks them where to stay or what to do in your destination. More and more travelers plan their trips this way. I shape your property's information so it's clear, complete and easy to cite: FAQs, structured data, reviews and destination content. It complements traditional SEO; it doesn't replace it.</div></div>
+          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>What does the SEO + AEO plan include each month?</span><span class="faq-icon">+</span></button><div class="faq-a">Every month includes an AI visibility test, a content brief and a report with a meeting. On top of that, each month has a different focus: technical foundation, a connected blog, FAQs, experience pages, one consistent brand across channels and mentions on other sites. The order is set by the first measurement.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>Do you work with businesses outside Chile?</span><span class="faq-icon">+</span></button><div class="faq-a">Yes. I work with tourism projects across different countries in the Americas. The methodology is the same; what changes is the campaign setup, source markets and languages.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>How soon do you see results?</span><span class="faq-icon">+</span></button><div class="faq-a">The first signs of traction arrive within the first few weeks after launching campaigns. Sustainable results in direct bookings and SEO tend to consolidate over a 3 to 6 month horizon, depending on the business's starting point.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>How do you handle the media budget?</span><span class="faq-icon">+</span></button><div class="faq-a">The media budget (what's invested in Google and Meta) is separate from the management fee. We define it together based on goals, season and the business's capacity to take on bookings.</div></div>
