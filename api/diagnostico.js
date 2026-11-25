@@ -2,6 +2,7 @@ const dns = require('dns').promises;
 const net = require('net');
 
 const UA = 'Mozilla/5.0 (compatible; RLDiagnostico/1.0; +https://www.rodrigoletelier.cl/diagnostico/)';
+const UA_PLAIN = 'RLDiagnostico/1.0 (+https://www.rodrigoletelier.cl/diagnostico/)';
 const MAX_BYTES = 1500000;
 const hits = new Map();
 
@@ -75,14 +76,14 @@ async function assertPublic(u) {
   if (!addrs.length || addrs.some((a) => isPrivateIp(a.address))) throw new Error('bad_url');
 }
 
-async function safeFetch(start, timeoutMs, wantBody = true) {
+async function safeFetch(start, timeoutMs, wantBody = true, ua = UA) {
   let url = new URL(start);
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     for (let hop = 0; hop < 5; hop++) {
       await assertPublic(url);
-      const r = await fetch(url, { redirect: 'manual', signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: 'text/html,*/*;q=0.8', 'Accept-Language': 'es,en;q=0.8' } });
+      const r = await fetch(url, { redirect: 'manual', signal: ctrl.signal, headers: { 'User-Agent': ua, Accept: 'text/html,*/*;q=0.8', 'Accept-Language': 'es,en;q=0.8' } });
       if (r.status >= 300 && r.status < 400 && r.headers.get('location')) {
         url = new URL(r.headers.get('location'), url);
         continue;
@@ -335,6 +336,10 @@ const handler = async (req, res) => {
         start.protocol = 'http:';
         home = await safeFetch(start.href, 4000);
       } else throw e;
+    }
+    if (home.status >= 500 || home.status === 403) {
+      const retry = await safeFetch(home.url || start.href, 5000, true, UA_PLAIN).catch(() => null);
+      if (retry && retry.status < 400 && retry.body) home = retry;
     }
     if (home.status === 401 || home.status === 403 || home.status === 429) { res.status(422).json({ error: 'blocked', status: home.status }); return; }
     if (home.status >= 400 || !home.body) { res.status(422).json({ error: 'unreachable', status: home.status }); return; }
