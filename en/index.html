@@ -344,6 +344,71 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .check-list li { position: relative; padding-left: 30px; font-size: 0.95rem; }
 .check-list li::before { content: ''; position: absolute; left: 0; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: rgba(111, 148, 100, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f4d3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center / 11px no-repeat; }
 .solution-card.is-dark .check-list li::before { background-color: rgba(166, 184, 145, 0.22); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a6b891' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E"); }
+/* === FONDOS ANIMADOS SOLUCIONES === */
+.solution-card.is-dark { overflow: hidden; }
+.sol-bg { --pad: clamp(28px, 4vw, 40px); position: relative; height: 190px; margin: calc(var(--pad) * -1) calc(var(--pad) * -1) 26px; overflow: hidden; pointer-events: none; -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent); mask-image: linear-gradient(to bottom, #000 55%, transparent); }
+.sb-window { position: absolute; top: 26px; left: 50%; width: 82%; padding: 12px 14px 16px; border-radius: 14px; background: rgba(244, 240, 232, 0.96); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); transform: translateX(-50%); }
+.sb-dots { display: flex; gap: 5px; margin-bottom: 10px; }
+.sb-dots i { width: 7px; height: 7px; border-radius: 50%; background: #c9b9a0; }
+.sb-bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; background: #fff; border: 1px solid #e2d9c8; font-size: 0.8rem; color: var(--ink); white-space: nowrap; overflow: hidden; }
+.sb-bar svg { flex-shrink: 0; width: 14px; height: 14px; fill: none; stroke: #4285f4; stroke-width: 2.4; stroke-linecap: round; }
+.sb-caret { width: 1.5px; height: 14px; margin-left: -6px; background: var(--ink); animation: sb-blink 1s steps(1) infinite; }
+.sb-results { display: grid; gap: 10px; margin-top: 12px; }
+.sb-result { display: grid; gap: 5px; opacity: 0; transform: translateY(6px); transition: opacity 400ms ease, transform 400ms ease; }
+.sol-bg-search.is-done .sb-result { opacity: 1; transform: none; }
+.sol-bg-search.is-done .sb-result:nth-child(2) { transition-delay: 150ms; }
+.sol-bg-search.is-done .sb-result:nth-child(3) { transition-delay: 300ms; }
+.sb-result b { width: 62%; height: 9px; border-radius: 4px; background: #1a0dab; opacity: 0.55; }
+.sb-result.is-ad b { width: auto; height: auto; justify-self: start; padding: 1px 7px; border-radius: 4px; background: none; border: 1px solid var(--green-700); color: var(--green-700); font-size: 0.62rem; font-weight: 700; opacity: 1; }
+.sb-result span { height: 6px; border-radius: 4px; background: #d8cfbf; }
+.sb-result span + span { width: 70%; }
+@keyframes sb-blink { 50% { opacity: 0; } }
+.rl-phone { position: absolute; top: 20px; left: 50%; width: 124px; aspect-ratio: 9 / 16; border-radius: 18px; border: 3px solid rgba(244, 240, 232, 0.9); overflow: hidden; background: #0d2b20; box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35); transform: translateX(-50%); }
+.rl-slides, .rl-slide { position: absolute; inset: 0; width: 100%; height: 100%; }
+.rl-slide { opacity: 0; animation: rl-show 12s infinite; }
+.rl-slide:nth-child(2) { animation-delay: 3s; }
+.rl-slide:nth-child(3) { animation-delay: 6s; }
+.rl-slide:nth-child(4) { animation-delay: 9s; }
+@keyframes rl-show { 0% { opacity: 0; transform: scale(1.12); } 4% { opacity: 1; } 25% { opacity: 1; } 29% { opacity: 0; transform: scale(1); } 100% { opacity: 0; } }
+.rl-progress { position: absolute; z-index: 2; top: 7px; left: 7px; right: 7px; display: flex; gap: 3px; }
+.rl-progress i { flex: 1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.35); overflow: hidden; position: relative; }
+.rl-progress i::after { content: ''; position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: left; animation: rl-bar 12s linear infinite; }
+.rl-progress i:nth-child(2)::after { animation-name: rl-bar2; }
+.rl-progress i:nth-child(3)::after { animation-name: rl-bar3; }
+.rl-progress i:nth-child(4)::after { animation-name: rl-bar4; }
+@keyframes rl-bar { 0% { transform: scaleX(0); } 25%, 100% { transform: scaleX(1); } }
+@keyframes rl-bar2 { 0%, 25% { transform: scaleX(0); } 50%, 100% { transform: scaleX(1); } }
+@keyframes rl-bar3 { 0%, 50% { transform: scaleX(0); } 75%, 100% { transform: scaleX(1); } }
+@keyframes rl-bar4 { 0%, 75% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+.rl-ui { position: absolute; z-index: 2; left: 8px; right: 8px; bottom: 8px; display: flex; align-items: flex-end; justify-content: space-between; color: #fff; font-size: 0.55rem; font-weight: 600; }
+.rl-icons { display: grid; gap: 6px; }
+.rl-icons svg { width: 13px; height: 13px; fill: none; stroke: #fff; stroke-width: 2; stroke-linejoin: round; }
+.ia-orb { position: absolute; border-radius: 50%; filter: blur(30px); opacity: 0.5; animation: ia-float 14s ease-in-out infinite alternate; }
+.ia-orb-1 { top: -30px; right: 10%; width: 200px; height: 200px; background: #a6b891; }
+.ia-orb-2 { top: 50px; left: 15%; width: 140px; height: 140px; background: #6f9464; animation-duration: 11s; animation-delay: -4s; }
+.ia-orb-3 { top: 20px; left: 45%; width: 110px; height: 110px; background: #cfe0c3; opacity: 0.3; animation-duration: 17s; }
+@keyframes ia-float { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30px, 24px) scale(1.12); } 100% { transform: translate(20px, -10px) scale(0.95); } }
+.ia-net { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.8; }
+.ia-lines path { fill: none; stroke: #cfe0c3; stroke-width: 1; stroke-dasharray: 4 5; animation: ia-flow 6s linear infinite; opacity: 0.6; }
+.ia-nodes circle { fill: #f4f0e8; animation: ia-pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.ia-nodes circle:nth-child(2n) { animation-delay: -1.5s; }
+.ia-nodes circle:nth-child(3n) { animation-delay: -0.8s; }
+@keyframes ia-flow { to { stroke-dashoffset: -54; } }
+@keyframes ia-pulse { 0%, 100% { opacity: 0.4; transform: scale(1); } 50% { opacity: 1; transform: scale(1.6); } }
+.ia-spark { position: absolute; color: #f4f0e8; font-size: 14px; animation: ia-twinkle 4s ease-in-out infinite; }
+.ia-spark-1 { top: 34px; left: 22%; }
+.ia-spark-2 { top: 80px; right: 14%; font-size: 10px; animation-delay: -1.3s; }
+.ia-spark-3 { top: 120px; left: 55%; font-size: 9px; animation-delay: -2.6s; }
+@keyframes ia-twinkle { 0%, 100% { opacity: 0.15; transform: scale(0.8); } 50% { opacity: 0.9; transform: scale(1.1); } }
+.sol-bg.is-paused *, .sol-bg.is-paused *::after { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .sol-bg *, .sol-bg *::after { animation: none !important; }
+  .rl-slide:first-child { opacity: 1; }
+  .sb-result { opacity: 1; transform: none; }
+}
+@media (max-width: 640px) {
+  .sb-window { width: 88%; }
+}
 .seo-chain-wrap { margin-top: 88px; text-align: center; }
 .seo-chain-wrap h3 { margin-bottom: 40px; font-family: 'Source Serif 4', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: -0.022em; }
 .seo-chain-wrap h3 span { color: var(--green-500); }
@@ -706,18 +771,21 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div class="container solution-grid">
         <article class="solution-card is-dark reveal">
+          <div class="sol-bg sol-bg-search" aria-hidden="true"><div class="sb-window"><div class="sb-dots"><i></i><i></i><i></i></div><div class="sb-bar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span class="sb-typed" data-queries="lodge in patagonia|amazon eco lodge|boutique hotel in atacama"></span><span class="sb-caret"></span></div><div class="sb-results"><div class="sb-result is-ad"><b>Sponsored</b><span></span><span></span></div><div class="sb-result"><b></b><span></span><span></span></div><div class="sb-result"><b></b><span></span></div></div></div></div>
           <span class="solution-tag">Acquisition</span>
           <h3>Google Ads and Meta Ads</h3>
           <p>Attract the right traveler.</p>
           <ul class="check-list"><li>Segmented by source market</li><li>Ads that lead to direct bookings</li><li>Measurement connected to your booking engine and sales team</li></ul>
         </article>
         <article id="seo-aeo" class="solution-card is-dark reveal reveal-delay-1">
+          <div class="sol-bg sol-bg-reels" aria-hidden="true"><div class="rl-phone"><div class="rl-progress"><i></i><i></i><i></i><i></i></div><div class="rl-slides"><svg class="rl-slide" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rlm" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0b37e"/><stop offset="0.55" stop-color="#c97a66"/><stop offset="1" stop-color="#3b3a52"/></linearGradient></defs><rect width="90" height="160" fill="url(#rlm)"/><circle cx="62" cy="52" r="10" fill="#fbe3c0" opacity="0.9"/><path d="M0 110 L22 62 L36 84 L52 48 L72 90 L90 70 L90 160 L0 160Z" fill="#2b2f45"/><path d="M46 58 L52 48 L58 60 L54 57 L50 61Z" fill="#f4f0e8"/><path d="M0 128 L30 100 L58 122 L90 104 L90 160 L0 160Z" fill="#1c2033"/></svg><svg class="rl-slide" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rlj" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe0c3"/><stop offset="0.5" stop-color="#6f9464"/><stop offset="1" stop-color="#143d2d"/></linearGradient></defs><rect width="90" height="160" fill="url(#rlj)"/><path d="M0 70 Q22 54 45 68 T90 62 L90 160 L0 160Z" fill="#4c7a4f" opacity="0.8"/><rect y="74" width="90" height="10" fill="#f4f0e8" opacity="0.35"/><path d="M0 96 Q20 80 40 96 T90 90 L90 160 L0 160Z" fill="#1f4d3a"/><path d="M8 160 Q10 120 4 104 M8 120 Q18 110 26 114 M8 128 Q-2 118 -8 120" stroke="#0d2b20" stroke-width="3" fill="none"/><path d="M0 130 Q30 116 60 132 T90 128 L90 160 L0 160Z" fill="#0d2b20"/></svg><svg class="rl-slide" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rld" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fa3c9"/><stop offset="0.55" stop-color="#f3d3a1"/><stop offset="1" stop-color="#d9935a"/></linearGradient></defs><rect width="90" height="160" fill="url(#rld)"/><circle cx="24" cy="44" r="8" fill="#fff6df"/><path d="M0 100 Q30 82 56 98 T90 92 L90 160 L0 160Z" fill="#e0a466"/><path d="M0 120 Q40 98 90 118 L90 160 L0 160Z" fill="#c97a46"/><path d="M0 140 Q50 124 90 142 L90 160 L0 160Z" fill="#a85f34"/></svg><svg class="rl-slide" viewBox="0 0 90 160" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rls" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9cc9d9"/><stop offset="0.5" stop-color="#4f97b0"/><stop offset="1" stop-color="#1b4f6a"/></linearGradient></defs><rect width="90" height="160" fill="url(#rls)"/><circle cx="66" cy="40" r="9" fill="#fff6df" opacity="0.9"/><rect y="78" width="90" height="82" fill="#2d7391"/><path d="M0 92 Q11 86 22 92 T45 92 T67 92 T90 92" stroke="#bfe3ee" stroke-width="2" fill="none" opacity="0.7"/><path d="M0 110 Q11 104 22 110 T45 110 T67 110 T90 110" stroke="#bfe3ee" stroke-width="2" fill="none" opacity="0.5"/><path d="M0 140 Q24 126 48 138 Q70 128 90 136 L90 160 L0 160Z" fill="#e9d8b6"/></svg></div><div class="rl-ui"><span class="rl-user">@yourlodge</span><span class="rl-icons"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg></span></div></div></div>
           <span class="solution-tag">Visibility</span>
           <h3>SEO + AEO</h3>
           <p>Get discovered and recommended.</p>
           <ul class="check-list"><li>Show up on Google when people search</li><li>Clear information that ChatGPT, Gemini and Perplexity can cite</li><li>Visits that don’t depend only on paid media</li></ul>
         </article>
         <article id="conversion" class="solution-card is-dark reveal reveal-delay-2">
+          <div class="sol-bg sol-bg-ia" aria-hidden="true"><span class="ia-orb ia-orb-1"></span><span class="ia-orb ia-orb-2"></span><span class="ia-orb ia-orb-3"></span><svg class="ia-net" viewBox="0 0 300 190" preserveAspectRatio="xMidYMid slice"><g class="ia-lines"><path d="M40 150 L110 90 L190 120 L260 50"/><path d="M110 90 L150 30 L260 50"/><path d="M190 120 L230 175"/><path d="M40 150 L95 185"/></g><g class="ia-nodes"><circle cx="40" cy="150" r="3"/><circle cx="110" cy="90" r="4"/><circle cx="190" cy="120" r="3"/><circle cx="260" cy="50" r="4"/><circle cx="150" cy="30" r="3"/><circle cx="230" cy="175" r="3"/><circle cx="95" cy="185" r="2.5"/></g></svg><span class="ia-spark ia-spark-1">✦</span><span class="ia-spark ia-spark-2">✦</span><span class="ia-spark ia-spark-3">✦</span></div>
           <span class="solution-tag">Conversion and technology</span>
           <h3>CRO · Tracking · Automation · AI</h3>
           <p>Turn visitors into travelers and connect marketing with your sales process.</p>
@@ -1065,5 +1133,6 @@ function toggleFaq(btn) {
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.412-.074-.124-.272-.198-.57-.347z"/><path d="M12.05 2C6.526 2 2.05 6.477 2.05 12c0 1.867.502 3.617 1.376 5.121L2 22l5.09-1.375A9.955 9.955 0 0012.05 22c5.523 0 10-4.477 10-10S17.573 2 12.05 2zm0 18.09c-1.68 0-3.24-.474-4.573-1.293l-.328-.198-3.02.816.812-2.98-.213-.313A8.06 8.06 0 013.95 12c0-4.474 3.626-8.1 8.1-8.1 4.473 0 8.099 3.626 8.099 8.1 0 4.473-3.626 8.09-8.099 8.09z"/></svg>
 </a>
 <script src="/assets/diag-inline.js" defer></script>
+<script src="/assets/solution-bg.js" defer></script>
 </body>
 </html>
