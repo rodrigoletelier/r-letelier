@@ -508,7 +508,7 @@ h3 { margin-top: 0; }
   });
 
   var preset = new URLSearchParams(location.search).get('web');
-  if (preset) { $('url-input').value = preset; }
+  if (preset) { $('url-input').value = preset; $('url-form').requestSubmit ? $('url-form').requestSubmit() : $('url-btn').click(); }
 })();
 </script>
 

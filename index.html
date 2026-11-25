@@ -355,7 +355,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .chain-step strong { max-width: 170px; font-size: 0.95rem; font-weight: 600; line-height: 1.35; color: var(--ink); }
 .chain-arrow { position: relative; width: clamp(28px, 6vw, 80px); height: 2px; margin-top: 31px; background: rgba(111, 148, 100, 0.3); overflow: hidden; }
 .chain-arrow::after { content: ''; position: absolute; top: -2px; left: -12px; width: 12px; height: 6px; border-radius: 3px; background: var(--green-500); }
-.chain-note { max-width: 560px; margin: 32px auto 0; color: var(--muted); }
 .seo-how { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 18px; margin-top: 72px; }
 .seo-how-col { padding: 28px; border: 1px solid var(--line); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.6); }
 .seo-how-col h4 { margin: 0 0 6px; font-family: 'Source Serif 4', serif; font-size: 1.35rem; font-weight: 400; color: var(--ink); }
@@ -381,6 +380,24 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .audit-steps b { flex-shrink: 0; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--green-900); color: var(--sage); font-family: 'Source Serif 4', serif; font-weight: 400; box-shadow: 0 0 0 6px var(--sand); }
 .audit-steps strong { display: block; margin: 9px 0 2px; font-size: 1rem; color: var(--ink); }
 .audit-steps span { color: var(--muted); font-size: 0.9rem; line-height: 1.55; }
+
+/* === DIAGNÓSTICO GRATIS (home) === */
+.diag-card { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(24px, 4vw, 48px); align-items: center; margin-top: clamp(56px, 8vw, 88px); padding: clamp(28px, 5vw, 52px); border-radius: var(--radius-xl); background: radial-gradient(circle at top left, rgba(111, 148, 100, 0.3), transparent 55%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
+.diag-card h2 { margin-bottom: 12px; color: var(--white); }
+.diag-card h2 span { color: var(--sage); }
+.diag-card .eyebrow { margin-bottom: 14px; color: var(--sage); }
+.diag-card p { margin: 0; color: rgba(255, 255, 255, 0.75); line-height: 1.65; }
+.diag-form { display: flex; gap: 8px; padding: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(166, 184, 145, 0.3); }
+.diag-form:focus-within { border-color: var(--sage); }
+.diag-form input { flex: 1; min-width: 0; padding: 12px 18px; border: none; background: transparent; color: var(--white); font: inherit; font-size: 1rem; }
+.diag-form input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.diag-form input:focus { outline: none; }
+.diag-meta { margin-top: 12px !important; font-size: 0.86rem; color: rgba(255, 255, 255, 0.55) !important; }
+@media (max-width: 760px) {
+  .diag-card { grid-template-columns: 1fr; }
+  .diag-form { flex-direction: column; border-radius: var(--radius-lg); }
+  .diag-form .btn { width: 100%; }
+}
 
 /* === FONDOS VERDES (alternancia) === */
 .services .process-grid::before { background: linear-gradient(90deg, var(--sage), rgba(166, 184, 145, 0.12)); }
@@ -675,7 +692,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <span class="chain-arrow" aria-hidden="true"></span>
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>El viajero reserva contigo</strong></div>
         </div>
-        <p class="chain-note reveal">Un buen posicionamiento ayuda, pero no garantiza aparecer en la IA. Por eso el SEO es la base y el AEO ordena tu información para que sea fácil de citar.</p>
       </div>
       <div class="container seo-how">
         <div class="seo-how-col reveal">
@@ -802,6 +818,22 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20ya%20tengo%20campa%C3%B1as%20activas%20y%20me%20interesa%20una%20auditor%C3%ADa." target="_blank" rel="noreferrer">Quiero auditar mis campañas</a>
         </div>
         <ol class="audit-steps reveal reveal-delay-1"><li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, anuncios, mercados, conversiones y páginas de destino.</span></div></li><li><b>2</b><div><strong>Sesión con tu equipo</strong><span>Repasamos hallazgos y aplicamos mejoras.</span></div></li><li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>Revisión con datos reales semanas después.</span></div></li></ol>
+      </div>
+      <div class="container">
+        <div class="diag-card reveal">
+          <div>
+            <p class="eyebrow">Diagnóstico gratis</p>
+            <h2>¿Tu web está lista para <span>vender directo?</span></h2>
+            <p>Escribe la web de tu lodge, hotel o agencia y en menos de un minuto ves qué le falta para que el viajero te encuentre y reserve contigo.</p>
+          </div>
+          <div>
+            <form class="diag-form" action="/diagnostico/" method="get">
+              <input type="text" name="web" inputmode="url" autocomplete="url" placeholder="tulodge.com" aria-label="Dirección de tu sitio web" required />
+              <button type="submit" class="btn btn-primary">Analizar mi web gratis</button>
+            </form>
+            <p class="diag-meta">Gratis, sin registro y con resultado inmediato.</p>
+          </div>
+        </div>
       </div>
     </section>
 
