@@ -426,12 +426,14 @@ async function runDiagnosis(input, lang) {
       const more = await Promise.all(deeper.map((u) => safeFetch(u, 3000, true, ua).catch(() => null)));
       offerBodies = offerBodies.concat(more.filter((o) => o && o.status < 400 && o.body).map((o) => o.body));
     }
+    const gtagId = ((home.body + ' ' + (gtmJs && gtmJs.status < 400 ? gtmJs.body : '')).match(/\bG-[A-Z0-9]{6,12}\b/) || [])[0];
+    const gtagJs = gtagId ? await safeFetch('https://www.googletagmanager.com/gtag/js?id=' + gtagId, 3000).catch(() => null) : null;
     const robotsSitemap = robots && robots.status < 400 && /^sitemap:/im.test(robots.body);
     const hasSitemap = robotsSitemap || (sitemap && sitemap.status < 400) || /sitemap/i.test(home.body.match(/<link[^>]+rel=["']sitemap["'][^>]*>/i) || '');
 
     const result = analyze(home.body, extra && extra.status < 400 ? extra.body : '', {
       host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap,
-      gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : '',
+      gtmJs: (gtmJs && gtmJs.status < 400 ? gtmJs.body : '') + (gtagJs && gtagJs.status < 400 ? ' ' + gtagJs.body : ''),
       offerHtml: offerBodies.join('\n')
     });
 
