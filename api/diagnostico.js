@@ -38,6 +38,7 @@ const ENGINES = [
   ['TrekkSoft', /trekksoft/],
   ['Regiondo', /regiondo/],
   ['WeTravel', /wetravel\.com/],
+  ['Bananadesk', /bananadesk/],
   ['TourCMS', /tourcms/],
   ['Turitop', /turitop/]
 ];
@@ -234,7 +235,13 @@ const EN = {
   'Los navegadores lo marcan como "no seguro".': 'Browsers flag it as "not secure".',
   'Preparado para móvil': 'Mobile-ready',
   'No está adaptado a móvil': 'Not adapted for mobile',
-  'La mayoría de los viajeros busca desde el teléfono.': 'Most travelers search from their phone.'
+  'La mayoría de los viajeros busca desde el teléfono.': 'Most travelers search from their phone.',
+  'Texto de tu portada: no pudimos leerlo (sitio cargado con JavaScript)': 'Home page text: we could not read it (site loads with JavaScript)',
+  'Muy poco texto en tu portada': 'Very little text on your home page',
+  'Google y la IA necesitan texto para entender qué ofreces, dónde y para quién.': 'Google and AI need text to understand what you offer, where and for whom.',
+  'Poco texto en tu portada': 'Not much text on your home page',
+  'Unas líneas más sobre tu lugar y tus experiencias ayudan a que Google y la IA te recomienden.': 'A few more lines about your place and experiences help Google and AI recommend you.',
+  'Texto suficiente para que Google y la IA te entiendan': 'Enough text for Google and AI to understand you'
 };
 
 function toEnglish(s) {
@@ -263,8 +270,9 @@ function analyze(html, extraHtml, ctx) {
   const engine = ENGINES.find(([, re]) => re.test(all));
   const dateInputs = /<input[^>]+type=["']date["']/i.test(all);
   const bookingLinkExternal = ctx.bookingLink && new URL(ctx.bookingLink).hostname !== ctx.host;
-  const bookText = /book now|book your stay|check availability|reserva ahora|reservar ahora|ver disponibilidad|consultar disponibilidad|reserve now|reservar/.test(textOf(all).toLowerCase());
-  const jsRendered = textOf(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '')).length < 600;
+  const bookText = /book now|book your stay|check availability|reserva ahora|reservar ahora|ver disponibilidad|consultar disponibilidad|reserve now|reservar|\breservas\b/.test(textOf(all).toLowerCase());
+  const shortText = textOf(html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, '')).length < 600;
+  const jsRendered = shortText && !/wp-content|wp-includes/.test(lower);
   if (engine) out.push(check('engine', 'conversion', 1, 'Motor de reservas detectado', engine[0]));
   else if (dateInputs || bookingLinkExternal || ctx.bookingLink || bookText) out.push(check('engine', 'conversion', 0.5, 'Hay un camino a reservar, pero no identificamos el motor', 'Revisa que el viajero pueda ver disponibilidad y pagar sin salir de tu marca.'));
   else if (jsRendered) out.push(check('engine', 'conversion', null, 'Motor de reservas: tu sitio carga con JavaScript y no pudimos verlo', ''));
@@ -309,7 +317,7 @@ function analyze(html, extraHtml, ctx) {
 
   const title = textOf((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1]);
   out.push(!title ? check('title', 'visibilidad', 0, 'La página no tiene título', '')
-    : title.length < 15 || title.length > 70 ? check('title', 'visibilidad', 0.5, 'Título poco descriptivo', '"' + title.slice(0, 80) + '"')
+    : title.length < 15 || title.length > 70 || /^(inicio|home|bienvenid|welcome|p[aá]gina principal)\b/i.test(title) ? check('title', 'visibilidad', 0.5, 'Título poco descriptivo', '"' + title.slice(0, 80) + '"')
       : check('title', 'visibilidad', 1, 'Título claro', '"' + title + '"'));
   const desc = meta(html, 'description');
   out.push(!desc ? check('desc', 'visibilidad', 0, 'Sin meta descripción', 'Google inventa el texto que muestra bajo tu enlace.')
@@ -322,6 +330,11 @@ function analyze(html, extraHtml, ctx) {
   out.push(ldTravel ? check('schema', 'visibilidad', 1, 'Datos estructurados (schema)', 'Ayudan a Google y a los asistentes de IA a entender qué ofreces.')
     : ld ? check('schema', 'visibilidad', 0.5, 'Datos estructurados genéricos', 'No describen tu alojamiento o experiencia.')
       : check('schema', 'visibilidad', 0, 'Sin datos estructurados', 'Google y la IA tienen menos información para recomendarte.'));
+  const words = visibleText(html).split(/\s+/).filter((w) => /[a-záéíóúñ]{2,}/i.test(w)).length;
+  out.push(jsRendered ? check('content', 'visibilidad', null, 'Texto de tu portada: no pudimos leerlo (sitio cargado con JavaScript)', '')
+    : words < 120 ? check('content', 'visibilidad', 0, 'Muy poco texto en tu portada', 'Google y la IA necesitan texto para entender qué ofreces, dónde y para quién.')
+      : words < 250 ? check('content', 'visibilidad', 0.5, 'Poco texto en tu portada', 'Unas líneas más sobre tu lugar y tus experiencias ayudan a que Google y la IA te recomienden.')
+        : check('content', 'visibilidad', 1, 'Texto suficiente para que Google y la IA te entiendan', ''));
   const h1 = /<h1[\s>]/i.test(html);
   out.push(h1 ? check('h1', 'visibilidad', 1, 'Título principal (H1)', '') : check('h1', 'visibilidad', 0, 'Sin título principal (H1)', ''));
   out.push(ctx.sitemap ? check('sitemap', 'visibilidad', 1, 'Sitemap para Google', '') : check('sitemap', 'visibilidad', 0, 'No encontramos sitemap', 'Ayuda a Google a encontrar todas tus páginas.'));
@@ -403,7 +416,7 @@ async function runDiagnosis(input, lang) {
         engine: result.engine,
         checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
         analyzedAt: new Date().toISOString(),
-        version: '1.7'
+        version: '1.8'
       }
     };
   } catch (e) {

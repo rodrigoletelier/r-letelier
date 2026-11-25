@@ -57,7 +57,7 @@ function compute(checks) {
 
 function buildEmail(t, data, r) {
   const color = (p) => p >= 70 ? '#6f9464' : p >= 40 ? '#c9935a' : '#c97a66';
-  const title = r.score !== null ? t.levels[r.score >= 70 ? 2 : r.score >= 40 ? 1 : 0] : t.partial;
+  const title = r.score !== null ? t.levels[r.score >= 75 ? 2 : r.score >= 50 ? 1 : 0] : t.partial;
   const bars = r.areas.map((a, i) => `<tr><td style="padding:6px 0;font-size:14px;color:#1e2420">${esc(t.areas[i])}</td><td style="padding:6px 0 6px 12px;width:45%"><div style="height:8px;border-radius:8px;background:#ebe3d5"><div style="height:8px;border-radius:8px;width:${a.ok ? a.pct : 0}%;background:${color(a.pct)}"></div></div></td><td style="padding:6px 0 6px 12px;text-align:right;font-size:14px;font-weight:600;color:#1e2420">${a.ok ? a.pct + '%' : '–'}</td></tr>`).join('');
   const groups = IDS.map((id, i) => {
     const rows = data.checks.filter((c) => c.area === id && c.status !== null).sort((a, b) => a.status - b.status).map((c) => {

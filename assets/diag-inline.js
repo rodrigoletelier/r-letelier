@@ -5,7 +5,7 @@
   var en = document.documentElement.lang === 'en';
   var T = en ? {
     areas: ['Visibility on Google and AI', 'Direct booking', 'Offer for travelers', 'Speed and mobile', 'Tracking and social'],
-    services: { visibilidad: 'Visibility', conversion: 'Conversion and technology', propuesta: 'Conversion and technology', rendimiento: 'Conversion and technology', tracking: 'Acquisition' },
+    services: { visibilidad: 'Visibility', conversion: 'Conversion and technology', propuesta: 'Conversion and technology', rendimiento: 'Conversion and technology', tracking: 'Conversion and technology' },
     loading: 'Checking your site…', measuring: 'Measuring mobile speed…', wait: 'Measuring mobile speed with Google. It takes up to a minute', of: 'out of 100', partial: 'Partial results',
     levels: ['There is a lot of room to grow', 'You are on track, but there are leaks', 'Your website has a solid base'],
     noEvidence: 'Not enough evidence', top: 'Your top 3 priorities', none: 'We found no obvious gaps',
@@ -14,7 +14,7 @@
     errors: { bad_url: 'Check the address. Type something like yourhotel.com.', unreachable: 'We could not open that site. Check the address and that the site is online.', rate: 'You ran several checks in a row. Wait a minute and try again.', blocked: 'Your site blocks automated checks. Write to me and I will review it by hand.' }
   } : {
     areas: ['Visibilidad en Google y la IA', 'Reserva directa', 'Propuesta para el viajero', 'Velocidad y móvil', 'Medición y redes'],
-    services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Adquisición' },
+    services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Conversión y tecnología' },
     loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', wait: 'Midiendo la velocidad en móvil con Google. Tarda hasta un minuto', of: 'de 100', partial: 'Diagnóstico parcial',
     levels: ['Hay mucho espacio para crecer', 'Vas bien, pero hay fugas', 'Tu web tiene una base sólida'],
     noEvidence: 'Sin evidencia suficiente', top: 'Tus 3 prioridades', none: 'No encontramos brechas evidentes',
@@ -25,7 +25,7 @@
   var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
   var WEIGHTS = [25, 25, 20, 15, 15];
   var MAX_PCT = 90;
-  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
+  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'content', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
   var data = null, speed = null, waitStart = 0, waitTimer = null;
 
   function esc(s) { return String(s || '').replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -59,7 +59,7 @@
   function render() {
     var r = compute();
     var keep = box.querySelector('.di-mail:not([hidden])');
-    var title = r.score !== null ? T.levels[r.score >= 70 ? 2 : r.score >= 40 ? 1 : 0] : speed === null ? T.measuring : T.partial;
+    var title = r.score !== null ? T.levels[r.score >= 75 ? 2 : r.score >= 50 ? 1 : 0] : speed === null ? T.measuring : T.partial;
     box.innerHTML =
       '<div class="di-head"><div class="di-score"><strong>' + (r.score !== null ? r.score : '–') + '</strong><span>' + T.of + '</span></div>' +
       '<div><p class="di-host">' + esc(data.host) + '</p><h3>' + esc(title) + '</h3></div></div>' +
