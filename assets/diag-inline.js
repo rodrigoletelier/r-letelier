@@ -26,6 +26,7 @@
   };
   var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
   var WEIGHTS = [25, 25, 20, 15, 15];
+  var MAX_PCT = 90;
   var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
   var data = null, speed = null;
 
@@ -45,9 +46,10 @@
     var areas = IDS.map(function (id, i) {
       var all = checks.filter(function (c) { return c.area === id; });
       var ev = all.filter(function (c) { return c.status !== null; });
-      var sum = ev.reduce(function (s, c) { return s + c.status; }, 0);
+      var sum = ev.reduce(function (s, c) { return s + c.status * (c.w || 1); }, 0);
+      var wsum = ev.reduce(function (s, c) { return s + (c.w || 1); }, 0);
       var ok = ev.length >= 2 && ev.length / all.length >= 0.7;
-      var pct = ev.length ? Math.round(sum / ev.length * 100) : 0;
+      var pct = ev.length ? Math.min(MAX_PCT, Math.round(sum / wsum * 100)) : 0;
       if (ok) total += pct * WEIGHTS[i] / 100; else complete = false;
       return { title: T.areas[i], pct: pct, ok: ok };
     });

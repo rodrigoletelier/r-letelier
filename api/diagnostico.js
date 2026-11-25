@@ -224,8 +224,10 @@ function toEnglish(s) {
 
 const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-chat|whatsapp-button|getbutton\.io|wati\.io|elfsight[^"']{0,40}whatsapp|whatsapp-widget|qlwapp|creame-whatsapp|floating-whatsapp|wa-chat-widget|whatsapp-chat/i;
 
+const WEIGHT = { engine: 2 };
+
 function check(id, area, status, label, detail) {
-  return { id, area, status, label, detail };
+  return { id, area, status, label, detail, w: WEIGHT[id] || 1 };
 }
 
 function analyze(html, extraHtml, ctx) {
@@ -365,7 +367,7 @@ const handler = async (req, res) => {
       engine: result.engine,
       checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.4'
+      version: '1.5'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
