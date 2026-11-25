@@ -334,7 +334,7 @@ function analyze(html, extraHtml, ctx) {
   return { checks: out, title, engine: engine ? engine[0] : null };
 }
 
-async function runDiagnosis(input, lang, debugOffers) {
+async function runDiagnosis(input, lang) {
   const t0 = Date.now();
   let raw = String(input || '').trim();
   if (!raw || raw.length > 200) return { status: 400, body: { error: 'bad_url' } };
@@ -394,10 +394,6 @@ async function runDiagnosis(input, lang, debugOffers) {
       offerHtml: offerBodies.join('\n')
     });
 
-    if (process.env.VERCEL_ENV !== 'production' && debugOffers) {
-      const t = offerBodies.map((o) => ({ len: o.length, sample: (visibleText(o).match(/.{0,60}(\$|usd|clp|precio|valor|tarifa).{0,60}/gi) || []).slice(0, 5) }));
-      return { status: 200, body: { offerLinks, t } };
-    }
     return {
       status: 200,
       body: {
@@ -427,7 +423,7 @@ const handler = async (req, res) => {
   hits.set(ip, recent);
 
   const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
-  const r = await runDiagnosis(req.query && req.query.url, lang, req.query && req.query.dbg === '1');
+  const r = await runDiagnosis(req.query && req.query.url, lang);
   if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
   res.status(r.status).json(r.body);
 };
