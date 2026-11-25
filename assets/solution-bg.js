@@ -1,5 +1,5 @@
 (function () {
-  var bgs = document.querySelectorAll('.sol-bg');
+  var bgs = document.querySelectorAll('.jn-media');
   if (!bgs.length) return;
   var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -10,7 +10,7 @@
     bgs.forEach(function (bg) { bg.classList.add('is-paused'); io.observe(bg); });
   }
 
-  document.querySelectorAll('.sol-bg-search').forEach(function (bg) {
+  document.querySelectorAll('.jn-search').forEach(function (bg) {
     var el = bg.querySelector('.sb-typed');
     var queries = (el.getAttribute('data-queries') || '').split('|');
     if (still) { el.textContent = queries[0]; bg.classList.add('is-done'); return; }

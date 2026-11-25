@@ -102,7 +102,7 @@ module.exports = async (req, res) => {
   hits.set(ip, recent);
 
   const d = await runDiagnosis(url, lang);
-  if (d.status !== 200) return res.status(d.status).json(d.body);
+  if (d.status !== 200) { console.error('informe: diagnóstico falló', url, d.body); return res.status(d.status).json(d.body); }
   const data = d.body;
 
   const sp = speed && Number.isFinite(+speed.score) ? Math.max(0, Math.min(100, Math.round(+speed.score))) : null;
@@ -128,9 +128,10 @@ module.exports = async (req, res) => {
         html: buildEmail(t, data, r)
       })
     });
-    if (!send.ok) return res.status(502).json({ error: 'send' });
+    if (!send.ok) { console.error('informe: Resend respondió', send.status, (await send.text()).slice(0, 300), 'key:', !!process.env.RESEND_API_KEY); return res.status(502).json({ error: 'send' }); }
     return res.status(200).json({ ok: true, score: r.score });
   } catch (e) {
+    console.error('informe: error al enviar', e.message);
     return res.status(500).json({ error: 'send' });
   }
 };

@@ -326,9 +326,11 @@ async function runDiagnosis(input, lang) {
         home = await safeFetch(start.href, 4000);
       } else throw e;
     }
-    if (home.status >= 500 || home.status === 403) {
+    const thin = home.status < 400 && (!home.body || home.body.length < 5000);
+    if (home.status >= 500 || home.status === 403 || thin) {
       const retry = await safeFetch(home.url || start.href, 5000, true, UA_PLAIN).catch(() => null);
-      if (retry && retry.status < 400 && retry.body) home = retry;
+      if (retry && retry.status < 400 && retry.body && (!thin || retry.body.length > home.body.length)) home = retry;
+      else if (thin) console.warn('diagnostico: respuesta corta', start.host, home.status, home.body ? home.body.length : 0);
     }
     if (home.status === 401 || home.status === 403 || home.status === 429) return { status: 422, body: { error: 'blocked', status: home.status } };
     if (home.status >= 400 || !home.body) return { status: 422, body: { error: 'unreachable', status: home.status } };
