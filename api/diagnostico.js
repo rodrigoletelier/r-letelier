@@ -328,7 +328,7 @@ function analyze(html, extraHtml, ctx) {
   return { checks: out, title, engine: engine ? engine[0] : null };
 }
 
-async function runDiagnosis(input, lang) {
+async function runDiagnosis(input, lang, debugOffers) {
   let raw = String(input || '').trim();
   if (!raw || raw.length > 200) return { status: 400, body: { error: 'bad_url' } };
   if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
@@ -379,6 +379,10 @@ async function runDiagnosis(input, lang) {
       offerHtml: offers.filter((o) => o && o.status < 400 && o.body).map((o) => o.body).join('\n')
     });
 
+    if (process.env.VERCEL_ENV !== 'production' && debugOffers) {
+      const t = offers.map((o) => o ? { status: o.status, len: (o.body || '').length, sample: (textOf(o.body || '').match(/.{0,60}(\$|usd|clp|precio|valor|tarifa).{0,60}/gi) || []).slice(0, 5) } : null);
+      return { status: 200, body: { offerLinks, t } };
+    }
     return {
       status: 200,
       body: {
@@ -408,7 +412,7 @@ const handler = async (req, res) => {
   hits.set(ip, recent);
 
   const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
-  const r = await runDiagnosis(req.query && req.query.url, lang);
+  const r = await runDiagnosis(req.query && req.query.url, lang, req.query && req.query.dbg === '1');
   if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
   res.status(r.status).json(r.body);
 };
