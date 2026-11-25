@@ -382,3 +382,4 @@ const handler = async (req, res) => {
 
 module.exports = handler;
 module.exports.analyze = analyze;
+module.exports.safeFetch = safeFetch;
