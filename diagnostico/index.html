@@ -181,7 +181,14 @@ h3 { margin-top: 0; }
 .result-host { margin: 0 0 28px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; word-break: break-all; }
 .bar-row small { display: block; color: rgba(255, 255, 255, 0.5); font-size: 0.78rem; }
 .details { margin-top: 28px; }
-.details summary { cursor: pointer; color: var(--sage); font-size: 0.92rem; }
+.details-toggle { color: var(--sage); font-size: 0.92rem; text-decoration: underline; text-underline-offset: 3px; }
+.unlock-form { margin-top: 16px; padding: 20px; border: 1px solid var(--line-dark); border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.05); }
+.unlock-form p { margin: 0 0 12px; color: rgba(255, 255, 255, 0.78); font-size: 0.94rem; line-height: 1.6; }
+.unlock-row { display: flex; gap: 10px; }
+.unlock-row input { flex: 1; min-width: 0; min-height: 50px; padding: 12px 16px; border: 1px solid rgba(166, 184, 145, 0.3); border-radius: var(--radius-md); background: rgba(255, 255, 255, 0.08); color: var(--white); font: inherit; }
+.unlock-row input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.unlock-form .unlock-status { margin: 8px 0 0; min-height: 1.2em; font-size: 0.86rem; }
+@media (max-width: 640px) { .unlock-row { flex-direction: column; } }
 .detail-group { margin-top: 20px; }
 .detail-group h4 { margin: 0 0 8px; font-size: 0.86rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sage); }
 .detail-group ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 6px; }
@@ -252,10 +259,18 @@ h3 { margin-top: 0; }
           <ol class="fix-list" id="fix-list"></ol>
         </div>
 
-        <details class="details">
-          <summary>Ver todo lo que revisamos</summary>
-          <div id="detail-list"></div>
-        </details>
+        <div class="details">
+          <button type="button" class="details-toggle" id="details-toggle" aria-expanded="false">Ver todo lo que revisamos</button>
+          <form class="unlock-form" id="unlock-form" hidden>
+            <p>Deja tu correo y ves el detalle completo de lo que revisamos. Me llega tu resultado y, si veo algo importante, te escribo.</p>
+            <div class="unlock-row">
+              <input type="email" name="email" placeholder="Tu correo" aria-label="Tu correo" required />
+              <button type="submit" class="btn btn-primary">Ver el detalle</button>
+            </div>
+            <p class="unlock-status" id="unlock-status" role="status"></p>
+          </form>
+          <div id="detail-list" hidden></div>
+        </div>
 
         <div class="cta-box">
           <h3>Revisemos tu resultado juntos</h3>
@@ -470,9 +485,46 @@ h3 { margin-top: 0; }
     });
   });
 
+  var unlocked = false;
+  try { unlocked = localStorage.getItem('diag_unlocked') === '1'; } catch (e) {}
+  function showDetail() {
+    $('unlock-form').hidden = true;
+    $('detail-list').hidden = false;
+    $('details-toggle').setAttribute('aria-expanded', 'true');
+  }
+  $('details-toggle').addEventListener('click', function () {
+    if (!$('detail-list').hidden) { $('detail-list').hidden = true; $('details-toggle').setAttribute('aria-expanded', 'false'); return; }
+    if (unlocked) { showDetail(); return; }
+    $('unlock-form').hidden = !$('unlock-form').hidden;
+    if (!$('unlock-form').hidden) $('unlock-form').querySelector('input').focus();
+  });
+  $('unlock-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = e.target;
+    if (!f.reportValidity() || !current) { $('unlock-status').textContent = 'Revisa tu correo.'; return; }
+    $('unlock-status').textContent = 'Un momento…';
+    var lines = ['Diagnóstico desde rodrigoletelier.cl/diagnostico (pidió ver el detalle)', '', 'Sitio: ' + data.url, 'Índice: ' + (current.complete ? current.score + '/100' : 'parcial'), '', 'Prioridades:'];
+    current.top.forEach(function (c, i) { lines.push((i + 1) + '. ' + c.label); });
+    var done = function () {
+      unlocked = true;
+      try { localStorage.setItem('diag_unlocked', '1'); } catch (e) {}
+      $('unlock-status').textContent = '';
+      showDetail();
+    };
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: 'Diagnóstico (solo correo)', email: f.email.value, company: data.host, message: lines.join('\n') })
+    }).then(function () {
+      track('generate_lead', { form_id: 'diagnostico_detalle', complete: current.complete, score: current.score });
+    }).catch(function () {}).then(done);
+  });
+
   $('restart').addEventListener('click', function () {
     $('result').hidden = true;
     $('url-input').value = '';
+    $('detail-list').hidden = true;
+    $('details-toggle').setAttribute('aria-expanded', 'false');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     $('url-input').focus();
   });

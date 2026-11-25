@@ -222,6 +222,8 @@ function toEnglish(s) {
   return s;
 }
 
+const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-chat|whatsapp-button|getbutton\.io|wati\.io|elfsight[^"']{0,40}whatsapp|whatsapp-widget|qlwapp|creame-whatsapp|floating-whatsapp|wa-chat-widget|whatsapp-chat/i;
+
 function check(id, area, status, label, detail) {
   return { id, area, status, label, detail };
 }
@@ -248,7 +250,7 @@ function analyze(html, extraHtml, ctx) {
     ? check('ota', 'conversion', 0, 'Tu sitio envía viajeros a OTAs', 'Enlaces a ' + otas.join(', ') + '. Cada reserva por ahí paga comisión.')
     : jsRendered ? check('ota', 'conversion', null, 'Enlaces a OTAs: no pudimos verlo (sitio cargado con JavaScript)', '') : check('ota', 'conversion', 1, 'No envía viajeros a OTAs', ''));
 
-  const wa = /wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|web\.whatsapp\.com\/send/.test(all);
+  const wa = /wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|web\.whatsapp\.com\/send/.test(all) || WA_WIDGETS.test(html);
   out.push(wa ? check('whatsapp', 'conversion', 1, 'Botón de WhatsApp', '') : jsRendered ? check('whatsapp', 'conversion', null, 'WhatsApp: no pudimos verlo (sitio cargado con JavaScript)', '') : check('whatsapp', 'conversion', 0, 'Sin botón de WhatsApp', 'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.'));
 
   const contact = /href=["'](tel:|mailto:)|<form[\s>]/.test(all);
@@ -267,7 +269,7 @@ function analyze(html, extraHtml, ctx) {
   out.push(ga4 ? check('ga4', 'tracking', 1, 'Google Analytics 4', gtmRead ? 'Encontrado dentro de Google Tag Manager.' : '')
     : hidden ? check('ga4', 'tracking', null, 'Google Analytics 4: no pudimos leer tu Google Tag Manager', '')
       : check('ga4', 'tracking', 0, 'No encontramos Google Analytics 4', 'Sin analítica no sabes de dónde llegan tus reservas.'));
-  const pixel = /connect\.facebook\.net\/[^"']*fbevents\.js|fbq\(\s*\\?['"]init/.test(tags);
+  const pixel = /connect\.facebook\.net[^"']{0,40}fbevents|fbq\(\s*\\?['"]init|facebook\.com\/tr\?id=|pixelyoursite|facebook-for-wordpress|official-facebook-pixel|pixel-caffeine|facebook-pixel/.test(tags);
   const ads = /aw-\d{6,}|googleadservices\.com\/pagead\/conversion/.test(tags);
   out.push(pixel && ads ? check('adtags', 'tracking', 1, 'Píxel de Meta y etiqueta de Google Ads', 'Tus campañas pueden aprender de las reservas.')
     : pixel || ads ? check('adtags', 'tracking', 0.5, pixel ? 'Píxel de Meta, pero sin etiqueta de Google Ads' : 'Etiqueta de Google Ads, pero sin píxel de Meta', pixel ? 'Sin ella, Google Ads no sabe qué clics terminan en reserva.' : 'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.')
@@ -363,7 +365,7 @@ const handler = async (req, res) => {
       engine: result.engine,
       checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
       analyzedAt: new Date().toISOString(),
-      version: '1.3'
+      version: '1.4'
     });
   } catch (e) {
     const code = e.message === 'bad_url' ? 400 : 422;
