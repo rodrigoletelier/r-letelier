@@ -349,7 +349,6 @@ h3 { margin-top: 0; }
     var caps = [];
     if (st('social') === 0) caps.push([35, 'social']);
     if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
-    if (st('content') === 0) caps.push([45, 'content']);
     caps.sort(function (a, b) { return a[0] - b[0]; });
     return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
   }
