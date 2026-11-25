@@ -262,7 +262,7 @@ h3 { margin-top: 0; }
         <div class="details">
           <button type="button" class="details-toggle" id="details-toggle" aria-expanded="false">See everything we checked</button>
           <form class="unlock-form" id="unlock-form" hidden>
-            <p>Leave your email to see the full detail of everything we checked. Your results reach me and, if I see something important, I will write to you.</p>
+            <p>Leave your email: I will send you the full report and you will see everything we checked right here.</p>
             <div class="unlock-row">
               <input type="email" name="email" placeholder="Your email" aria-label="Your email" required />
               <button type="submit" class="btn btn-primary">See the detail</button>
@@ -505,18 +505,16 @@ h3 { margin-top: 0; }
     var f = e.target;
     if (!f.reportValidity() || !current) { $('unlock-status').textContent = 'Check your email address.'; return; }
     $('unlock-status').textContent = 'One moment…';
-    var lines = ['Diagnóstico desde rodrigoletelier.cl/en/diagnostic (inglés) (pidió ver el detalle)', '', 'Sitio: ' + data.url, 'Índice: ' + (current.complete ? current.score + '/100' : 'parcial'), '', 'Prioridades:'];
-    current.top.forEach(function (c, i) { lines.push((i + 1) + '. ' + c.label); });
     var done = function () {
       unlocked = true;
       try { localStorage.setItem('diag_unlocked', '1'); } catch (e) {}
       $('unlock-status').textContent = '';
       showDetail();
     };
-    fetch('/api/contact', {
+    fetch('/api/informe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Diagnóstico (solo correo, inglés)', email: f.email.value, company: data.host, message: lines.join('\n') })
+      body: JSON.stringify({ email: f.email.value, url: data.url, lang: 'en', speed: speed || null })
     }).then(function () {
       track('generate_lead', { form_id: 'diagnostico_detalle', complete: current.complete, score: current.score });
     }).catch(function () {}).then(done);

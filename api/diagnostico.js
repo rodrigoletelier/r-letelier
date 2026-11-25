@@ -308,23 +308,12 @@ function analyze(html, extraHtml, ctx) {
   return { checks: out, title, engine: engine ? engine[0] : null };
 }
 
-const handler = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  if (req.method !== 'GET') { res.status(405).json({ error: 'method' }); return; }
-
-  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'x';
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < 60000);
-  if (recent.length >= 6) { res.status(429).json({ error: 'rate' }); return; }
-  recent.push(now);
-  hits.set(ip, recent);
-
-  let raw = String((req.query && req.query.url) || '').trim();
-  const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
-  if (!raw || raw.length > 200) { res.status(400).json({ error: 'bad_url' }); return; }
+async function runDiagnosis(input, lang) {
+  let raw = String(input || '').trim();
+  if (!raw || raw.length > 200) return { status: 400, body: { error: 'bad_url' } };
   if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
   let start;
-  try { start = new URL(raw); start.hash = ''; } catch (e) { res.status(400).json({ error: 'bad_url' }); return; }
+  try { start = new URL(raw); start.hash = ''; } catch (e) { return { status: 400, body: { error: 'bad_url' } }; }
 
   try {
     let home;
@@ -341,8 +330,8 @@ const handler = async (req, res) => {
       const retry = await safeFetch(home.url || start.href, 5000, true, UA_PLAIN).catch(() => null);
       if (retry && retry.status < 400 && retry.body) home = retry;
     }
-    if (home.status === 401 || home.status === 403 || home.status === 429) { res.status(422).json({ error: 'blocked', status: home.status }); return; }
-    if (home.status >= 400 || !home.body) { res.status(422).json({ error: 'unreachable', status: home.status }); return; }
+    if (home.status === 401 || home.status === 403 || home.status === 429) return { status: 422, body: { error: 'blocked', status: home.status } };
+    if (home.status >= 400 || !home.body) return { status: 422, body: { error: 'unreachable', status: home.status } };
 
     const finalUrl = new URL(home.url);
     const host = finalUrl.hostname;
@@ -364,21 +353,40 @@ const handler = async (req, res) => {
       gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : ''
     });
 
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
-    res.status(200).json({
-      url: finalUrl.href,
-      host,
-      title: result.title,
-      engine: result.engine,
-      checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
-      analyzedAt: new Date().toISOString(),
-      version: '1.5'
-    });
+    return {
+      status: 200,
+      body: {
+        url: finalUrl.href,
+        host,
+        title: result.title,
+        engine: result.engine,
+        checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
+        analyzedAt: new Date().toISOString(),
+        version: '1.6'
+      }
+    };
   } catch (e) {
-    const code = e.message === 'bad_url' ? 400 : 422;
-    res.status(code).json({ error: e.message === 'bad_url' ? 'bad_url' : 'unreachable' });
+    return e.message === 'bad_url' ? { status: 400, body: { error: 'bad_url' } } : { status: 422, body: { error: 'unreachable' } };
   }
+}
+
+const handler = async (req, res) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (req.method !== 'GET') { res.status(405).json({ error: 'method' }); return; }
+
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'x';
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < 60000);
+  if (recent.length >= 6) { res.status(429).json({ error: 'rate' }); return; }
+  recent.push(now);
+  hits.set(ip, recent);
+
+  const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
+  const r = await runDiagnosis(req.query && req.query.url, lang);
+  if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
+  res.status(r.status).json(r.body);
 };
 
 module.exports = handler;
 module.exports.analyze = analyze;
+module.exports.runDiagnosis = runDiagnosis;

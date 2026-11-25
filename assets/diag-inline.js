@@ -9,9 +9,8 @@
     loading: 'Checking your site…', measuring: 'Measuring mobile speed…', of: 'out of 100', partial: 'Partial results',
     levels: ['There is a lot of room to grow', 'You are on track, but there are leaks', 'Your website has a solid base'],
     noEvidence: 'Not enough evidence', top: 'Your top 3 priorities', none: 'We found no obvious gaps',
-    wa: 'Go over my results on WhatsApp', full: 'See the full report →', page: '/en/diagnostic/',
+    full: 'See full report', send: 'Send report', email: 'Your email', ask: 'Leave your email and I will send you the full report, with everything we checked and what to fix first.', sending: 'Sending…', sent: function (e) { return 'Done. The full report is on its way to ' + e + '. If you do not see it in a few minutes, check your spam folder.'; }, sendError: 'We could not send it. Check the email address and try again.',
     speedOk: 'Fast on mobile', speedBad: 'Slow on mobile', speedDetail: 'Measured with Google PageSpeed.',
-    msg: function (host, score, weak) { return 'Hi Rodrigo, I checked my website (' + host + ') with your free tool. ' + (score !== null ? 'It scored ' + score + '/100' : 'I got partial results') + (weak ? ' and the weakest area is "' + weak + '".' : '.') + ' I would like to go over it with you.'; },
     errors: { bad_url: 'Check the address. Type something like yourlodge.com.', unreachable: 'We could not open that site. Check the address and that the site is online.', rate: 'You ran several checks in a row. Wait a minute and try again.', blocked: 'Your site blocks automated checks. Write to me and I will review it by hand.' }
   } : {
     areas: ['Visibilidad en Google y la IA', 'Reserva directa', 'Propuesta para el viajero', 'Velocidad y móvil', 'Medición y redes'],
@@ -19,9 +18,8 @@
     loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', of: 'de 100', partial: 'Diagnóstico parcial',
     levels: ['Hay mucho espacio para crecer', 'Vas bien, pero hay fugas', 'Tu web tiene una base sólida'],
     noEvidence: 'Sin evidencia suficiente', top: 'Tus 3 prioridades', none: 'No encontramos brechas evidentes',
-    wa: 'Revisar mi resultado por WhatsApp', full: 'Ver el informe completo →', page: '/diagnostico/',
+    full: 'Ver informe completo', send: 'Enviar informe', email: 'Tu correo', ask: 'Deja tu correo y te envío el informe completo, con todo lo que revisamos y qué conviene corregir primero.', sending: 'Enviando…', sent: function (e) { return 'Listo. El informe completo va camino a ' + e + '. Si no lo ves en unos minutos, revisa la carpeta de spam.'; }, sendError: 'No pudimos enviarlo. Revisa el correo e inténtalo de nuevo.',
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
-    msg: function (host, score, weak) { return 'Hola Rodrigo, analicé mi web (' + host + ') en tu diagnóstico. ' + (score !== null ? 'Me dio ' + score + '/100' : 'Me salió un diagnóstico parcial') + (weak ? ' y el área más débil es "' + weak + '".' : '.') + ' Me gustaría revisarlo contigo.'; },
     errors: { bad_url: 'Revisa la dirección. Escribe algo como tulodge.com.', unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.', rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.', blocked: 'Tu sitio bloquea las revisiones automáticas. Escríbeme y lo reviso a mano.' }
   };
   var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
@@ -60,8 +58,8 @@
 
   function render() {
     var r = compute();
+    var keep = box.querySelector('.di-mail:not([hidden])');
     var title = r.score !== null ? T.levels[r.score >= 70 ? 2 : r.score >= 40 ? 1 : 0] : speed === null ? T.measuring : T.partial;
-    var weak = r.areas.filter(function (a) { return a.ok; }).sort(function (a, b) { return a.pct - b.pct; })[0];
     box.innerHTML =
       '<div class="di-head"><div class="di-score"><strong>' + (r.score !== null ? r.score : '–') + '</strong><span>' + T.of + '</span></div>' +
       '<div><p class="di-host">' + esc(data.host) + '</p><h3>' + esc(title) + '</h3></div></div>' +
@@ -71,9 +69,42 @@
       '<h4>' + T.top + '</h4><ol class="di-top">' + (r.top.length ? r.top.map(function (c) {
         return '<li><small>' + T.services[c.area] + '</small>' + esc(c.label) + '</li>';
       }).join('') : '<li>' + T.none + '</li>') + '</ol>' +
-      '<div class="di-actions"><a class="btn btn-primary" target="_blank" rel="noreferrer" href="https://wa.me/56966170884?text=' + encodeURIComponent(T.msg(data.host, r.score, weak && weak.title)) + '">' + T.wa + '</a>' +
-      '<a class="di-full" href="' + T.page + '?web=' + encodeURIComponent(data.host) + '">' + T.full + '</a></div>';
+      '<div class="di-actions"><button type="button" class="btn btn-primary di-open">' + T.full + '</button></div>' +
+      '<form class="di-mail" hidden><p>' + T.ask + '</p><div class="di-mail-row"><input type="email" name="email" placeholder="' + T.email + '" aria-label="' + T.email + '" required /><button type="submit" class="btn btn-primary">' + T.send + '</button></div><p class="di-status" role="status"></p></form>';
+    if (keep) {
+      box.replaceChild(keep, box.querySelector('.di-mail'));
+      box.querySelector('.di-actions').hidden = true;
+    } else bindMail();
     return r;
+  }
+
+  function bindMail() {
+    var open = box.querySelector('.di-open'), mail = box.querySelector('.di-mail');
+    open.addEventListener('click', function () {
+      mail.hidden = false;
+      open.parentNode.hidden = true;
+      mail.querySelector('input').focus();
+      track('diagnostico_report_open', { site: data.host, place: 'home' });
+    });
+    mail.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!mail.reportValidity()) return;
+      var email = mail.email.value.trim(), b = mail.querySelector('button'), st = mail.querySelector('.di-status');
+      b.disabled = true;
+      st.textContent = T.sending;
+      fetch('/api/informe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, url: data.url, lang: en ? 'en' : 'es', speed: speed || null })
+      }).then(function (res) {
+        if (!res.ok) throw new Error(String(res.status));
+        mail.innerHTML = '<p class="di-done">' + esc(T.sent(email)) + '</p>';
+        track('generate_lead', { form_id: 'diagnostico_informe', site: data.host, place: 'home' });
+      }).catch(function () {
+        b.disabled = false;
+        st.textContent = T.sendError;
+      });
+    });
   }
 
   function getJson(u, ms) {

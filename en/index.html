@@ -420,10 +420,21 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .di-top small { display: block; color: var(--sage); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
 .di-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
 .di-full { color: var(--sage); border-bottom: 1px solid rgba(166, 184, 145, 0.5); font-size: 0.92rem; }
+.di-mail { max-width: 620px; }
+.di-actions[hidden], .di-mail[hidden] { display: none; }
+.di-mail p { margin: 0 0 12px; }
+.di-mail-row { display: flex; gap: 10px; }
+.di-mail-row input { flex: 1; min-width: 0; min-height: 52px; padding: 12px 18px; border: 1px solid rgba(166, 184, 145, 0.35); border-radius: 999px; background: rgba(255, 255, 255, 0.08); color: var(--white); font: inherit; }
+.di-mail-row input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.di-mail-row input:focus { outline: none; border-color: var(--sage); }
+.di-mail .di-status { margin-top: 8px; min-height: 1.2em; font-size: 0.86rem; }
+.di-done { padding: 16px 20px; border-radius: var(--radius-lg); background: rgba(166, 184, 145, 0.15); color: var(--white) !important; }
+#diagnostic { scroll-margin-top: 96px; }
 @media (max-width: 760px) {
   .di-bar { grid-template-columns: 1fr 44px; gap: 4px 12px; }
   .di-bar span { grid-column: 1 / -1; }
   .di-actions .btn { width: 100%; }
+  .di-mail-row { flex-direction: column; }
 }
 
 /* === FONDOS VERDES (alternancia) === */
@@ -624,7 +635,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <a href="#servicios">How I work</a>
       <a href="#casos">Case studies</a>
       <a href="#sobre-mi">About me</a>
-      <a href="/en/diagnostic/">Free website check</a>
+      <a href="/en/#diagnostic">Free website check</a>
       <a class="nav-cta" href="https://wa.me/56966170884?text=Hi%20Rodrigo%2C%20I%27d%20like%20to%20talk%20about%20direct%20bookings%20for%20my%20tourism%20business." target="_blank" rel="noreferrer">Book a call</a>
       <a class="lang-switch" href="/" aria-label="Ver este sitio en español" title="Español">🇪🇸</a>
     </nav>
@@ -852,7 +863,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <ol class="audit-steps reveal reveal-delay-1"><li><b>1</b><div><strong>Account diagnosis</strong><span>Campaigns, ads, markets, conversions and landing pages.</span></div></li><li><b>2</b><div><strong>Session with your team</strong><span>We go over findings and apply improvements.</span></div></li><li><b>3</b><div><strong>Follow-up (optional)</strong><span>A review with real data a few weeks later.</span></div></li></ol>
       </div>
       <div class="container">
-        <div class="diag-card reveal">
+        <div class="diag-card reveal" id="diagnostic">
           <div>
             <p class="eyebrow">Free website check</p>
             <h2>Is your website ready to <span>sell direct?</span></h2>
@@ -896,7 +907,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div>
             <h2>Increase your direct bookings.</h2>
             <p>Let's talk about your project and look at concrete opportunities for growth. The first diagnosis is free, with no commitment.</p>
-            <p class="cta-alt">Prefer to start on your own? <a href="/en/diagnostic/">Check your website for free in one minute →</a></p>
+            <p class="cta-alt">Prefer to start on your own? <a href="/en/#diagnostic">Check your website for free in one minute →</a></p>
           </div>
           <form id="contact-form" class="contact-form" action="/api/contact" method="POST">
             <div class="form-grid">
@@ -941,7 +952,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <a href="#casos">Case studies</a>
         <a href="#auditoria">Campaign audit</a>
         <a href="#sobre-mi">About me</a>
-        <a href="/en/diagnostic/">Free website check</a>
+        <a href="/en/#diagnostic">Free website check</a>
         <a href="#contacto">Contact</a>
       </div>
       <div>

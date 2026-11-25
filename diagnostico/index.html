@@ -262,7 +262,7 @@ h3 { margin-top: 0; }
         <div class="details">
           <button type="button" class="details-toggle" id="details-toggle" aria-expanded="false">Ver todo lo que revisamos</button>
           <form class="unlock-form" id="unlock-form" hidden>
-            <p>Deja tu correo y ves el detalle completo de lo que revisamos. Me llega tu resultado y, si veo algo importante, te escribo.</p>
+            <p>Deja tu correo: te envío el informe completo y ves aquí mismo todo lo que revisamos.</p>
             <div class="unlock-row">
               <input type="email" name="email" placeholder="Tu correo" aria-label="Tu correo" required />
               <button type="submit" class="btn btn-primary">Ver el detalle</button>
@@ -505,18 +505,16 @@ h3 { margin-top: 0; }
     var f = e.target;
     if (!f.reportValidity() || !current) { $('unlock-status').textContent = 'Revisa tu correo.'; return; }
     $('unlock-status').textContent = 'Un momento…';
-    var lines = ['Diagnóstico desde rodrigoletelier.cl/diagnostico (pidió ver el detalle)', '', 'Sitio: ' + data.url, 'Índice: ' + (current.complete ? current.score + '/100' : 'parcial'), '', 'Prioridades:'];
-    current.top.forEach(function (c, i) { lines.push((i + 1) + '. ' + c.label); });
     var done = function () {
       unlocked = true;
       try { localStorage.setItem('diag_unlocked', '1'); } catch (e) {}
       $('unlock-status').textContent = '';
       showDetail();
     };
-    fetch('/api/contact', {
+    fetch('/api/informe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Diagnóstico (solo correo)', email: f.email.value, company: data.host, message: lines.join('\n') })
+      body: JSON.stringify({ email: f.email.value, url: data.url, lang: 'es', speed: speed || null })
     }).then(function () {
       track('generate_lead', { form_id: 'diagnostico_detalle', complete: current.complete, score: current.score });
     }).catch(function () {}).then(done);
