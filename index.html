@@ -132,6 +132,14 @@
     },
     {
       "@type": "Question",
+      "name": "¿Qué incluye el plan SEO + AEO cada mes?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Todos los meses hay un test de visibilidad en IA, una pauta de contenido y un reporte con reunión. Además, cada mes tiene un foco distinto: base técnica, blog conectado, preguntas frecuentes, fichas de experiencias, una sola marca en todos los canales y menciones en otros sitios. El orden se define según la primera medición."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "¿Trabajas con negocios fuera de Chile?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -326,12 +334,16 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .journey-chips span { display: inline-flex; align-items: center; gap: 5px; }
 .journey-lines { display: block; width: 100%; height: 110px; }
 .journey-lines path { fill: none; stroke: rgba(111, 148, 100, 0.55); stroke-width: 2; stroke-dasharray: 6 8; vector-effect: non-scaling-stroke; }
-.journey-target { display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; }
+.journey-target { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px; }
 .journey-pill { display: inline-flex; flex-direction: column; align-items: center; padding: 16px 30px; border-radius: 999px; background: var(--white); border: 1px solid var(--line); font-weight: 600; color: var(--ink); }
 .journey-pill.is-final { background: linear-gradient(135deg, var(--green-950), var(--green-800)); border-color: transparent; color: var(--white); box-shadow: var(--shadow); }
 .journey-pill small { margin-top: 2px; font-size: 0.76rem; font-weight: 400; color: var(--sage); }
 .journey-pill:not(.is-final) small { color: var(--green-500); }
-.journey-arrow { color: var(--green-500); font-size: 1.4rem; }
+.journey-arrow { color: var(--green-500); font-size: 1.4rem; transform: rotate(90deg); }
+.journey-pill.is-final { position: relative; }
+.jp-badge { position: absolute; top: -14px; right: -18px; display: inline-flex; align-items: center; gap: 5px; padding: 5px 11px 5px 8px; border-radius: 999px; background: var(--white); color: var(--green-700); font-size: 0.7rem; font-weight: 700; white-space: nowrap; box-shadow: 0 8px 20px rgba(7, 26, 19, 0.14); opacity: 0; transform: scale(0.6) translateY(6px); }
+.jp-badge svg { width: 14px; height: 14px; fill: none; stroke: var(--green-500); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 24; stroke-dashoffset: 24; }
+.journey-pill.is-final::before { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--sage); opacity: 0; pointer-events: none; }
 .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 72px; }
 .solution-card { padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
 .solution-card.is-dark { border-color: transparent; background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); }
@@ -344,6 +356,67 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .check-list li { position: relative; padding-left: 30px; font-size: 0.95rem; }
 .check-list li::before { content: ''; position: absolute; left: 0; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: rgba(111, 148, 100, 0.2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f4d3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E") center / 11px no-repeat; }
 .solution-card.is-dark .check-list li::before { background-color: rgba(166, 184, 145, 0.22); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a6b891' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12l4 4 8-8'/%3E%3C/svg%3E"); }
+/* === ANIMACIONES VIAJE DEL VIAJERO === */
+.jn-media { position: relative; height: 150px; margin: -8px -6px 18px; border-radius: 14px; overflow: hidden; background: var(--sand); }
+.sb-window { position: absolute; top: 18px; left: 50%; width: 86%; padding: 10px 12px 14px; border-radius: 12px; background: var(--white); box-shadow: 0 12px 30px rgba(7, 26, 19, 0.12); transform: translateX(-50%); text-align: left; }
+.sb-dots { display: flex; gap: 5px; margin-bottom: 8px; }
+.sb-dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--sand-2); }
+.sb-bar { display: flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; border: 1px solid var(--sand-2); font-size: 0.78rem; color: var(--ink); white-space: nowrap; overflow: hidden; }
+.sb-bar svg { flex-shrink: 0; width: 13px; height: 13px; fill: none; stroke: #4285f4; stroke-width: 2.4; stroke-linecap: round; }
+.sb-caret { width: 1.5px; height: 13px; margin-left: -6px; background: var(--ink); animation: sb-blink 1s steps(1) infinite; }
+.sb-results { display: grid; gap: 9px; margin-top: 11px; }
+.sb-result { display: grid; gap: 5px; opacity: 0; transform: translateY(6px); transition: opacity 400ms ease, transform 400ms ease; }
+.jn-search.is-done .sb-result { opacity: 1; transform: none; }
+.jn-search.is-done .sb-result:nth-child(2) { transition-delay: 150ms; }
+.sb-result b { width: 62%; height: 8px; border-radius: 4px; background: #1a0dab; opacity: 0.5; }
+.sb-result.is-ad b { width: auto; height: auto; justify-self: start; padding: 1px 7px; border-radius: 4px; background: none; border: 1px solid var(--green-700); color: var(--green-700); font-size: 0.6rem; font-weight: 700; opacity: 1; }
+.sb-result span { height: 6px; border-radius: 4px; background: var(--sand-2); }
+.sb-result span + span { width: 70%; }
+@keyframes sb-blink { 50% { opacity: 0; } }
+.jn-reels { display: flex; justify-content: center; align-items: flex-start; gap: 10px; padding-top: 14px; }
+.rl-phone { position: relative; flex-shrink: 0; width: 84px; height: 150px; border-radius: 14px; border: 3px solid var(--ink); overflow: hidden; background: var(--ink); box-shadow: 0 12px 30px rgba(7, 26, 19, 0.2); }
+.rl-phone.is-side { width: 64px; height: 114px; margin-top: 22px; opacity: 0.55; border-width: 2px; }
+.rl-phone { --o: 0s; }
+.rl-phone.is-left { --o: -3s; }
+.rl-phone.is-right { --o: -6s; }
+.rl-phone img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: rl-show 9s infinite; animation-delay: var(--o); }
+.rl-phone img:nth-of-type(2) { animation-delay: calc(var(--o) + 3s); }
+.rl-phone img:nth-of-type(3) { animation-delay: calc(var(--o) + 6s); }
+@keyframes rl-show { 0% { opacity: 0; transform: scale(1.15); } 4% { opacity: 1; } 33% { opacity: 1; } 37% { opacity: 0; transform: scale(1); } 100% { opacity: 0; } }
+.rl-progress { position: absolute; z-index: 2; top: 6px; left: 6px; right: 6px; display: flex; gap: 3px; }
+.rl-progress i { position: relative; flex: 1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.4); overflow: hidden; }
+.rl-progress i::after { content: ''; position: absolute; inset: 0; background: #fff; transform: scaleX(0); transform-origin: left; animation: rl-bar1 9s linear infinite; }
+.rl-progress i:nth-child(2)::after { animation-name: rl-bar2; }
+.rl-progress i:nth-child(3)::after { animation-name: rl-bar3; }
+@keyframes rl-bar1 { 0% { transform: scaleX(0); } 33.3%, 100% { transform: scaleX(1); } }
+@keyframes rl-bar2 { 0%, 33.3% { transform: scaleX(0); } 66.6%, 100% { transform: scaleX(1); } }
+@keyframes rl-bar3 { 0%, 66.6% { transform: scaleX(0); } 100% { transform: scaleX(1); } }
+.rl-ui { position: absolute; z-index: 2; inset: auto 0 0; display: flex; align-items: flex-end; justify-content: space-between; padding: 18px 6px 6px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.55)); color: #fff; font-size: 0.5rem; font-weight: 600; text-align: left; }
+.rl-ui svg { width: 12px; height: 12px; fill: #fff; animation: rl-like 4s ease-in-out infinite; }
+@keyframes rl-like { 0%, 70%, 100% { transform: scale(1); fill: #fff; } 78% { transform: scale(1.35); fill: #ff4d67; } 90% { fill: #ff4d67; } }
+.jn-ia { background: radial-gradient(circle at 75% 20%, rgba(166, 184, 145, 0.35), transparent 55%), linear-gradient(135deg, var(--green-950), var(--green-800)); }
+.ia-orb { position: absolute; border-radius: 50%; filter: blur(26px); opacity: 0.45; animation: ia-float 14s ease-in-out infinite alternate; }
+.ia-orb-1 { top: -40px; right: 8%; width: 150px; height: 150px; background: var(--sage); }
+.ia-orb-2 { bottom: -50px; left: 10%; width: 120px; height: 120px; background: var(--green-500); animation-duration: 11s; animation-delay: -4s; }
+@keyframes ia-float { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-24px, 16px) scale(1.12); } 100% { transform: translate(16px, -8px) scale(0.95); } }
+.ia-stars { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ia-stars path { fill: none; stroke: rgba(244, 240, 232, 0.55); stroke-width: 1; stroke-dasharray: 3 4; animation: ia-flow 5s linear infinite; }
+.ia-stars circle { fill: #f4f0e8; animation: ia-pulse 3s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.ia-stars circle:nth-of-type(2) { animation-delay: -0.7s; }
+.ia-stars circle:nth-of-type(3) { animation-delay: -1.4s; }
+.ia-stars circle:nth-of-type(4) { animation-delay: -2.1s; }
+.ia-stars circle.is-dim { opacity: 0.35; animation: ia-twinkle 4s ease-in-out infinite; }
+@keyframes ia-flow { to { stroke-dashoffset: -42; } }
+@keyframes ia-pulse { 0%, 100% { opacity: 0.6; transform: scale(1); } 50% { opacity: 1; transform: scale(1.5); } }
+@keyframes ia-twinkle { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.7; } }
+.jn-media.is-paused *, .jn-media.is-paused *::after { animation-play-state: paused !important; }
+@media (prefers-reduced-motion: reduce) {
+  .jn-media *, .jn-media *::after { animation: none !important; }
+  .rl-phone img:first-of-type { opacity: 1; }
+  .rl-phone.is-left img:first-of-type, .rl-phone.is-right img:first-of-type { opacity: 0; }
+  .rl-phone.is-left img:nth-of-type(2), .rl-phone.is-right img:nth-of-type(3) { opacity: 1; }
+  .sb-result { opacity: 1; transform: none; }
+}
 .seo-chain-wrap { margin-top: 88px; text-align: center; }
 .seo-chain-wrap h3 { margin-bottom: 40px; font-family: 'Source Serif 4', serif; font-size: clamp(1.7rem, 3vw, 2.5rem); font-weight: 400; letter-spacing: -0.022em; }
 .seo-chain-wrap h3 span { color: var(--green-500); }
@@ -399,6 +472,57 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .diag-form .btn { width: 100%; }
 }
 
+.diag-inline { grid-column: 1 / -1; padding-top: 28px; border-top: 1px solid rgba(166, 184, 145, 0.2); }
+.diag-inline[hidden] { display: none; }
+.di-msg { display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, 0.8) !important; }
+.di-spin { width: 20px; height: 20px; border: 2px solid rgba(255, 255, 255, 0.2); border-top-color: var(--sage); border-radius: 50%; animation: di-spin 0.9s linear infinite; }
+@keyframes di-spin { to { transform: rotate(360deg); } }
+.di-head { display: flex; align-items: center; gap: 20px; }
+.di-score { flex-shrink: 0; width: 92px; height: 92px; display: grid; place-content: center; text-align: center; border-radius: 50%; border: 2px solid rgba(166, 184, 145, 0.45); }
+.di-score strong { font-family: 'Source Serif 4', serif; font-size: 2.1rem; font-weight: 400; line-height: 1; }
+.di-score span { font-size: 0.7rem; color: rgba(255, 255, 255, 0.6); }
+.di-host { margin: 0 0 4px !important; font-size: 0.85rem; color: rgba(255, 255, 255, 0.55) !important; }
+.di-head h3 { margin: 0; font-family: 'Source Serif 4', serif; font-size: 1.5rem; font-weight: 400; color: var(--white); }
+.di-bars { display: grid; gap: 10px; margin: 24px 0; }
+.di-bar { display: grid; grid-template-columns: 210px 1fr 44px; gap: 12px; align-items: center; font-size: 0.88rem; color: rgba(255, 255, 255, 0.8); }
+.di-bar i { height: 8px; border-radius: 999px; background: rgba(255, 255, 255, 0.1); overflow: hidden; }
+.di-bar b { display: block; height: 100%; border-radius: 999px; transition: width 700ms ease; }
+.di-bar em { font-style: normal; text-align: right; font-weight: 600; }
+.di-wait { display: flex; align-items: center; gap: 10px; margin: -10px 0 22px !important; font-size: 0.86rem; color: rgba(255, 255, 255, 0.7) !important; }
+.di-wait .di-spin { width: 14px; height: 14px; }
+.di-sec { min-width: 32px; color: var(--sage); font-variant-numeric: tabular-nums; }
+.di-bar i.is-loading { position: relative; }
+.di-bar i.is-loading::after { content: ''; position: absolute; inset: 0; width: 40%; border-radius: 999px; background: linear-gradient(90deg, transparent, rgba(166, 184, 145, 0.6), transparent); animation: di-sweep 1.4s ease-in-out infinite; }
+@keyframes di-sweep { from { transform: translateX(-100%); } to { transform: translateX(250%); } }
+.di-dots { display: inline-flex; gap: 3px; }
+.di-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--sage); animation: di-dot 1.2s ease-in-out infinite; }
+.di-dots i:nth-child(2) { animation-delay: 0.2s; }
+.di-dots i:nth-child(3) { animation-delay: 0.4s; }
+@keyframes di-dot { 0%, 80%, 100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+.diag-form input:-webkit-autofill, .di-mail-row input:-webkit-autofill, .cta-card input:-webkit-autofill { -webkit-text-fill-color: var(--white); caret-color: var(--white); -webkit-box-shadow: 0 0 0 1000px #1d3a2c inset; box-shadow: 0 0 0 1000px #1d3a2c inset; transition: background-color 9999s; }
+.diag-form input:-webkit-autofill { border-radius: 999px; }
+.diag-inline h4 { margin: 0 0 10px; color: var(--white); font-size: 1rem; }
+.di-top { display: grid; gap: 8px; margin: 0 0 24px; padding-left: 20px; color: rgba(255, 255, 255, 0.85); font-size: 0.94rem; }
+.di-top small { display: block; color: var(--sage); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.di-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.di-full { color: var(--sage); border-bottom: 1px solid rgba(166, 184, 145, 0.5); font-size: 0.92rem; }
+.di-mail { max-width: 620px; }
+.di-actions[hidden], .di-mail[hidden] { display: none; }
+.di-mail p { margin: 0 0 12px; }
+.di-mail-row { display: flex; gap: 10px; }
+.di-mail-row input { flex: 1; min-width: 0; min-height: 52px; padding: 12px 18px; border: 1px solid rgba(166, 184, 145, 0.35); border-radius: 999px; background: rgba(255, 255, 255, 0.08); color: var(--white); font: inherit; }
+.di-mail-row input::placeholder { color: rgba(255, 255, 255, 0.5); }
+.di-mail-row input:focus { outline: none; border-color: var(--sage); }
+.di-mail .di-status { margin-top: 8px; min-height: 1.2em; font-size: 0.86rem; }
+.di-done { padding: 16px 20px; border-radius: var(--radius-lg); background: rgba(166, 184, 145, 0.15); color: var(--white) !important; }
+#diagnostico { scroll-margin-top: 96px; }
+@media (max-width: 760px) {
+  .di-bar { grid-template-columns: 1fr 44px; gap: 4px 12px; }
+  .di-bar span { grid-column: 1 / -1; }
+  .di-actions .btn { width: 100%; }
+  .di-mail-row { flex-direction: column; }
+}
+
 /* === FONDOS VERDES (alternancia) === */
 .services .process-grid::before { background: linear-gradient(90deg, var(--sage), rgba(166, 184, 145, 0.12)); }
 .services .process-dot { background: var(--sage); color: var(--green-950); box-shadow: 0 0 0 6px var(--green-900); }
@@ -434,11 +558,9 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .final-cta { padding: 96px 0; background: var(--sand); }
 .cta-card .cta-alt { margin-top: 12px; font-size: 0.92rem; }
 .cta-card .cta-alt a { color: var(--sage); border-bottom: 1px solid rgba(166, 184, 145, 0.5); padding-bottom: 1px; }
-.cta-card { display: flex; align-items: center; justify-content: space-between; gap: 36px; padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
+.cta-card { display: grid; grid-template-columns: 1fr 1.15fr; align-items: center; gap: clamp(28px, 5vw, 64px); padding: clamp(36px, 5vw, 64px); border-radius: var(--radius-xl); background: radial-gradient(circle at top right, rgba(111, 148, 100, 0.3), transparent 60%), linear-gradient(135deg, var(--green-950), var(--green-800)); color: var(--white); box-shadow: var(--shadow); }
 .cta-card h2 { margin-bottom: 14px; color: var(--white); }
 .cta-card p { max-width: 580px; margin-bottom: 0; color: rgba(255, 255, 255, 0.78); font-size: 1.06rem; line-height: 1.65; }
-.contact-form-wrap { max-width: 920px; margin: 40px auto 0; }
-.contact-form-lead { margin: 0 0 18px; text-align: center; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .contact-form { display: flex; flex-direction: column; gap: 18px; padding: clamp(28px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); }
 .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .form-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
@@ -448,6 +570,13 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
 .form-field textarea { resize: vertical; }
 .contact-form .btn { align-self: flex-start; border: none; cursor: pointer; }
 .contact-form .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.cta-card .contact-form { gap: 16px; padding: 0; border: none; background: transparent; }
+.cta-card .form-grid { grid-template-columns: 1fr 1fr; }
+.cta-card .company-field { grid-column: 1 / -1; }
+.cta-card .form-field label { color: rgba(255, 255, 255, 0.8); }
+.cta-card .form-field input, .cta-card .form-field textarea { border-color: rgba(166, 184, 145, 0.3); background: rgba(255, 255, 255, 0.08); color: var(--white); }
+.cta-card .form-status { color: var(--sage); }
+@media (max-width: 640px) { .cta-card .form-grid { grid-template-columns: 1fr; } }
 .form-status { margin: 0; font-size: 0.85rem; color: var(--muted); min-height: 1.2em; }
 @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
 .site-footer { padding: 64px 0 28px; background: var(--green-950); color: rgba(255, 255, 255, 0.7); }
@@ -470,7 +599,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .case-content { padding: 40px 30px; }
   .case-image { min-height: 280px; order: -1; }
   .cap-grid { grid-template-columns: repeat(2, 1fr); }
-  .cta-card { flex-direction: column; align-items: flex-start; }
+  .cta-card { grid-template-columns: 1fr; }
   .services .process-grid::before { display: none; }
   .solution-grid, .seo-how, .audit-layout { grid-template-columns: 1fr; }
 }
@@ -509,11 +638,17 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
   .seo-chain .chain-arrow:nth-of-type(4)::after { animation-delay: 0.6s; }
   .seo-chain .chain-arrow:nth-of-type(6)::after { animation-delay: 1.2s; }
   .journey-pill.is-final { animation: glow 3s ease-in-out infinite; }
+  .journey-pill.is-final::before { animation: ripple 3s ease-out infinite; }
+  .jp-badge { animation: badge-pop 6s ease-in-out infinite; }
+  .jp-badge svg { animation: check-draw 6s ease-in-out infinite; }
   .process-dot, .audit-steps b { transition: transform 300ms ease; }
   .service-card:hover .process-dot, .audit-steps li:hover b { transform: scale(1.1); }
 }
 @keyframes flow { to { stroke-dashoffset: -28; } }
 @keyframes travel { 0% { left: -12px; } 60%, 100% { left: 100%; } }
+@keyframes ripple { 0% { opacity: 0.7; transform: scale(1); } 70%, 100% { opacity: 0; transform: scale(1.18, 1.45); } }
+@keyframes badge-pop { 0%, 15% { opacity: 0; transform: scale(0.6) translateY(6px); } 22% { opacity: 1; transform: scale(1.08) translateY(0); } 26%, 80% { opacity: 1; transform: scale(1) translateY(0); } 88%, 100% { opacity: 0; transform: scale(0.9) translateY(-4px); } }
+@keyframes check-draw { 0%, 20% { stroke-dashoffset: 24; } 32%, 100% { stroke-dashoffset: 0; } }
 @keyframes glow { 0%, 100% { box-shadow: var(--shadow); } 50% { box-shadow: 0 0 0 8px rgba(111, 148, 100, 0.18), var(--shadow); } }
 
 /* === ANIMACIONES DE SCROLL === */
@@ -592,7 +727,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       <a href="#servicios">Cómo trabajo</a>
       <a href="#casos">Casos</a>
       <a href="#sobre-mi">Sobre mí</a>
-      <a href="/diagnostico/">Diagnóstico gratis</a>
+      <a href="/#diagnostico">Diagnóstico gratis</a>
       <a class="nav-cta" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
       <a class="lang-switch" href="/en/" aria-label="View this site in English" title="English">🇺🇸</a>
     </nav>
@@ -650,15 +785,15 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
       </div>
       <div class="container journey reveal">
         <div class="journey-sources">
-          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><strong>Busca en Google</strong><div class="journey-chips"><span><svg class="brand-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M3.9998 22.9291C1.7908 22.9291 0 21.1383 0 18.9293s1.7908-3.9998 3.9998-3.9998 3.9998 1.7908 3.9998 3.9998-1.7908 3.9998-3.9998 3.9998zm19.4643-6.0004L15.4632 3.072C14.3586 1.1587 11.9121.5028 9.9988 1.6074S7.4295 5.1585 8.5341 7.0718l8.0009 13.8567c1.1046 1.9133 3.5511 2.5679 5.4644 1.4646 1.9134-1.1046 2.568-3.5511 1.4647-5.4644zM7.5137 4.8438L1.5645 15.1484A4.5 4.5 0 0 1 4 14.4297c2.5597-.0075 4.6248 2.1585 4.4941 4.7148l3.2168-5.5723-3.6094-6.25c-.4499-.7793-.6322-1.6394-.5878-2.4784z"/></svg>Google Ads</span><span>SEO</span></div></div>
-          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg></span><strong>Se inspira en redes</strong><div class="journey-chips"><span><svg class="brand-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0467DF" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta Ads</span></div></div>
-          <div class="journey-node"><span class="journey-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 2.3L22 19l-2.3.7L19 22l-.7-2.3L16 19l2.3-.7z"/></svg></span><strong>Le pregunta a la IA</strong><div class="journey-chips"><span class="is-ai">AEO</span></div></div>
+          <div class="journey-node is-anim"><div class="jn-media jn-search" aria-hidden="true"><div class="sb-window"><div class="sb-dots"><i></i><i></i><i></i></div><div class="sb-bar"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span class="sb-typed" data-queries="lodge en la patagonia|eco lodge en la amazonía|hotel boutique en atacama"></span><span class="sb-caret"></span></div><div class="sb-results"><div class="sb-result is-ad"><b>Patrocinado</b><span></span><span></span></div><div class="sb-result"><b></b><span></span></div></div></div></div><strong>Busca en Google</strong><div class="journey-chips"><span><svg class="brand-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M3.9998 22.9291C1.7908 22.9291 0 21.1383 0 18.9293s1.7908-3.9998 3.9998-3.9998 3.9998 1.7908 3.9998 3.9998-1.7908 3.9998-3.9998 3.9998zm19.4643-6.0004L15.4632 3.072C14.3586 1.1587 11.9121.5028 9.9988 1.6074S7.4295 5.1585 8.5341 7.0718l8.0009 13.8567c1.1046 1.9133 3.5511 2.5679 5.4644 1.4646 1.9134-1.1046 2.568-3.5511 1.4647-5.4644zM7.5137 4.8438L1.5645 15.1484A4.5 4.5 0 0 1 4 14.4297c2.5597-.0075 4.6248 2.1585 4.4941 4.7148l3.2168-5.5723-3.6094-6.25c-.4499-.7793-.6322-1.6394-.5878-2.4784z"/></svg>Google Ads</span><span>SEO</span></div></div>
+          <div class="journey-node is-anim"><div class="jn-media jn-reels" aria-hidden="true"><div class="rl-phone is-side is-left"><img src="/assets/reels/reel-4.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-5.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-3.webp" alt="" loading="lazy" /></div><div class="rl-phone"><div class="rl-progress"><i></i><i></i><i></i></div><img src="/assets/reels/reel-4.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-5.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-3.webp" alt="" loading="lazy" /><div class="rl-ui"><span>@tulodge</span><svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.7-9.3-9.6C1.5 8 3.6 4.5 7.2 4.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3.6 0 5.7 3.5 4.5 6.9C19.5 16.3 12 21 12 21z"/></svg></div></div><div class="rl-phone is-side is-right"><img src="/assets/reels/reel-4.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-5.webp" alt="" loading="lazy" /><img src="/assets/reels/reel-3.webp" alt="" loading="lazy" /></div></div><strong>Se inspira en redes</strong><div class="journey-chips"><span><svg class="brand-ico" viewBox="0 0 24 24" aria-hidden="true"><path fill="#0467DF" d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/></svg>Meta Ads</span></div></div>
+          <div class="journey-node is-anim"><div class="jn-media jn-ia" aria-hidden="true"><span class="ia-orb ia-orb-1"></span><span class="ia-orb ia-orb-2"></span><svg class="ia-stars" viewBox="25 10 250 135" preserveAspectRatio="xMidYMid meet"><path d="M128 28 L98 44 L120 82 L132 79 L144 76 L168 46 L128 28 M120 82 L108 124 M144 76 L172 118 M168 46 L196 34 M168 46 L198 50 M196 34 L204 22 M198 50 L206 62"/><circle cx="98" cy="44" r="4.5"/><circle cx="168" cy="46" r="3.2"/><circle cx="128" cy="28" r="2.2"/><circle cx="120" cy="82" r="3"/><circle cx="132" cy="79" r="3.2"/><circle cx="144" cy="76" r="3"/><circle cx="108" cy="124" r="2.8"/><circle cx="172" cy="118" r="4.5"/><circle cx="131" cy="94" r="1.6"/><circle cx="133" cy="102" r="1.4"/><circle class="is-dim" cx="40" cy="30" r="1.5"/><circle class="is-dim" cx="250" cy="40" r="1.5"/><circle class="is-dim" cx="70" cy="120" r="1.2"/><circle class="is-dim" cx="245" cy="118" r="1.3"/><circle class="is-dim" cx="220" cy="90" r="1.1"/><circle class="is-dim" cx="55" cy="75" r="1.2"/></svg></div><strong>Le pregunta a la IA</strong><div class="journey-chips"><span class="is-ai">AEO</span></div></div>
         </div>
         <svg class="journey-lines" viewBox="0 0 900 110" preserveAspectRatio="none" aria-hidden="true"><path d="M150 0 C150 70 450 40 450 110"/><path d="M450 0 L450 110"/><path d="M750 0 C750 70 450 40 450 110"/></svg>
         <div class="journey-target">
           <span class="journey-pill">Tu sitio web<small>CRO · Tracking · Automatización</small></span>
           <span class="journey-arrow" aria-hidden="true">→</span>
-          <span class="journey-pill is-final">Reserva directa<small>sin comisión de OTA</small></span>
+          <span class="journey-pill is-final"><span class="jp-badge" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Reserva confirmada</span>Reserva directa<small>sin comisión de OTA</small></span>
         </div>
       </div>
       <div class="container solution-grid">
@@ -676,9 +811,9 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         </article>
         <article id="conversion" class="solution-card is-dark reveal reveal-delay-2">
           <span class="solution-tag">Conversión y tecnología</span>
-          <h3>CRO · Tracking · Automatización · IA</h3>
-          <p>Transformar visitantes en viajeros y conectar marketing con el proceso comercial.</p>
-          <ul class="check-list"><li>Páginas que convierten visitas en consultas y reservas</li><li>Del primer clic a la venta, con WhatsApp, formularios y motor de reservas conectados</li><li>Automatizaciones e IA para responder y hacer seguimiento a tiempo</li></ul>
+          <h3>CRO · Tracking · IA</h3>
+          <p>Convertir visitas en reservas.</p>
+          <ul class="check-list"><li>Páginas pensadas para reservar</li><li>WhatsApp, formularios y motor de reservas conectados</li><li>Automatización e IA para responder a tiempo</li></ul>
         </article>
       </div>
       <div class="container seo-chain-wrap">
@@ -693,20 +828,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>El viajero reserva contigo</strong></div>
         </div>
       </div>
-      <div class="container seo-how">
-        <div class="seo-how-col reveal">
-          <h4>Todos los meses</h4>
-          <p>Lo fijo del plan SEO + AEO.</p>
-          <ul class="pill-list"><li>Test de visibilidad en IA</li><li>Pauta de contenido</li><li>Reporte y reunión</li></ul>
-        </div>
-        <div class="seo-how-col reveal reveal-delay-1">
-          <h4>Distintos focos para cada mes</h4>
-          <p>El orden se define según la primera medición.</p>
-          <ol class="focus-trail"><li><span>Base técnica</span></li><li><span>Blog conectado</span></li><li><span>Preguntas frecuentes</span></li><li><span>Fichas de experiencias</span></li><li><span>Una sola marca</span></li><li><span>Menciones</span></li></ol>
-        </div>
-      </div>
       <div class="container section-center solutions-cta">
-        <a class="btn btn-primary reveal" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20saber%20si%20mi%20negocio%20aparece%20en%20Google%20y%20en%20la%20IA." target="_blank" rel="noreferrer">¿Te recomienda la IA? Revisémoslo</a>
+        <a class="btn btn-primary reveal" href="/#diagnostico">Analiza tu web gratis</a>
       </div>
     </section>
 
@@ -820,7 +943,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <ol class="audit-steps reveal reveal-delay-1"><li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, anuncios, mercados, conversiones y páginas de destino.</span></div></li><li><b>2</b><div><strong>Sesión con tu equipo</strong><span>Repasamos hallazgos y aplicamos mejoras.</span></div></li><li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>Revisión con datos reales semanas después.</span></div></li></ol>
       </div>
       <div class="container">
-        <div class="diag-card reveal">
+        <div class="diag-card reveal" id="diagnostico">
           <div>
             <p class="eyebrow">Diagnóstico gratis</p>
             <h2>¿Tu web está lista para <span>vender directo?</span></h2>
@@ -833,6 +956,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
             </form>
             <p class="diag-meta">Gratis, sin registro y con resultado inmediato.</p>
           </div>
+          <div class="diag-inline" id="diag-inline" hidden aria-live="polite"></div>
         </div>
       </div>
     </section>
@@ -847,6 +971,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué metodología usas?</span><span class="faq-icon">+</span></button><div class="faq-a">Es el proceso de 4 etapas que ves más arriba — Diagnóstico, Estrategia, Activación y Optimización, mes a mes — sumado a asesoría constante durante toda la relación, no solo cuando lanzamos algo nuevo.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué herramientas usas o implementas en el sitio?</span><span class="faq-icon">+</span></button><div class="faq-a">Depende del objetivo, pero el stack habitual incluye Google Ads y Meta Ads para atraer viajeros, SEO y AEO para posicionar tu sitio en Google y en asistentes de IA sin depender solo de pauta paga, landing pages diseñadas para que la visita termine en consulta o reserva, y Google Analytics 4 junto con Google Tag Manager para medir qué campaña, canal o mercado genera cada reserva real. Elijo la combinación según tu propiedad — no aplico el mismo set de herramientas a un hotel de ciudad que a un lodge remoto.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué es el AEO y por qué importa para un lodge u hotel?</span><span class="faq-icon">+</span></button><div class="faq-a">AEO (Answer Engine Optimization) es preparar tu sitio para que los asistentes de IA, como ChatGPT, Gemini, Perplexity o las respuestas con IA de Google, te mencionen cuando un viajero les pregunta dónde alojarse o qué hacer en tu destino. Cada vez más viajeros planifican así. Trabajo la información de tu propiedad para que sea clara, completa y fácil de citar: preguntas frecuentes, datos estructurados, reseñas y contenido del destino. Se complementa con el SEO tradicional, no lo reemplaza.</div></div>
+          <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Qué incluye el plan SEO + AEO cada mes?</span><span class="faq-icon">+</span></button><div class="faq-a">Todos los meses hay un test de visibilidad en IA, una pauta de contenido y un reporte con reunión. Además, cada mes tiene un foco distinto: base técnica, blog conectado, preguntas frecuentes, fichas de experiencias, una sola marca en todos los canales y menciones en otros sitios. El orden se define según la primera medición.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Trabajas con negocios fuera de Chile?</span><span class="faq-icon">+</span></button><div class="faq-a">Sí. Trabajo con proyectos turísticos en distintos países de América. La metodología es la misma; lo que cambia es la configuración de campañas, mercados de origen e idiomas.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿En cuánto tiempo se ven resultados?</span><span class="faq-icon">+</span></button><div class="faq-a">Las primeras señales de captación llegan en las primeras semanas tras lanzar campañas. Los resultados sostenibles en reservas directas y SEO se consolidan en un horizonte de 3 a 6 meses, dependiendo del estado inicial del negocio.</div></div>
           <div class="faq-item reveal"><button class="faq-q" onclick="toggleFaq(this)"><span>¿Cómo trabajas el presupuesto de medios?</span><span class="faq-icon">+</span></button><div class="faq-a">El presupuesto de medios (lo que se invierte en Google y Meta) es independiente del fee de gestión. Lo definimos juntos en función de los objetivos, la temporada y la capacidad del negocio para recibir reservas.</div></div>
@@ -863,13 +988,8 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div>
             <h2>Aumenta tus reservas directas.</h2>
             <p>Conversemos sobre tu proyecto y revisemos oportunidades concretas para tu crecimiento. El primer diagnóstico es gratuito y sin compromiso.</p>
-            <p class="cta-alt">¿Prefieres partir solo? <a href="/diagnostico/">Analiza tu web gratis en un minuto →</a></p>
+            <p class="cta-alt">¿Prefieres partir solo? <a href="/#diagnostico">Analiza tu web gratis en un minuto →</a></p>
           </div>
-          <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer">Agendar llamada</a>
-        </div>
-
-        <div class="contact-form-wrap reveal">
-          <p class="contact-form-lead">O escríbeme directo</p>
           <form id="contact-form" class="contact-form" action="/api/contact" method="POST">
             <div class="form-grid">
               <div class="form-field">
@@ -880,7 +1000,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
                 <label for="cf-email">Correo</label>
                 <input type="email" id="cf-email" name="email" required>
               </div>
-              <div class="form-field">
+              <div class="form-field company-field">
                 <label for="cf-company">Empresa</label>
                 <input type="text" id="cf-company" name="company" required>
               </div>
@@ -913,7 +1033,7 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
         <a href="#casos">Casos</a>
         <a href="#auditoria">Auditoría de campañas</a>
         <a href="#sobre-mi">Sobre mí</a>
-        <a href="/diagnostico/">Diagnóstico gratis de tu web</a>
+        <a href="/#diagnostico">Diagnóstico gratis de tu web</a>
         <a href="#contacto">Contacto</a>
       </div>
       <div>
@@ -1025,5 +1145,7 @@ function toggleFaq(btn) {
 <a class="whatsapp-float" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20quiero%20conversar%20sobre%20reservas%20directas%20para%20mi%20empresa%20tur%C3%ADstica." target="_blank" rel="noreferrer" aria-label="Escribir por WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.412-.074-.124-.272-.198-.57-.347z"/><path d="M12.05 2C6.526 2 2.05 6.477 2.05 12c0 1.867.502 3.617 1.376 5.121L2 22l5.09-1.375A9.955 9.955 0 0012.05 22c5.523 0 10-4.477 10-10S17.573 2 12.05 2zm0 18.09c-1.68 0-3.24-.474-4.573-1.293l-.328-.198-3.02.816.812-2.98-.213-.313A8.06 8.06 0 013.95 12c0-4.474 3.626-8.1 8.1-8.1 4.473 0 8.099 3.626 8.099 8.1 0 4.473-3.626 8.09-8.099 8.09z"/></svg>
 </a>
+<script src="/assets/diag-inline.js" defer></script>
+<script src="/assets/solution-bg.js" defer></script>
 </body>
 </html>

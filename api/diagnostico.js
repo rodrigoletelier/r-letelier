@@ -2,6 +2,7 @@ const dns = require('dns').promises;
 const net = require('net');
 
 const UA = 'Mozilla/5.0 (compatible; RLDiagnostico/1.0; +https://www.rodrigoletelier.cl/diagnostico/)';
+const UA_PLAIN = 'RLDiagnostico/1.0 (+https://www.rodrigoletelier.cl/diagnostico/)';
 const MAX_BYTES = 1500000;
 const hits = new Map();
 
@@ -75,14 +76,14 @@ async function assertPublic(u) {
   if (!addrs.length || addrs.some((a) => isPrivateIp(a.address))) throw new Error('bad_url');
 }
 
-async function safeFetch(start, timeoutMs, wantBody = true) {
+async function safeFetch(start, timeoutMs, wantBody = true, ua = UA) {
   let url = new URL(start);
   const ctrl = new AbortController();
   const t = setTimeout(() => ctrl.abort(), timeoutMs);
   try {
     for (let hop = 0; hop < 5; hop++) {
       await assertPublic(url);
-      const r = await fetch(url, { redirect: 'manual', signal: ctrl.signal, headers: { 'User-Agent': UA, Accept: 'text/html,*/*;q=0.8', 'Accept-Language': 'es,en;q=0.8' } });
+      const r = await fetch(url, { redirect: 'manual', signal: ctrl.signal, headers: { 'User-Agent': ua, Accept: 'text/html,*/*;q=0.8', 'Accept-Language': 'es,en;q=0.8' } });
       if (r.status >= 300 && r.status < 400 && r.headers.get('location')) {
         url = new URL(r.headers.get('location'), url);
         continue;
@@ -222,8 +223,12 @@ function toEnglish(s) {
   return s;
 }
 
+const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-chat|whatsapp-button|getbutton\.io|wati\.io|elfsight[^"']{0,40}whatsapp|whatsapp-widget|qlwapp|creame-whatsapp|floating-whatsapp|wa-chat-widget|whatsapp-chat/i;
+
+const WEIGHT = { engine: 2 };
+
 function check(id, area, status, label, detail) {
-  return { id, area, status, label, detail };
+  return { id, area, status, label, detail, w: WEIGHT[id] || 1 };
 }
 
 function analyze(html, extraHtml, ctx) {
@@ -248,7 +253,7 @@ function analyze(html, extraHtml, ctx) {
     ? check('ota', 'conversion', 0, 'Tu sitio envía viajeros a OTAs', 'Enlaces a ' + otas.join(', ') + '. Cada reserva por ahí paga comisión.')
     : jsRendered ? check('ota', 'conversion', null, 'Enlaces a OTAs: no pudimos verlo (sitio cargado con JavaScript)', '') : check('ota', 'conversion', 1, 'No envía viajeros a OTAs', ''));
 
-  const wa = /wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|web\.whatsapp\.com\/send/.test(all);
+  const wa = /wa\.me\/|api\.whatsapp\.com|whatsapp:\/\/|web\.whatsapp\.com\/send/.test(all) || WA_WIDGETS.test(html);
   out.push(wa ? check('whatsapp', 'conversion', 1, 'Botón de WhatsApp', '') : jsRendered ? check('whatsapp', 'conversion', null, 'WhatsApp: no pudimos verlo (sitio cargado con JavaScript)', '') : check('whatsapp', 'conversion', 0, 'Sin botón de WhatsApp', 'Muchos viajeros latinoamericanos prefieren consultar por WhatsApp antes de reservar.'));
 
   const contact = /href=["'](tel:|mailto:)|<form[\s>]/.test(all);
@@ -267,7 +272,7 @@ function analyze(html, extraHtml, ctx) {
   out.push(ga4 ? check('ga4', 'tracking', 1, 'Google Analytics 4', gtmRead ? 'Encontrado dentro de Google Tag Manager.' : '')
     : hidden ? check('ga4', 'tracking', null, 'Google Analytics 4: no pudimos leer tu Google Tag Manager', '')
       : check('ga4', 'tracking', 0, 'No encontramos Google Analytics 4', 'Sin analítica no sabes de dónde llegan tus reservas.'));
-  const pixel = /connect\.facebook\.net\/[^"']*fbevents\.js|fbq\(\s*\\?['"]init/.test(tags);
+  const pixel = /connect\.facebook\.net[^"']{0,40}fbevents|fbq\(\s*\\?['"]init|facebook\.com\/tr\?id=|pixelyoursite|facebook-for-wordpress|official-facebook-pixel|pixel-caffeine|facebook-pixel/.test(tags);
   const ads = /aw-\d{6,}|googleadservices\.com\/pagead\/conversion/.test(tags);
   out.push(pixel && ads ? check('adtags', 'tracking', 1, 'Píxel de Meta y etiqueta de Google Ads', 'Tus campañas pueden aprender de las reservas.')
     : pixel || ads ? check('adtags', 'tracking', 0.5, pixel ? 'Píxel de Meta, pero sin etiqueta de Google Ads' : 'Etiqueta de Google Ads, pero sin píxel de Meta', pixel ? 'Sin ella, Google Ads no sabe qué clics terminan en reserva.' : 'Sin píxel, Instagram y Facebook no aprenden de quienes reservan.')
@@ -303,23 +308,12 @@ function analyze(html, extraHtml, ctx) {
   return { checks: out, title, engine: engine ? engine[0] : null };
 }
 
-const handler = async (req, res) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  if (req.method !== 'GET') { res.status(405).json({ error: 'method' }); return; }
-
-  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'x';
-  const now = Date.now();
-  const recent = (hits.get(ip) || []).filter((t) => now - t < 60000);
-  if (recent.length >= 6) { res.status(429).json({ error: 'rate' }); return; }
-  recent.push(now);
-  hits.set(ip, recent);
-
-  let raw = String((req.query && req.query.url) || '').trim();
-  const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
-  if (!raw || raw.length > 200) { res.status(400).json({ error: 'bad_url' }); return; }
+async function runDiagnosis(input, lang) {
+  let raw = String(input || '').trim();
+  if (!raw || raw.length > 200) return { status: 400, body: { error: 'bad_url' } };
   if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
   let start;
-  try { start = new URL(raw); start.hash = ''; } catch (e) { res.status(400).json({ error: 'bad_url' }); return; }
+  try { start = new URL(raw); start.hash = ''; } catch (e) { return { status: 400, body: { error: 'bad_url' } }; }
 
   try {
     let home;
@@ -332,8 +326,14 @@ const handler = async (req, res) => {
         home = await safeFetch(start.href, 4000);
       } else throw e;
     }
-    if (home.status === 401 || home.status === 403 || home.status === 429) { res.status(422).json({ error: 'blocked', status: home.status }); return; }
-    if (home.status >= 400 || !home.body) { res.status(422).json({ error: 'unreachable', status: home.status }); return; }
+    const thin = home.status < 400 && (!home.body || home.body.length < 5000);
+    if (home.status >= 500 || home.status === 403 || thin) {
+      const retry = await safeFetch(home.url || start.href, 5000, true, UA_PLAIN).catch(() => null);
+      if (retry && retry.status < 400 && retry.body && (!thin || retry.body.length > home.body.length)) home = retry;
+      else if (thin) console.warn('diagnostico: respuesta corta', start.host, home.status, home.body ? home.body.length : 0);
+    }
+    if (home.status === 401 || home.status === 403 || home.status === 429) return { status: 422, body: { error: 'blocked', status: home.status } };
+    if (home.status >= 400 || !home.body) return { status: 422, body: { error: 'unreachable', status: home.status } };
 
     const finalUrl = new URL(home.url);
     const host = finalUrl.hostname;
@@ -355,21 +355,40 @@ const handler = async (req, res) => {
       gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : ''
     });
 
-    res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
-    res.status(200).json({
-      url: finalUrl.href,
-      host,
-      title: result.title,
-      engine: result.engine,
-      checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
-      analyzedAt: new Date().toISOString(),
-      version: '1.3'
-    });
+    return {
+      status: 200,
+      body: {
+        url: finalUrl.href,
+        host,
+        title: result.title,
+        engine: result.engine,
+        checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
+        analyzedAt: new Date().toISOString(),
+        version: '1.6'
+      }
+    };
   } catch (e) {
-    const code = e.message === 'bad_url' ? 400 : 422;
-    res.status(code).json({ error: e.message === 'bad_url' ? 'bad_url' : 'unreachable' });
+    return e.message === 'bad_url' ? { status: 400, body: { error: 'bad_url' } } : { status: 422, body: { error: 'unreachable' } };
   }
+}
+
+const handler = async (req, res) => {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  if (req.method !== 'GET') { res.status(405).json({ error: 'method' }); return; }
+
+  const ip = String(req.headers['x-forwarded-for'] || '').split(',')[0].trim() || 'x';
+  const now = Date.now();
+  const recent = (hits.get(ip) || []).filter((t) => now - t < 60000);
+  if (recent.length >= 6) { res.status(429).json({ error: 'rate' }); return; }
+  recent.push(now);
+  hits.set(ip, recent);
+
+  const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
+  const r = await runDiagnosis(req.query && req.query.url, lang);
+  if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
+  res.status(r.status).json(r.body);
 };
 
 module.exports = handler;
 module.exports.analyze = analyze;
+module.exports.runDiagnosis = runDiagnosis;
