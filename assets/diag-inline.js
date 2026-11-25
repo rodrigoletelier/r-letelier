@@ -128,7 +128,7 @@
       fetch('/api/informe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, url: data.url, lang: en ? 'en' : 'es', speed: speed || null })
+        body: JSON.stringify({ email: email, url: data.url, lang: en ? 'en' : 'es', speed: speed || null, result: data })
       }).then(function (res) {
         if (!res.ok) throw new Error(String(res.status));
         mail.innerHTML = '<p class="di-done">' + esc(T.sent(email)) + '</p>';

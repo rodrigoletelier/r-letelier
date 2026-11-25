@@ -523,7 +523,7 @@ h3 { margin-top: 0; }
     fetch('/api/informe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: f.email.value, url: data.url, lang: 'en', speed: speed || null })
+      body: JSON.stringify({ email: f.email.value, url: data.url, lang: 'en', speed: speed || null, result: data })
     }).then(function () {
       track('generate_lead', { form_id: 'diagnostico_detalle', complete: current.complete, score: current.score });
     }).catch(function () {}).then(done);

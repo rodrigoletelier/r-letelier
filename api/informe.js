@@ -1,4 +1,5 @@
-const { runDiagnosis } = require('./diagnostico.js');
+const crypto = require('crypto');
+const { runDiagnosis, signResult } = require('./diagnostico.js');
 
 const hits = new Map();
 const IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
@@ -102,7 +103,7 @@ ${groups}
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method' });
-  const { email, url, lang: rawLang, speed } = req.body || {};
+  const { email, url, lang: rawLang, speed, result } = req.body || {};
   const lang = rawLang === 'en' ? 'en' : 'es';
   const t = TXT[lang];
   if (!/^[^\s@<>]{1,64}@[^\s@<>]{1,190}\.[a-z]{2,}$/i.test(String(email || ''))) return res.status(400).json({ error: 'email' });
@@ -114,9 +115,18 @@ module.exports = async (req, res) => {
   recent.push(now);
   hits.set(ip, recent);
 
-  const d = await runDiagnosis(url, lang);
-  if (d.status !== 200) { console.error('informe: diagnóstico falló', url, d.body); return res.status(d.status).json(d.body); }
-  const data = d.body;
+  let data = null;
+  if (result && typeof result === 'object' && typeof result.sig === 'string' && result.sig.length === 64 && Array.isArray(result.checks)) {
+    const want = signResult(result);
+    const age = Date.now() - Date.parse(result.analyzedAt || '');
+    if (want && crypto.timingSafeEqual(Buffer.from(want), Buffer.from(result.sig)) && age >= 0 && age < 6 * 3600000) data = JSON.parse(JSON.stringify(result));
+  }
+  if (!data) {
+    const d = await runDiagnosis(url, lang);
+    if (d.status !== 200) { console.error('informe: diagnóstico falló', url, d.body); return res.status(d.status).json(d.body); }
+    data = d.body;
+    console.warn('informe: sin resultado firmado, se volvió a analizar', url);
+  }
 
   const sp = speed && Number.isFinite(+speed.score) ? Math.max(0, Math.min(100, Math.round(+speed.score))) : null;
   const lcp = speed && /^[\d.,]{1,6}\s?m?s$/.test(String(speed.lcp || '')) ? String(speed.lcp) : '';

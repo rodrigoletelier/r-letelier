@@ -263,6 +263,15 @@ const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-ch
 
 const WEIGHT = { engine: 2, social: 2 };
 
+const crypto = require('crypto');
+
+function signResult(body) {
+  const key = process.env.PAGESPEED_API_KEY || process.env.RESEND_API_KEY;
+  if (!key) return '';
+  const { sig, ...rest } = body;
+  return crypto.createHmac('sha256', 'diagnostico:' + key).update(JSON.stringify(rest)).digest('hex');
+}
+
 function check(id, area, status, label, detail) {
   return { id, area, status, label, detail, w: WEIGHT[id] || 1 };
 }
@@ -456,10 +465,11 @@ const handler = async (req, res) => {
 
   const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
   const r = await runDiagnosis(req.query && req.query.url, lang);
-  if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
+  if (r.status === 200) { r.body.sig = signResult(r.body); res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0'); }
   res.status(r.status).json(r.body);
 };
 
 module.exports = handler;
 module.exports.analyze = analyze;
 module.exports.runDiagnosis = runDiagnosis;
+module.exports.signResult = signResult;
