@@ -15,6 +15,7 @@ const TXT = {
     score: 'Índice', of: 'de 100', noScore: 'Sin índice completo: no encontramos evidencia suficiente en todas las áreas.',
     detail: 'Todo lo que revisamos', ok: 'Bien', mid: 'Mejorable', bad: 'Falta',
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
+    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.', content: 'Índice limitado a 45: la portada casi no tiene texto.' },
     note: 'Es una revisión automática de tu página de inicio. El máximo por área es 90 %: el resto solo se puede ver con tus datos reales de campañas y reservas.',
     cta: '¿Lo revisamos juntos? Responde este correo o escríbeme por WhatsApp.',
     wa: 'Escribir por WhatsApp',
@@ -30,6 +31,7 @@ const TXT = {
     score: 'Score', of: 'out of 100', noScore: 'No full score: we did not find enough evidence in every area.',
     detail: 'Everything we checked', ok: 'Good', mid: 'Can improve', bad: 'Missing',
     speedOk: 'Fast on mobile', speedBad: 'Slow on mobile', speedDetail: 'Measured with Google PageSpeed.',
+    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.', content: 'Score capped at 45: the home page has almost no text.' },
     note: 'This is an automatic review of your home page. Each area tops out at 90%: the rest can only be seen with your real campaign and booking data.',
     cta: 'Want to go over it together? Reply to this email or message me on WhatsApp.',
     wa: 'Message me on WhatsApp',
@@ -39,6 +41,17 @@ const TXT = {
 };
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+
+function capScore(checks, score) {
+  if (score === null) return { score: null, cap: null };
+  var st = function (id) { var c = checks.filter(function (x) { return x.id === id; })[0]; return c ? c.status : null; };
+  var caps = [];
+  if (st('social') === 0) caps.push([35, 'social']);
+  if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
+  if (st('content') === 0) caps.push([45, 'content']);
+  caps.sort(function (a, b) { return a[0] - b[0]; });
+  return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
+}
 
 function compute(checks) {
   let total = 0, complete = true;
@@ -52,7 +65,8 @@ function compute(checks) {
     if (ok) total += pct * WEIGHTS[i] / 100; else complete = false;
     return { id, pct, ok };
   });
-  return { areas, score: complete ? Math.round(total) : null };
+  const c = capScore(checks, complete ? Math.round(total) : null);
+  return { areas, score: c.score, cap: c.cap };
 }
 
 function buildEmail(t, data, r) {
@@ -73,7 +87,7 @@ function buildEmail(t, data, r) {
 <tr><td style="background:#0d2b20;padding:28px 28px 24px;color:#ffffff">
 <p style="margin:0 0 6px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#a6b891">${esc(data.host)}</p>
 <p style="margin:0;font-size:22px;font-family:Georgia,serif">${esc(title)}</p>
-<p style="margin:14px 0 0;font-size:15px;color:#a6b891">${r.score !== null ? `${t.score}: <strong style="font-size:26px;color:#ffffff">${r.score}</strong> ${t.of}` : esc(t.noScore)}</p>
+<p style="margin:14px 0 0;font-size:15px;color:#a6b891">${r.score !== null ? `${t.score}: <strong style="font-size:26px;color:#ffffff">${r.score}</strong> ${t.of}` : esc(t.noScore)}</p>${r.cap ? `<p style="margin:8px 0 0;font-size:13px;color:#a6b891">${esc(t.capped[r.cap])}</p>` : ''}
 </td></tr>
 <tr><td style="padding:24px 28px">
 <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#1e2420">${esc(t.intro(data.host))}</p>

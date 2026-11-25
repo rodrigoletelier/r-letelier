@@ -8,6 +8,14 @@
     services: { visibilidad: 'Visibility', conversion: 'Conversion and technology', propuesta: 'Conversion and technology', rendimiento: 'Conversion and technology', tracking: 'Conversion and technology' },
     loading: 'Checking your site…', measuring: 'Measuring mobile speed…', wait: 'Measuring mobile speed with Google. It takes up to a minute', of: 'out of 100', partial: 'Partial results',
     levels: ['There is a lot of room to grow', 'You are on track, but there are leaks', 'Your website has a solid base'],
+    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.', content: 'Score capped at 45: the home page has almost no text.' },
+    prio: {
+      visibilidad: ['Get found on Google and by AI', 'Your home page gives few signals to show up when a traveler searches for your destination or asks an AI assistant.'],
+      conversion: ['Make booking direct easy', 'A traveler who already chose you needs a clear way to book or ask without leaving for an OTA.'],
+      propuesta: ['Show travelers why to choose you', 'Before booking they want to see what they will experience, what it costs and what other guests say.'],
+      rendimiento: ['Load fast on phones', 'Every second of waiting on mobile makes more travelers leave before they see your offer.'],
+      tracking: ['Know where your bookings come from', 'Without tracking and social profiles you cannot tell what works, and your campaigns cannot learn.']
+    },
     noEvidence: 'Not enough evidence', top: 'Your top 3 priorities', none: 'We found no obvious gaps',
     full: 'See full report', send: 'Send report', email: 'Your email', ask: 'Leave your email and I will send you the full report, with everything we checked and what to fix first.', sending: 'Sending…', sent: function (e) { return 'Done. The full report is on its way to ' + e + '. If you do not see it in a few minutes, check your spam folder.'; }, sendError: 'We could not send it. Check the email address and try again.',
     speedOk: 'Fast on mobile', speedBad: 'Slow on mobile', speedDetail: 'Measured with Google PageSpeed.',
@@ -17,11 +25,29 @@
     services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Conversión y tecnología' },
     loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', wait: 'Midiendo la velocidad en móvil con Google. Tarda hasta un minuto', of: 'de 100', partial: 'Diagnóstico parcial',
     levels: ['Hay mucho espacio para crecer', 'Vas bien, pero hay fugas', 'Tu web tiene una base sólida'],
+    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.', content: 'Índice limitado a 45: la portada casi no tiene texto.' },
+    prio: {
+      visibilidad: ['Que Google y la IA te encuentren', 'Tu portada da pocas señales para aparecer cuando un viajero busca tu destino o le pregunta a la IA.'],
+      conversion: ['Que reservar directo sea fácil', 'El viajero que ya te eligió necesita un camino claro para reservar o preguntar sin irse a una OTA.'],
+      propuesta: ['Que el viajero entienda por qué elegirte', 'Antes de reservar quiere ver qué va a vivir, cuánto cuesta y qué dicen otros huéspedes.'],
+      rendimiento: ['Que tu sitio cargue rápido en el teléfono', 'Cada segundo de espera en móvil hace que más viajeros se vayan antes de ver tu oferta.'],
+      tracking: ['Saber de dónde vienen tus reservas', 'Sin medición ni redes enlazadas no sabes qué funciona, y tus campañas no pueden aprender.']
+    },
     noEvidence: 'Sin evidencia suficiente', top: 'Tus 3 prioridades', none: 'No encontramos brechas evidentes',
     full: 'Ver informe completo', send: 'Enviar informe', email: 'Tu correo', ask: 'Deja tu correo y te envío el informe completo, con todo lo que revisamos y qué conviene corregir primero.', sending: 'Enviando…', sent: function (e) { return 'Listo. El informe completo va camino a ' + e + '. Si no lo ves en unos minutos, revisa la carpeta de spam.'; }, sendError: 'No pudimos enviarlo. Revisa el correo e inténtalo de nuevo.',
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
     errors: { bad_url: 'Revisa la dirección. Escribe algo como tuhotel.com.', unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.', rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.', blocked: 'Tu sitio bloquea las revisiones automáticas. Escríbeme y lo reviso a mano.' }
   };
+  function capScore(checks, score) {
+    if (score === null) return { score: null, cap: null };
+    var st = function (id) { var c = checks.filter(function (x) { return x.id === id; })[0]; return c ? c.status : null; };
+    var caps = [];
+    if (st('social') === 0) caps.push([35, 'social']);
+    if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
+    if (st('content') === 0) caps.push([45, 'content']);
+    caps.sort(function (a, b) { return a[0] - b[0]; });
+    return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
+  }
   var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
   var WEIGHTS = [25, 25, 20, 15, 15];
   var MAX_PCT = 90;
@@ -49,11 +75,15 @@
       var ok = ev.length >= 2 && ev.length / all.length >= 0.7;
       var pct = ev.length ? Math.min(MAX_PCT, Math.round(sum / wsum * 100)) : 0;
       if (ok) total += pct * WEIGHTS[i] / 100; else complete = false;
-      return { title: T.areas[i], pct: pct, ok: ok };
+      return { id: id, title: T.areas[i], pct: pct, ok: ok, gap: ok ? (MAX_PCT - pct) * WEIGHTS[i] : 0 };
     });
     var gaps = checks.filter(function (c) { return c.status !== null && c.status < 1; });
     gaps.sort(function (a, b) { return (a.status - b.status) || (PRIORITY.indexOf(a.id) - PRIORITY.indexOf(b.id)); });
-    return { areas: areas, score: complete ? Math.round(total) : null, top: gaps.slice(0, 3) };
+    var top = areas.filter(function (a) { return a.ok && a.pct < MAX_PCT; }).sort(function (a, b) { return b.gap - a.gap; }).slice(0, 3).map(function (a) {
+      return { area: a, items: gaps.filter(function (c) { return c.area === a.id; }) };
+    }).filter(function (p) { return p.items.length; });
+    var capped = capScore(checks, complete ? Math.round(total) : null);
+    return { areas: areas, score: capped.score, cap: capped.cap, top: top };
   }
 
   function render() {
@@ -68,8 +98,10 @@
         return '<div class="di-bar"><span>' + a.title + '</span><i' + (waiting ? ' class="is-loading"' : '') + '><b style="width:' + (a.ok ? a.pct : 0) + '%;background:' + color(a.pct) + '"></b></i><em>' + (a.ok ? a.pct + '%' : waiting ? '<span class="di-dots"><i></i><i></i><i></i></span>' : '–') + '</em></div>';
       }).join('') + '</div>' +
       (speed === null ? '<p class="di-wait"><span class="di-spin" aria-hidden="true"></span>' + T.wait + ' <b class="di-sec">' + Math.round((Date.now() - waitStart) / 1000) + ' s</b></p>' : '') +
-      '<h4>' + T.top + '</h4><ol class="di-top">' + (r.top.length ? r.top.map(function (c) {
-        return '<li><small>' + T.services[c.area] + '</small>' + esc(c.label) + '</li>';
+      (r.cap ? '<p class="di-cap">' + T.capped[r.cap] + '</p>' : '') +
+      '<h4>' + T.top + '</h4><ol class="di-top">' + (r.top.length ? r.top.map(function (p) {
+        var c = T.prio[p.area.id];
+        return '<li><small>' + p.area.title + ' · ' + p.area.pct + '%</small><strong>' + c[0] + '</strong><p>' + c[1] + '</p><ul>' + p.items.slice(0, 4).map(function (it) { return '<li' + (it.status >= 0.5 ? ' class="is-mid"' : '') + '>' + esc(it.label) + '</li>'; }).join('') + '</ul></li>';
       }).join('') : '<li>' + T.none + '</li>') + '</ol>' +
       '<div class="di-actions"><button type="button" class="btn btn-primary di-open">' + T.full + '</button></div>' +
       '<form class="di-mail" hidden><p>' + T.ask + '</p><div class="di-mail-row"><input type="email" name="email" placeholder="' + T.email + '" aria-label="' + T.email + '" required /><button type="submit" class="btn btn-primary">' + T.send + '</button></div><p class="di-status" role="status"></p></form>';

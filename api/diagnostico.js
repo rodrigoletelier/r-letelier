@@ -241,7 +241,14 @@ const EN = {
   'Google y la IA necesitan texto para entender qué ofreces, dónde y para quién.': 'Google and AI need text to understand what you offer, where and for whom.',
   'Poco texto en tu portada': 'Not much text on your home page',
   'Unas líneas más sobre tu lugar y tus experiencias ayudan a que Google y la IA te recomienden.': 'A few more lines about your place and experiences help Google and AI recommend you.',
-  'Texto suficiente para que Google y la IA te entiendan': 'Enough text for Google and AI to understand you'
+  'Texto suficiente para que Google y la IA te entiendan': 'Enough text for Google and AI to understand you',
+  'Descripción de la experiencia: no pudimos leerla (sitio cargado con JavaScript)': 'Experience description: we could not read it (site loads with JavaScript)',
+  'La portada casi no cuenta qué vive el huésped': 'Your home page barely tells what guests experience',
+  'Describe el lugar, la experiencia y para quién es. Es lo que hace que alguien quiera reservar.': 'Describe the place, the experience and who it is for. That is what makes someone want to book.',
+  'La portada cuenta poco sobre la experiencia': 'Your home page says little about the experience',
+  'Unas líneas más sobre qué vive el huésped ayudan a decidir.': 'A few more lines about what guests experience help them decide.',
+  'La portada describe la experiencia': 'Your home page describes the experience',
+  'El viajero busca fotos, videos y comentarios recientes antes de reservar. Sin redes, tu marca parece inactiva.': 'Travelers look for recent photos, videos and comments before booking. Without social profiles, your brand looks inactive.'
 };
 
 function toEnglish(s) {
@@ -254,7 +261,7 @@ function toEnglish(s) {
 
 const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-chat|whatsapp-button|getbutton\.io|wati\.io|elfsight[^"']{0,40}whatsapp|whatsapp-widget|qlwapp|creame-whatsapp|floating-whatsapp|wa-chat-widget|whatsapp-chat/i;
 
-const WEIGHT = { engine: 2 };
+const WEIGHT = { engine: 2, social: 2 };
 
 function check(id, area, status, label, detail) {
   return { id, area, status, label, detail, w: WEIGHT[id] || 1 };
@@ -290,15 +297,21 @@ function analyze(html, extraHtml, ctx) {
   out.push(contact ? check('contact', 'conversion', 1, 'Teléfono, correo o formulario visibles', '') : jsRendered ? check('contact', 'conversion', null, 'Contacto: no pudimos verlo (sitio cargado con JavaScript)', '') : check('contact', 'conversion', 0, 'No encontramos datos de contacto directo', 'El viajero con dudas no tiene cómo preguntarte sin salir del sitio.'));
 
   const offer = /href=["'][^"']*(habitacion|rooms?|suites?|villas?|tents?|casitas?|cabins?|cabanas|cabañas|accommodation|alojamiento|stay|tours?|experiencias|experiences|programas|expedici|itinerar|paquetes|packages|actividades|activities)/.test(all);
-  out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.5, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
+  out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.25, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
   const PRICE = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|desde\s+\$|from\s+\$|per night|por noche|por persona|per person/;
   const price = PRICE.test(textOf(all).toLowerCase());
   const innerPrice = !price && ctx.offerHtml && PRICE.test(visibleText(ctx.offerHtml).toLowerCase());
   out.push(price ? check('price', 'propuesta', 1, 'Precios o tarifas de referencia visibles', '')
     : innerPrice ? check('price', 'propuesta', 0.75, 'Precios solo dentro de cada programa', 'Un "desde USD X" en la portada ayuda al viajero a decidir antes de hacer clic.')
-      : check('price', 'propuesta', 0.5, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
+      : check('price', 'propuesta', 0.25, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
   const reviews = /tripadvisor\.|google\.com\/maps|g\.page|testimoni|reseñas|opiniones|reviews|guest stories/.test(all);
-  out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0.5, 'No vimos reseñas ni testimonios en tu portada', 'La confianza es clave para reservar directo y no en una OTA.'));
+  out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0, 'No vimos reseñas ni testimonios en tu portada', 'La confianza es clave para reservar directo y no en una OTA.'));
+
+  const words = visibleText(html).split(/\s+/).filter((w) => /[a-záéíóúñ]{2,}/i.test(w)).length;
+  out.push(jsRendered ? check('story', 'propuesta', null, 'Descripción de la experiencia: no pudimos leerla (sitio cargado con JavaScript)', '')
+    : words < 120 ? check('story', 'propuesta', 0, 'La portada casi no cuenta qué vive el huésped', 'Describe el lugar, la experiencia y para quién es. Es lo que hace que alguien quiera reservar.')
+      : words < 250 ? check('story', 'propuesta', 0.5, 'La portada cuenta poco sobre la experiencia', 'Unas líneas más sobre qué vive el huésped ayudan a decidir.')
+        : check('story', 'propuesta', 1, 'La portada describe la experiencia', ''));
 
   const gtm = /googletagmanager\.com\/gtm\.js|gtm-[a-z0-9]{4,}/.test(lower);
   const hidden = gtm && !gtmRead;
@@ -313,7 +326,7 @@ function analyze(html, extraHtml, ctx) {
       : hidden ? check('adtags', 'tracking', null, 'Etiquetas de publicidad: no pudimos leer tu Google Tag Manager', '')
         : check('adtags', 'tracking', 0, 'Sin píxel de Meta ni etiqueta de Google Ads', 'Tus campañas no pueden saber qué anuncios traen reservas.'));
   const social = ['instagram.com', 'facebook.com'].filter((d) => all.includes(d));
-  out.push(social.length === 2 ? check('social', 'tracking', 1, 'Enlaces a Instagram y Facebook', '') : check('social', 'tracking', social.length ? 0.5 : 0, social.length ? 'Solo un perfil social enlazado' : 'Sin enlaces a redes sociales', ''));
+  out.push(social.length === 2 ? check('social', 'tracking', 1, 'Enlaces a Instagram y Facebook', '') : check('social', 'tracking', social.length ? 0.5 : 0, social.length ? 'Solo un perfil social enlazado' : 'Sin enlaces a redes sociales', social.length ? '' : 'El viajero busca fotos, videos y comentarios recientes antes de reservar. Sin redes, tu marca parece inactiva.'));
 
   const title = textOf((html.match(/<title[^>]*>([\s\S]*?)<\/title>/i) || [])[1]);
   out.push(!title ? check('title', 'visibilidad', 0, 'La página no tiene título', '')
@@ -330,7 +343,6 @@ function analyze(html, extraHtml, ctx) {
   out.push(ldTravel ? check('schema', 'visibilidad', 1, 'Datos estructurados (schema)', 'Ayudan a Google y a los asistentes de IA a entender qué ofreces.')
     : ld ? check('schema', 'visibilidad', 0.5, 'Datos estructurados genéricos', 'No describen tu alojamiento o experiencia.')
       : check('schema', 'visibilidad', 0, 'Sin datos estructurados', 'Google y la IA tienen menos información para recomendarte.'));
-  const words = visibleText(html).split(/\s+/).filter((w) => /[a-záéíóúñ]{2,}/i.test(w)).length;
   out.push(jsRendered ? check('content', 'visibilidad', null, 'Texto de tu portada: no pudimos leerlo (sitio cargado con JavaScript)', '')
     : words < 120 ? check('content', 'visibilidad', 0, 'Muy poco texto en tu portada', 'Google y la IA necesitan texto para entender qué ofreces, dónde y para quién.')
       : words < 250 ? check('content', 'visibilidad', 0.5, 'Poco texto en tu portada', 'Unas líneas más sobre tu lugar y tus experiencias ayudan a que Google y la IA te recomienden.')
@@ -416,7 +428,7 @@ async function runDiagnosis(input, lang) {
         engine: result.engine,
         checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
         analyzedAt: new Date().toISOString(),
-        version: '1.8'
+        version: '1.9'
       }
     };
   } catch (e) {
