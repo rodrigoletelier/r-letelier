@@ -11,7 +11,7 @@
     noEvidence: 'Not enough evidence', top: 'Your top 3 priorities', none: 'We found no obvious gaps',
     full: 'See full report', send: 'Send report', email: 'Your email', ask: 'Leave your email and I will send you the full report, with everything we checked and what to fix first.', sending: 'Sending…', sent: function (e) { return 'Done. The full report is on its way to ' + e + '. If you do not see it in a few minutes, check your spam folder.'; }, sendError: 'We could not send it. Check the email address and try again.',
     speedOk: 'Fast on mobile', speedBad: 'Slow on mobile', speedDetail: 'Measured with Google PageSpeed.',
-    errors: { bad_url: 'Check the address. Type something like www.yourhotel.com.', unreachable: 'We could not open that site. Check the address and that the site is online.', rate: 'You ran several checks in a row. Wait a minute and try again.', blocked: 'Your site blocks automated checks. Write to me and I will review it by hand.' }
+    errors: { bad_url: 'Check the address. Type something like yourhotel.com.', unreachable: 'We could not open that site. Check the address and that the site is online.', rate: 'You ran several checks in a row. Wait a minute and try again.', blocked: 'Your site blocks automated checks. Write to me and I will review it by hand.' }
   } : {
     areas: ['Visibilidad en Google y la IA', 'Reserva directa', 'Propuesta para el viajero', 'Velocidad y móvil', 'Medición y redes'],
     services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Adquisición' },
@@ -20,7 +20,7 @@
     noEvidence: 'Sin evidencia suficiente', top: 'Tus 3 prioridades', none: 'No encontramos brechas evidentes',
     full: 'Ver informe completo', send: 'Enviar informe', email: 'Tu correo', ask: 'Deja tu correo y te envío el informe completo, con todo lo que revisamos y qué conviene corregir primero.', sending: 'Enviando…', sent: function (e) { return 'Listo. El informe completo va camino a ' + e + '. Si no lo ves en unos minutos, revisa la carpeta de spam.'; }, sendError: 'No pudimos enviarlo. Revisa el correo e inténtalo de nuevo.',
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
-    errors: { bad_url: 'Revisa la dirección. Escribe algo como www.tuhotel.com.', unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.', rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.', blocked: 'Tu sitio bloquea las revisiones automáticas. Escríbeme y lo reviso a mano.' }
+    errors: { bad_url: 'Revisa la dirección. Escribe algo como tuhotel.com.', unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.', rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.', blocked: 'Tu sitio bloquea las revisiones automáticas. Escríbeme y lo reviso a mano.' }
   };
   var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
   var WEIGHTS = [25, 25, 20, 15, 15];
