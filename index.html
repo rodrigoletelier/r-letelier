@@ -828,8 +828,22 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <div class="chain-step is-final"><span class="chain-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4.5 4.5L19 7"/></svg></span><strong>El viajero reserva contigo</strong></div>
         </div>
       </div>
-      <div class="container section-center solutions-cta">
-        <a class="btn btn-primary reveal" href="/#diagnostico">Analiza tu web gratis</a>
+      <div class="container">
+        <div class="diag-card reveal" id="diagnostico">
+          <div>
+            <p class="eyebrow">Diagnóstico gratis</p>
+            <h2>¿Tu web está lista para <span>vender directo?</span></h2>
+            <p>Escribe la web de tu lodge, hotel o agencia y en menos de un minuto ves qué le falta para que el viajero te encuentre y reserve contigo.</p>
+          </div>
+          <div>
+            <form class="diag-form" action="/diagnostico/" method="get">
+              <input type="text" name="web" inputmode="url" autocomplete="url" placeholder="tulodge.com" aria-label="Dirección de tu sitio web" required />
+              <button type="submit" class="btn btn-primary">Analizar mi web gratis</button>
+            </form>
+            <p class="diag-meta">Gratis, sin registro y con resultado inmediato.</p>
+          </div>
+          <div class="diag-inline" id="diag-inline" hidden aria-live="polite"></div>
+        </div>
       </div>
     </section>
 
@@ -941,23 +955,6 @@ h3 { margin-bottom: 12px; font-size: 1.08rem; line-height: 1.25; font-weight: 60
           <a class="btn btn-primary" href="https://wa.me/56966170884?text=Hola%20Rodrigo%2C%20ya%20tengo%20campa%C3%B1as%20activas%20y%20me%20interesa%20una%20auditor%C3%ADa." target="_blank" rel="noreferrer">Quiero auditar mis campañas</a>
         </div>
         <ol class="audit-steps reveal reveal-delay-1"><li><b>1</b><div><strong>Diagnóstico de la cuenta</strong><span>Campañas, anuncios, mercados, conversiones y páginas de destino.</span></div></li><li><b>2</b><div><strong>Sesión con tu equipo</strong><span>Repasamos hallazgos y aplicamos mejoras.</span></div></li><li><b>3</b><div><strong>Seguimiento (opcional)</strong><span>Revisión con datos reales semanas después.</span></div></li></ol>
-      </div>
-      <div class="container">
-        <div class="diag-card reveal" id="diagnostico">
-          <div>
-            <p class="eyebrow">Diagnóstico gratis</p>
-            <h2>¿Tu web está lista para <span>vender directo?</span></h2>
-            <p>Escribe la web de tu lodge, hotel o agencia y en menos de un minuto ves qué le falta para que el viajero te encuentre y reserve contigo.</p>
-          </div>
-          <div>
-            <form class="diag-form" action="/diagnostico/" method="get">
-              <input type="text" name="web" inputmode="url" autocomplete="url" placeholder="tulodge.com" aria-label="Dirección de tu sitio web" required />
-              <button type="submit" class="btn btn-primary">Analizar mi web gratis</button>
-            </form>
-            <p class="diag-meta">Gratis, sin registro y con resultado inmediato.</p>
-          </div>
-          <div class="diag-inline" id="diag-inline" hidden aria-live="polite"></div>
-        </div>
       </div>
     </section>
 

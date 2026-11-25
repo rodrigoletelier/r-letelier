@@ -141,7 +141,23 @@ function findBookingLink(html, base) {
   return null;
 }
 
+function findOfferLinks(html, base, skip) {
+  const re = /<a\b[^>]*href=["']([^"'#]+)["']/gi;
+  const out = [];
+  let m;
+  while ((m = re.exec(html)) && out.length < 2) {
+    try {
+      const u = new URL(m[1], base);
+      if (u.hostname !== base.hostname || u.href === base.href || u.href === skip) continue;
+      if (/\/(project|proyecto|tours?|programas?|programs?|experiencias?|experiences?|excursion|habitacion|rooms?|suites?|paquetes?|packages?|trek|expedic|viajes?|trips?|actividades|activities)/i.test(u.pathname) && !out.includes(u.href)) out.push(u.href);
+    } catch (e) { /* ignore */ }
+  }
+  return out;
+}
+
 const EN = {
+  'Precios solo dentro de cada programa': 'Prices only inside each program page',
+  'Un "desde USD X" en la portada ayuda al viajero a decidir antes de hacer clic.': 'A "from USD X" on your home page helps travelers decide before they click.',
   'Motor de reservas detectado': 'Booking engine detected',
   'Hay un camino a reservar, pero no identificamos el motor': 'There is a path to book, but we could not identify the engine',
   'Revisa que el viajero pueda ver disponibilidad y pagar sin salir de tu marca.': 'Make sure travelers can check availability and pay without leaving your brand.',
@@ -261,8 +277,12 @@ function analyze(html, extraHtml, ctx) {
 
   const offer = /href=["'][^"']*(habitacion|rooms?|suites?|villas?|tents?|casitas?|cabins?|cabanas|cabañas|accommodation|alojamiento|stay|tours?|experiencias|experiences|programas|expedici|itinerar|paquetes|packages|actividades|activities)/.test(all);
   out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.5, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
-  const price = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|desde\s+\$|from\s+\$|per night|por noche|por persona|per person/.test(textOf(all).toLowerCase());
-  out.push(price ? check('price', 'propuesta', 1, 'Precios o tarifas de referencia visibles', '') : check('price', 'propuesta', 0.5, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
+  const PRICE = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|desde\s+\$|from\s+\$|per night|por noche|por persona|per person/;
+  const price = PRICE.test(textOf(all).toLowerCase());
+  const innerPrice = !price && ctx.offerHtml && PRICE.test(textOf(ctx.offerHtml).toLowerCase());
+  out.push(price ? check('price', 'propuesta', 1, 'Precios o tarifas de referencia visibles', '')
+    : innerPrice ? check('price', 'propuesta', 0.75, 'Precios solo dentro de cada programa', 'Un "desde USD X" en la portada ayuda al viajero a decidir antes de hacer clic.')
+      : check('price', 'propuesta', 0.5, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
   const reviews = /tripadvisor\.|google\.com\/maps|g\.page|testimoni|reseñas|opiniones|reviews|guest stories/.test(all);
   out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0.5, 'No vimos reseñas ni testimonios en tu portada', 'La confianza es clave para reservar directo y no en una OTA.'));
 
@@ -326,10 +346,11 @@ async function runDiagnosis(input, lang) {
         home = await safeFetch(start.href, 4000);
       } else throw e;
     }
+    let ua = UA;
     const thin = home.status < 400 && (!home.body || home.body.length < 5000);
     if (home.status >= 500 || home.status === 403 || thin) {
       const retry = await safeFetch(home.url || start.href, 5000, true, UA_PLAIN).catch(() => null);
-      if (retry && retry.status < 400 && retry.body && (!thin || retry.body.length > home.body.length)) home = retry;
+      if (retry && retry.status < 400 && retry.body && (!thin || retry.body.length > home.body.length)) { home = retry; ua = UA_PLAIN; }
       else if (thin) console.warn('diagnostico: respuesta corta', start.host, home.status, home.body ? home.body.length : 0);
     }
     if (home.status === 401 || home.status === 403 || home.status === 429) return { status: 422, body: { error: 'blocked', status: home.status } };
@@ -341,18 +362,21 @@ async function runDiagnosis(input, lang) {
     const sameHost = bookingLink && new URL(bookingLink).hostname === host;
 
     const gtmId = (home.body.match(/GTM-[A-Z0-9]{4,10}/) || [])[0];
-    const [extra, robots, sitemap, gtmJs] = await Promise.all([
+    const offerLinks = findOfferLinks(home.body, finalUrl, bookingLink);
+    const [extra, robots, sitemap, gtmJs, ...offers] = await Promise.all([
       sameHost && bookingLink !== finalUrl.href ? safeFetch(bookingLink, 3500).catch(() => null) : null,
       safeFetch(finalUrl.origin + '/robots.txt', 2500).catch(() => null),
       safeFetch(finalUrl.origin + '/sitemap.xml', 2500, false).catch(() => null),
-      gtmId ? safeFetch('https://www.googletagmanager.com/gtm.js?id=' + gtmId, 3500).catch(() => null) : null
+      gtmId ? safeFetch('https://www.googletagmanager.com/gtm.js?id=' + gtmId, 3500).catch(() => null) : null,
+      ...offerLinks.map((u) => safeFetch(u, 3500, true, ua).catch(() => null))
     ]);
     const robotsSitemap = robots && robots.status < 400 && /^sitemap:/im.test(robots.body);
     const hasSitemap = robotsSitemap || (sitemap && sitemap.status < 400) || /sitemap/i.test(home.body.match(/<link[^>]+rel=["']sitemap["'][^>]*>/i) || '');
 
     const result = analyze(home.body, extra && extra.status < 400 ? extra.body : '', {
       host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap,
-      gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : ''
+      gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : '',
+      offerHtml: offers.filter((o) => o && o.status < 400 && o.body).map((o) => o.body).join('\n')
     });
 
     return {
@@ -364,7 +388,7 @@ async function runDiagnosis(input, lang) {
         engine: result.engine,
         checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
         analyzedAt: new Date().toISOString(),
-        version: '1.6'
+        version: '1.7'
       }
     };
   } catch (e) {
