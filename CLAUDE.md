@@ -60,7 +60,7 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 6. **Sobre mí** (verde) — texto + foto de Rodrigo en la cordillera (rodrigo-montana-naranja.jpg)
 7. **Auditoría de campañas** (#auditoria, beige) — texto + 3 pasos en línea vertical y CTA WhatsApp
 8. **FAQ** (verde) — 9 preguntas con acordeón (incluye "¿Qué es el AEO?"). El JSON-LD FAQPage del <head> replica estas preguntas: si cambias una, actualiza ambos
-9. **CTA final** (beige) — caja verde con botón WhatsApp + formulario
+9. **CTA final** (beige) — caja verde con el formulario de contacto dentro (texto a la izquierda, formulario a la derecha; en móvil apilado). Sin botón de llamada: el WhatsApp queda en el botón flotante
 
 **Fondos**: alternar siempre beige / verde entre secciones.
 
