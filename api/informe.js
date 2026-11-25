@@ -1,4 +1,5 @@
-const { runDiagnosis } = require('./diagnostico.js');
+const crypto = require('crypto');
+const { runDiagnosis, signResult } = require('./diagnostico.js');
 
 const hits = new Map();
 const IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
@@ -15,7 +16,7 @@ const TXT = {
     score: 'Índice', of: 'de 100', noScore: 'Sin índice completo: no encontramos evidencia suficiente en todas las áreas.',
     detail: 'Todo lo que revisamos', ok: 'Bien', mid: 'Mejorable', bad: 'Falta',
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
-    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.', content: 'Índice limitado a 45: la portada casi no tiene texto.' },
+    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.' },
     note: 'Es una revisión automática de tu página de inicio. El máximo por área es 90 %: el resto solo se puede ver con tus datos reales de campañas y reservas.',
     cta: '¿Lo revisamos juntos? Responde este correo o escríbeme por WhatsApp.',
     wa: 'Escribir por WhatsApp',
@@ -31,7 +32,7 @@ const TXT = {
     score: 'Score', of: 'out of 100', noScore: 'No full score: we did not find enough evidence in every area.',
     detail: 'Everything we checked', ok: 'Good', mid: 'Can improve', bad: 'Missing',
     speedOk: 'Fast on mobile', speedBad: 'Slow on mobile', speedDetail: 'Measured with Google PageSpeed.',
-    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.', content: 'Score capped at 45: the home page has almost no text.' },
+    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.' },
     note: 'This is an automatic review of your home page. Each area tops out at 90%: the rest can only be seen with your real campaign and booking data.',
     cta: 'Want to go over it together? Reply to this email or message me on WhatsApp.',
     wa: 'Message me on WhatsApp',
@@ -48,7 +49,6 @@ function capScore(checks, score) {
   var caps = [];
   if (st('social') === 0) caps.push([35, 'social']);
   if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
-  if (st('content') === 0) caps.push([45, 'content']);
   caps.sort(function (a, b) { return a[0] - b[0]; });
   return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
 }
@@ -103,7 +103,7 @@ ${groups}
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'method' });
-  const { email, url, lang: rawLang, speed } = req.body || {};
+  const { email, url, lang: rawLang, speed, result } = req.body || {};
   const lang = rawLang === 'en' ? 'en' : 'es';
   const t = TXT[lang];
   if (!/^[^\s@<>]{1,64}@[^\s@<>]{1,190}\.[a-z]{2,}$/i.test(String(email || ''))) return res.status(400).json({ error: 'email' });
@@ -115,9 +115,18 @@ module.exports = async (req, res) => {
   recent.push(now);
   hits.set(ip, recent);
 
-  const d = await runDiagnosis(url, lang);
-  if (d.status !== 200) { console.error('informe: diagnóstico falló', url, d.body); return res.status(d.status).json(d.body); }
-  const data = d.body;
+  let data = null;
+  if (result && typeof result === 'object' && typeof result.sig === 'string' && result.sig.length === 64 && Array.isArray(result.checks)) {
+    const want = signResult(result);
+    const age = Date.now() - Date.parse(result.analyzedAt || '');
+    if (want && crypto.timingSafeEqual(Buffer.from(want), Buffer.from(result.sig)) && age >= 0 && age < 6 * 3600000) data = JSON.parse(JSON.stringify(result));
+  }
+  if (!data) {
+    const d = await runDiagnosis(url, lang);
+    if (d.status !== 200) { console.error('informe: diagnóstico falló', url, d.body); return res.status(d.status).json(d.body); }
+    data = d.body;
+    console.warn('informe: sin resultado firmado, se volvió a analizar', url);
+  }
 
   const sp = speed && Number.isFinite(+speed.score) ? Math.max(0, Math.min(100, Math.round(+speed.score))) : null;
   const lcp = speed && /^[\d.,]{1,6}\s?m?s$/.test(String(speed.lcp || '')) ? String(speed.lcp) : '';

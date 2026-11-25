@@ -8,7 +8,7 @@
     services: { visibilidad: 'Visibility', conversion: 'Conversion and technology', propuesta: 'Conversion and technology', rendimiento: 'Conversion and technology', tracking: 'Conversion and technology' },
     loading: 'Checking your site…', measuring: 'Measuring mobile speed…', wait: 'Measuring mobile speed with Google. It takes up to a minute', of: 'out of 100', partial: 'Partial results',
     levels: ['There is a lot of room to grow', 'You are on track, but there are leaks', 'Your website has a solid base'],
-    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.', content: 'Score capped at 45: the home page has almost no text.' },
+    capped: { social: 'Score capped at 35: no social profiles linked.', channel: 'Score capped at 40: no WhatsApp or direct contact on the home page.' },
     prio: {
       visibilidad: ['Get found on Google and by AI', 'Your home page gives few signals to show up when a traveler searches for your destination or asks an AI assistant.'],
       conversion: ['Make booking direct easy', 'A traveler who already chose you needs a clear way to book or ask without leaving for an OTA.'],
@@ -25,7 +25,7 @@
     services: { visibilidad: 'Visibilidad', conversion: 'Conversión y tecnología', propuesta: 'Conversión y tecnología', rendimiento: 'Conversión y tecnología', tracking: 'Conversión y tecnología' },
     loading: 'Revisando tu sitio…', measuring: 'Midiendo la velocidad en móvil…', wait: 'Midiendo la velocidad en móvil con Google. Tarda hasta un minuto', of: 'de 100', partial: 'Diagnóstico parcial',
     levels: ['Hay mucho espacio para crecer', 'Vas bien, pero hay fugas', 'Tu web tiene una base sólida'],
-    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.', content: 'Índice limitado a 45: la portada casi no tiene texto.' },
+    capped: { social: 'Índice limitado a 35: sin redes sociales enlazadas.', channel: 'Índice limitado a 40: sin WhatsApp ni contacto directo en la portada.' },
     prio: {
       visibilidad: ['Que Google y la IA te encuentren', 'Tu portada da pocas señales para aparecer cuando un viajero busca tu destino o le pregunta a la IA.'],
       conversion: ['Que reservar directo sea fácil', 'El viajero que ya te eligió necesita un camino claro para reservar o preguntar sin irse a una OTA.'],
@@ -44,7 +44,6 @@
     var caps = [];
     if (st('social') === 0) caps.push([35, 'social']);
     if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
-    if (st('content') === 0) caps.push([45, 'content']);
     caps.sort(function (a, b) { return a[0] - b[0]; });
     return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
   }
@@ -129,7 +128,7 @@
       fetch('/api/informe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email, url: data.url, lang: en ? 'en' : 'es', speed: speed || null })
+        body: JSON.stringify({ email: email, url: data.url, lang: en ? 'en' : 'es', speed: speed || null, result: data })
       }).then(function (res) {
         if (!res.ok) throw new Error(String(res.status));
         mail.innerHTML = '<p class="di-done">' + esc(T.sent(email)) + '</p>';

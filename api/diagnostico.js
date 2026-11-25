@@ -244,9 +244,9 @@ const EN = {
   'Texto suficiente para que Google y la IA te entiendan': 'Enough text for Google and AI to understand you',
   'Descripción de la experiencia: no pudimos leerla (sitio cargado con JavaScript)': 'Experience description: we could not read it (site loads with JavaScript)',
   'La portada casi no cuenta qué vive el huésped': 'Your home page barely tells what guests experience',
-  'Describe el lugar, la experiencia y para quién es. Es lo que hace que alguien quiera reservar.': 'Describe the place, the experience and who it is for. That is what makes someone want to book.',
+  'Describe qué ofreces, dónde, para quién y qué incluye. Es lo que hace que alguien quiera reservar.': 'Say what you offer, where, who it is for and what is included. That is what makes someone want to book.',
   'La portada cuenta poco sobre la experiencia': 'Your home page says little about the experience',
-  'Unas líneas más sobre qué vive el huésped ayudan a decidir.': 'A few more lines about what guests experience help them decide.',
+  'Falta decir con claridad dónde estás, para quién es o qué incluye.': 'It does not clearly say where you are, who it is for or what is included.',
   'La portada describe la experiencia': 'Your home page describes the experience',
   'El viajero busca fotos, videos y comentarios recientes antes de reservar. Sin redes, tu marca parece inactiva.': 'Travelers look for recent photos, videos and comments before booking. Without social profiles, your brand looks inactive.'
 };
@@ -262,6 +262,15 @@ function toEnglish(s) {
 const WA_WIDGETS = /wp-whatsapp|njt-whatsapp|nta-wa-|joinchat|ht-ctc|click-to-chat|whatsapp-button|getbutton\.io|wati\.io|elfsight[^"']{0,40}whatsapp|whatsapp-widget|qlwapp|creame-whatsapp|floating-whatsapp|wa-chat-widget|whatsapp-chat/i;
 
 const WEIGHT = { engine: 2, social: 2 };
+
+const crypto = require('crypto');
+
+function signResult(body) {
+  const key = process.env.PAGESPEED_API_KEY || process.env.RESEND_API_KEY;
+  if (!key) return '';
+  const { sig, ...rest } = body;
+  return crypto.createHmac('sha256', 'diagnostico:' + key).update(JSON.stringify(rest)).digest('hex');
+}
 
 function check(id, area, status, label, detail) {
   return { id, area, status, label, detail, w: WEIGHT[id] || 1 };
@@ -307,10 +316,17 @@ function analyze(html, extraHtml, ctx) {
   const reviews = /tripadvisor\.|google\.com\/maps|g\.page|testimoni|reseñas|opiniones|reviews|guest stories/.test(all);
   out.push(reviews ? check('reviews', 'propuesta', 1, 'Reseñas o testimonios', '') : check('reviews', 'propuesta', 0, 'No vimos reseñas ni testimonios en tu portada', 'La confianza es clave para reservar directo y no en una OTA.'));
 
-  const words = visibleText(html).split(/\s+/).filter((w) => /[a-záéíóúñ]{2,}/i.test(w)).length;
+  const vtext = visibleText(html).toLowerCase();
+  const words = vtext.split(/\s+/).filter((w) => /[a-záéíóúñ]{2,}/i.test(w)).length;
+  const storySignals = [
+    /lodge|hotel|caba[ñn]a|domo|glamping|hostal|refugio|habitaci|suite|tour|excursi|expedici|trekking|kayak|cabalgata|experiencia|programa|cabin|room|experience|hike|retreat/,
+    /\bkm\b|kil[oó]metros|minutos de|a pasos|frente al|junto al|cerca de|valle|lago|r[ií]o|volc[aá]n|bosque|selva|cordillera|parque nacional|playa|desierto|patagonia|minutes from|next to|near |valley|lake|river|forest|jungle|beach|mountain/,
+    /familia|pareja|grupos?\b|ni[ñn]os|viajeros|aventurer|amantes de|ideal para|para quienes|families|couples|kids|travelers|ideal for|perfect for/,
+    /incluye|incluido|desayuno|traslado|gu[ií]a|todo incluido|pensi[oó]n|alimentaci|includes|included|breakfast|transfer|guided|all.inclusive/
+  ].filter((re) => re.test(vtext)).length;
   out.push(jsRendered ? check('story', 'propuesta', null, 'Descripción de la experiencia: no pudimos leerla (sitio cargado con JavaScript)', '')
-    : words < 120 ? check('story', 'propuesta', 0, 'La portada casi no cuenta qué vive el huésped', 'Describe el lugar, la experiencia y para quién es. Es lo que hace que alguien quiera reservar.')
-      : words < 250 ? check('story', 'propuesta', 0.5, 'La portada cuenta poco sobre la experiencia', 'Unas líneas más sobre qué vive el huésped ayudan a decidir.')
+    : storySignals <= 1 ? check('story', 'propuesta', 0, 'La portada casi no cuenta qué vive el huésped', 'Describe qué ofreces, dónde, para quién y qué incluye. Es lo que hace que alguien quiera reservar.')
+      : storySignals === 2 ? check('story', 'propuesta', 0.5, 'La portada cuenta poco sobre la experiencia', 'Falta decir con claridad dónde estás, para quién es o qué incluye.')
         : check('story', 'propuesta', 1, 'La portada describe la experiencia', ''));
 
   const gtm = /googletagmanager\.com\/gtm\.js|gtm-[a-z0-9]{4,}/.test(lower);
@@ -428,7 +444,7 @@ async function runDiagnosis(input, lang) {
         engine: result.engine,
         checks: lang === 'en' ? result.checks.map((c) => ({ ...c, label: toEnglish(c.label), detail: toEnglish(c.detail) })) : result.checks,
         analyzedAt: new Date().toISOString(),
-        version: '1.9'
+        version: '1.10'
       }
     };
   } catch (e) {
@@ -449,10 +465,11 @@ const handler = async (req, res) => {
 
   const lang = req.query && req.query.lang === 'en' ? 'en' : 'es';
   const r = await runDiagnosis(req.query && req.query.url, lang);
-  if (r.status === 200) res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0');
+  if (r.status === 200) { r.body.sig = signResult(r.body); res.setHeader('Cache-Control', 'public, s-maxage=3600, max-age=0'); }
   res.status(r.status).json(r.body);
 };
 
 module.exports = handler;
 module.exports.analyze = analyze;
 module.exports.runDiagnosis = runDiagnosis;
+module.exports.signResult = signResult;
