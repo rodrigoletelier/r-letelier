@@ -141,18 +141,24 @@ function findBookingLink(html, base) {
   return null;
 }
 
-function findOfferLinks(html, base, skip) {
+function findOfferLinks(html, base, skip, limit = 2) {
   const re = /<a\b[^>]*href=["']([^"'#]+)["']/gi;
-  const out = [];
+  const found = [];
   let m;
-  while ((m = re.exec(html)) && out.length < 2) {
+  while ((m = re.exec(html))) {
     try {
       const u = new URL(m[1], base);
-      if (u.hostname !== base.hostname || u.href === base.href || u.href === skip) continue;
-      if (/\/(project|proyecto|tours?|programas?|programs?|experiencias?|experiences?|excursion|habitacion|rooms?|suites?|paquetes?|packages?|trek|expedic|viajes?|trips?|actividades|activities)/i.test(u.pathname) && !out.includes(u.href)) out.push(u.href);
+      u.search = '';
+      if (u.hostname !== base.hostname || u.href === base.href || skip.includes(u.href)) continue;
+      if (/\/(project|proyecto|tours?|programas?|programs?|experiencias?|experiences?|excursion|habitacion|rooms?|suites?|paquetes?|packages?|trek|expedic|viajes?|trips?|actividades|activities)/i.test(u.pathname) && !found.includes(u.href)) found.push(u.href);
     } catch (e) { /* ignore */ }
   }
-  return out;
+  const depth = (h) => new URL(h).pathname.split('/').filter(Boolean).length;
+  return found.sort((x, y) => depth(y) - depth(x)).slice(0, limit);
+}
+
+function visibleText(html) {
+  return textOf((html || '').replace(/<(script|style|noscript)[\s\S]*?<\/\1>/gi, ' '));
 }
 
 const EN = {
@@ -279,7 +285,7 @@ function analyze(html, extraHtml, ctx) {
   out.push(offer ? check('offer', 'propuesta', 1, 'Oferta identificable (habitaciones, tours o programas)', '') : check('offer', 'propuesta', 0.5, 'No encontramos páginas de habitaciones, tours o programas', 'Cuesta entender qué vendes y qué incluye.'));
   const PRICE = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|desde\s+\$|from\s+\$|per night|por noche|por persona|per person/;
   const price = PRICE.test(textOf(all).toLowerCase());
-  const innerPrice = !price && ctx.offerHtml && PRICE.test(textOf(ctx.offerHtml).toLowerCase());
+  const innerPrice = !price && ctx.offerHtml && PRICE.test(visibleText(ctx.offerHtml).toLowerCase());
   out.push(price ? check('price', 'propuesta', 1, 'Precios o tarifas de referencia visibles', '')
     : innerPrice ? check('price', 'propuesta', 0.75, 'Precios solo dentro de cada programa', 'Un "desde USD X" en la portada ayuda al viajero a decidir antes de hacer clic.')
       : check('price', 'propuesta', 0.5, 'No vimos precios de referencia', 'Un "desde USD X" ayuda al viajero a decidir y filtra consultas.'));
@@ -329,6 +335,7 @@ function analyze(html, extraHtml, ctx) {
 }
 
 async function runDiagnosis(input, lang, debugOffers) {
+  const t0 = Date.now();
   let raw = String(input || '').trim();
   if (!raw || raw.length > 200) return { status: 400, body: { error: 'bad_url' } };
   if (!/^https?:\/\//i.test(raw)) raw = 'https://' + raw;
@@ -362,7 +369,7 @@ async function runDiagnosis(input, lang, debugOffers) {
     const sameHost = bookingLink && new URL(bookingLink).hostname === host;
 
     const gtmId = (home.body.match(/GTM-[A-Z0-9]{4,10}/) || [])[0];
-    const offerLinks = findOfferLinks(home.body, finalUrl, bookingLink);
+    const offerLinks = findOfferLinks(home.body, finalUrl, [bookingLink]);
     const [extra, robots, sitemap, gtmJs, ...offers] = await Promise.all([
       sameHost && bookingLink !== finalUrl.href ? safeFetch(bookingLink, 3500).catch(() => null) : null,
       safeFetch(finalUrl.origin + '/robots.txt', 2500).catch(() => null),
@@ -370,17 +377,25 @@ async function runDiagnosis(input, lang, debugOffers) {
       gtmId ? safeFetch('https://www.googletagmanager.com/gtm.js?id=' + gtmId, 3500).catch(() => null) : null,
       ...offerLinks.map((u) => safeFetch(u, 3500, true, ua).catch(() => null))
     ]);
+    let offerBodies = offers.filter((o) => o && o.status < 400 && o.body).map((o) => o.body);
+    const PRICE_HINT = /(usd|us\$|clp|€|eur|\$)\s?\d{2,3}([.,]\d{3})*|por persona|per person|por noche|per night/i;
+    if (offerBodies.length && !offerBodies.some((b) => PRICE_HINT.test(visibleText(b))) && Date.now() - t0 < 5000) {
+      const deeper = [];
+      offerBodies.forEach((b) => findOfferLinks(b, finalUrl, offerLinks.concat(deeper), 2).forEach((u) => { if (deeper.length < 2) deeper.push(u); }));
+      const more = await Promise.all(deeper.map((u) => safeFetch(u, 3000, true, ua).catch(() => null)));
+      offerBodies = offerBodies.concat(more.filter((o) => o && o.status < 400 && o.body).map((o) => o.body));
+    }
     const robotsSitemap = robots && robots.status < 400 && /^sitemap:/im.test(robots.body);
     const hasSitemap = robotsSitemap || (sitemap && sitemap.status < 400) || /sitemap/i.test(home.body.match(/<link[^>]+rel=["']sitemap["'][^>]*>/i) || '');
 
     const result = analyze(home.body, extra && extra.status < 400 ? extra.body : '', {
       host, bookingLink, https: finalUrl.protocol === 'https:', sitemap: !!hasSitemap,
       gtmJs: gtmJs && gtmJs.status < 400 ? gtmJs.body : '',
-      offerHtml: offers.filter((o) => o && o.status < 400 && o.body).map((o) => o.body).join('\n')
+      offerHtml: offerBodies.join('\n')
     });
 
     if (process.env.VERCEL_ENV !== 'production' && debugOffers) {
-      const t = offers.map((o) => o ? { status: o.status, len: (o.body || '').length, sample: (textOf(o.body || '').match(/.{0,60}(\$|usd|clp|precio|valor|tarifa).{0,60}/gi) || []).slice(0, 5) } : null);
+      const t = offerBodies.map((o) => ({ len: o.length, sample: (visibleText(o).match(/.{0,60}(\$|usd|clp|precio|valor|tarifa).{0,60}/gi) || []).slice(0, 5) }));
       return { status: 200, body: { offerLinks, t } };
     }
     return {
