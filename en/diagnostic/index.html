@@ -309,10 +309,10 @@ h3 { margin-top: 0; }
     { id: 'conversion', title: 'Direct booking', weight: 25, service: 'Conversion and technology' },
     { id: 'propuesta', title: 'Offer for travelers', weight: 20, service: 'Conversion and technology' },
     { id: 'rendimiento', title: 'Speed and mobile', weight: 15, service: 'Conversion and technology' },
-    { id: 'tracking', title: 'Tracking and social', weight: 15, service: 'Acquisition' }
+    { id: 'tracking', title: 'Tracking and social', weight: 15, service: 'Conversion and technology' }
   ];
   var MAX_PCT = 90;
-  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
+  var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'content', 'story', 'social', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https'];
 
   var data = null;
   var speed = null;
@@ -329,8 +329,8 @@ h3 { margin-top: 0; }
     return pct >= 70 ? 'var(--sage)' : pct >= 40 ? 'var(--warn)' : 'var(--low)';
   }
   function level(score) {
-    if (score >= 70) return ['Your website has a solid base', 'The essentials for selling direct are in place. Growth now comes from fine-tuning campaigns, content and follow-up.'];
-    if (score >= 40) return ['You are on track, but there are leaks', 'Your website has important pieces, but there are points where bookings likely slip away to OTAs or competitors.'];
+    if (score >= 75) return ['Your website has a solid base', 'The essentials for selling direct are in place. Growth now comes from fine-tuning campaigns, content and follow-up.'];
+    if (score >= 50) return ['You are on track, but there are leaks', 'Your website has important pieces, but there are points where bookings likely slip away to OTAs or competitors.'];
     return ['There is a lot of room to grow', 'Today your website makes it hard for travelers to find you or book with you. A few well-chosen fixes make a visible difference.'];
   }
 
@@ -343,6 +343,16 @@ h3 { margin-top: 0; }
       detail: 'Measured with Google PageSpeed' + (speed.lcp ? '. Main content appears after ' + speed.lcp : '') + '. Every second of waiting makes more travelers leave.' };
   }
 
+  function capScore(checks, score) {
+    if (score === null) return { score: null, cap: null };
+    var st = function (id) { var c = checks.filter(function (x) { return x.id === id; })[0]; return c ? c.status : null; };
+    var caps = [];
+    if (st('social') === 0) caps.push([35, 'social']);
+    if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
+    if (st('content') === 0) caps.push([45, 'content']);
+    caps.sort(function (a, b) { return a[0] - b[0]; });
+    return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
+  }
   function compute() {
     var checks = data.checks.concat([speedCheck()]);
     var total = 0;
@@ -361,7 +371,7 @@ h3 { margin-top: 0; }
     gaps.sort(function (a, b) {
       return (a.status - b.status) || (PRIORITY.indexOf(a.id) - PRIORITY.indexOf(b.id));
     });
-    return { checks: checks, areas: areas, complete: complete, score: complete ? Math.round(total) : null, top: gaps.slice(0, 3) };
+    return { checks: checks, areas: areas, complete: complete, score: capScore(checks, complete ? Math.round(total) : null).score, top: gaps.slice(0, 3) };
   }
 
   function render(animate) {
