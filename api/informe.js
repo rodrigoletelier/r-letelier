@@ -2,9 +2,8 @@ const crypto = require('crypto');
 const { runDiagnosis, signResult } = require('./diagnostico.js');
 
 const hits = new Map();
-const IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
-const WEIGHTS = [25, 25, 20, 15, 15];
-const MAX_PCT = 90;
+const TGI = require('../assets/tgi-score.js');
+const IDS = TGI.IDS;
 
 const TXT = {
   es: {
@@ -43,35 +42,13 @@ const TXT = {
 
 function esc(s) { return String(s || '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
 
-function capScore(checks, score) {
-  if (score === null) return { score: null, cap: null };
-  var st = function (id) { var c = checks.filter(function (x) { return x.id === id; })[0]; return c ? c.status : null; };
-  var caps = [];
-  if (st('social') === 0) caps.push([35, 'social']);
-  if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
-  caps.sort(function (a, b) { return a[0] - b[0]; });
-  return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
-}
-
 function compute(checks) {
-  let total = 0, complete = true;
-  const areas = IDS.map((id, i) => {
-    const all = checks.filter((c) => c.area === id);
-    const ev = all.filter((c) => c.status !== null);
-    const sum = ev.reduce((s, c) => s + c.status * (c.w || 1), 0);
-    const wsum = ev.reduce((s, c) => s + (c.w || 1), 0);
-    const ok = ev.length >= 2 && ev.length / all.length >= 0.7;
-    const pct = ev.length ? Math.min(MAX_PCT, Math.round(sum / wsum * 100)) : 0;
-    if (ok) total += pct * WEIGHTS[i] / 100; else complete = false;
-    return { id, pct, ok };
-  });
-  const c = capScore(checks, complete ? Math.round(total) : null);
-  return { areas, score: c.score, cap: c.cap };
+  return TGI.score(checks);
 }
 
 function buildEmail(t, data, r) {
   const color = (p) => p >= 70 ? '#6f9464' : p >= 40 ? '#c9935a' : '#c97a66';
-  const title = r.score !== null ? t.levels[r.score >= 75 ? 2 : r.score >= 50 ? 1 : 0] : t.partial;
+  const title = r.score !== null ? t.levels[TGI.level(r.score)] : t.partial;
   const bars = r.areas.map((a, i) => `<tr><td style="padding:6px 0;font-size:14px;color:#1e2420">${esc(t.areas[i])}</td><td style="padding:6px 0 6px 12px;width:45%"><div style="height:8px;border-radius:8px;background:#ebe3d5"><div style="height:8px;border-radius:8px;width:${a.ok ? a.pct : 0}%;background:${color(a.pct)}"></div></div></td><td style="padding:6px 0 6px 12px;text-align:right;font-size:14px;font-weight:600;color:#1e2420">${a.ok ? a.pct + '%' : '–'}</td></tr>`).join('');
   const groups = IDS.map((id, i) => {
     const rows = data.checks.filter((c) => c.area === id && c.status !== null).sort((a, b) => a.status - b.status).map((c) => {
