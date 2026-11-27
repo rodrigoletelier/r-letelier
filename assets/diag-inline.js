@@ -38,18 +38,8 @@
     speedOk: 'Carga rápida en móvil', speedBad: 'Carga lenta en móvil', speedDetail: 'Medido con Google PageSpeed.',
     errors: { bad_url: 'Revisa la dirección. Escribe algo como tuhotel.com.', unreachable: 'No pudimos abrir ese sitio. Revisa que la dirección esté bien y que el sitio esté en línea.', rate: 'Hiciste varios análisis seguidos. Espera un minuto y vuelve a intentar.', blocked: 'Tu sitio bloquea las revisiones automáticas. Escríbeme y lo reviso a mano.' }
   };
-  function capScore(checks, score) {
-    if (score === null) return { score: null, cap: null };
-    var st = function (id) { var c = checks.filter(function (x) { return x.id === id; })[0]; return c ? c.status : null; };
-    var caps = [];
-    if (st('social') === 0) caps.push([35, 'social']);
-    if (st('whatsapp') === 0 && st('contact') === 0) caps.push([40, 'channel']);
-    caps.sort(function (a, b) { return a[0] - b[0]; });
-    return caps.length && caps[0][0] < score ? { score: caps[0][0], cap: caps[0][1] } : { score: score, cap: null };
-  }
-  var IDS = ['visibilidad', 'conversion', 'propuesta', 'rendimiento', 'tracking'];
-  var WEIGHTS = [25, 25, 20, 15, 15];
-  var MAX_PCT = 90;
+  var S = window.TGIScore;
+  var MAX_PCT = S.MAX_PCT;
   var PRIORITY = ['noindex', 'engine', 'ota', 'ga4', 'speed', 'whatsapp', 'schema', 'content', 'adtags', 'desc', 'reviews', 'sitemap', 'price', 'offer', 'contact', 'lang', 'title', 'h1', 'viewport', 'https', 'social'];
   var data = null, speed = null, waitStart = 0, waitTimer = null;
 
@@ -65,30 +55,20 @@
 
   function compute() {
     var checks = data.checks.concat([speedCheck()]);
-    var total = 0, complete = true;
-    var areas = IDS.map(function (id, i) {
-      var all = checks.filter(function (c) { return c.area === id; });
-      var ev = all.filter(function (c) { return c.status !== null; });
-      var sum = ev.reduce(function (s, c) { return s + c.status * (c.w || 1); }, 0);
-      var wsum = ev.reduce(function (s, c) { return s + (c.w || 1); }, 0);
-      var ok = ev.length >= 2 && ev.length / all.length >= 0.7;
-      var pct = ev.length ? Math.min(MAX_PCT, Math.round(sum / wsum * 100)) : 0;
-      if (ok) total += pct * WEIGHTS[i] / 100; else complete = false;
-      return { id: id, title: T.areas[i], pct: pct, ok: ok, gap: ok ? (MAX_PCT - pct) * WEIGHTS[i] : 0 };
-    });
+    var r = S.score(checks);
+    var areas = r.areas.map(function (a, i) { a.title = T.areas[i]; return a; });
     var gaps = checks.filter(function (c) { return c.status !== null && c.status < 1; });
     gaps.sort(function (a, b) { return (a.status - b.status) || (PRIORITY.indexOf(a.id) - PRIORITY.indexOf(b.id)); });
     var top = areas.filter(function (a) { return a.ok && a.pct < MAX_PCT; }).sort(function (a, b) { return b.gap - a.gap; }).slice(0, 3).map(function (a) {
       return { area: a, items: gaps.filter(function (c) { return c.area === a.id; }) };
     }).filter(function (p) { return p.items.length; });
-    var capped = capScore(checks, complete ? Math.round(total) : null);
-    return { areas: areas, score: capped.score, cap: capped.cap, top: top };
+    return { areas: areas, score: r.score, cap: r.cap, top: top };
   }
 
   function render() {
     var r = compute();
     var keep = box.querySelector('.di-mail:not([hidden])');
-    var title = r.score !== null ? T.levels[r.score >= 75 ? 2 : r.score >= 50 ? 1 : 0] : speed === null ? T.measuring : T.partial;
+    var title = r.score !== null ? T.levels[S.level(r.score)] : speed === null ? T.measuring : T.partial;
     box.innerHTML =
       '<div class="di-head"><div class="di-score"><strong>' + (r.score !== null ? r.score : '–') + '</strong><span>' + T.of + '</span></div>' +
       '<div><p class="di-host">' + esc(data.host) + '</p><h3>' + esc(title) + '</h3></div></div>' +

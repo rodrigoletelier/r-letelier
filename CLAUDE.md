@@ -32,8 +32,8 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 - **Hosting**: Vercel (cuenta personal de Rodrigo)
 - **Repositorio GitHub**: `r-letelier` (en cuenta personal)
-- **URL temporal**: la que asigne Vercel al hacer el nuevo deploy
-- **Dominio final**: rodrigoletelier.cl (registrado en NIC.cl, pendiente conectar a Vercel)
+- **Dominio**: rodrigoletelier.cl (NIC.cl), conectado a Vercel y en producción
+- **Versión en inglés**: publicada en /en/ (incluye /en/diagnostic/)
 
 ## Paleta de colores
 
@@ -81,11 +81,9 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 
 ## Lo que falta / próximos pasos
 
-- **Conectar dominio rodrigoletelier.cl a Vercel** (apuntar DNS desde NIC.cl)
 - **Testimonios** de Wasai y Wildtrip cuando estén disponibles
 - **Sección de resultados/métricas** cuando Rodrigo tenga más casos o pueda exponer datos
-- **Email hola@rodrigoletelier.cl** — configurar cuando el dominio esté listo
-- **Versión en inglés** cuando empiece a apuntar a mercados internacionales con más fuerza
+- **Email hola@rodrigoletelier.cl** — configurar el buzón (el dominio ya está conectado)
 - **Sección de certificaciones** (Google Partner y otras) — la insignia ya está en assets/google-partner.svg
 - **Blog o recursos** para SEO orgánico de palabras clave como "marketing turístico", "reservas directas hotel", etc.
 
@@ -96,6 +94,12 @@ Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en ma
 - No usar fotos de stock genéricas para las secciones de Casos (esas llevan fotos reales de los clientes). El hero SÍ usa una foto de stock a propósito (ver "Decisiones de diseño importantes" arriba) — no revertir eso a la foto de Rodrigo en el tren.
 - No prometer resultados específicos sin respaldo
 - No revertir la marca a "Reserve Atelier" — ese fue un nombre anterior, ya descartado
+
+## Diagnóstico (Tourism Growth Index)
+
+- Motor de revisión: `api/diagnostico.js`. Velocidad: `api/velocidad.js`. Correo del informe: `api/informe.js`
+- Cálculo del índice (pesos por área, tope de 90 % por área, topes por falta de redes o de contacto, niveles 75/50): **solo en `assets/tgi-score.js`**. Lo usan la portada (`assets/diag-inline.js`), las landings `/diagnostico/` y `/en/diagnostic/`, y el correo. No volver a copiar el cálculo en otro archivo
+- Documentación completa para GPT: repo privado `rodrigoletelier/letequinesis`, `docs/claude/respuesta-NN.md`
 
 ## Convenciones de código
 
