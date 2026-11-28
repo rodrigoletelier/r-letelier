@@ -4,7 +4,7 @@ Contexto del proyecto para Claude Code. Leer al inicio de cada sesión.
 
 ## Quién es Rodrigo
 
-Rodrigo Letelier es administrador en ecoturismo con 8 años de experiencia en marketing digital. Está construyendo su marca personal como **especialista en marketing turístico para Latinoamérica**, enfocado en:
+Rodrigo Letelier es administrador en ecoturismo con 10 años de experiencia en marketing digital. Está construyendo su marca personal como **especialista en marketing turístico para Latinoamérica**, enfocado en:
 
 - Lodges
 - Hoteles boutique
