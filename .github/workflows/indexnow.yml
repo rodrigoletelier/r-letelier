@@ -1,0 +1,25 @@
+name: Avisar a Bing (IndexNow)
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['CLAUDE.md', '.github/**']
+  workflow_dispatch:
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Esperar el deploy de Vercel
+        run: |
+          for i in $(seq 1 30); do
+            [ "$(curl -s https://www.rodrigoletelier.cl/b9a9813b8f1e4b37932a21e50e01f929.txt)" = "b9a9813b8f1e4b37932a21e50e01f929" ] && exit 0
+            sleep 10
+          done
+          echo "La clave no está publicada"; exit 1
+      - name: Avisar a IndexNow
+        run: |
+          curl -sS -w '\nHTTP %{http_code}\n' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' \
+            -d '{"host":"www.rodrigoletelier.cl","key":"b9a9813b8f1e4b37932a21e50e01f929","keyLocation":"https://www.rodrigoletelier.cl/b9a9813b8f1e4b37932a21e50e01f929.txt","urlList":["https://www.rodrigoletelier.cl/","https://www.rodrigoletelier.cl/en/","https://www.rodrigoletelier.cl/diagnostico/","https://www.rodrigoletelier.cl/en/diagnostic/","https://www.rodrigoletelier.cl/llms.txt"]}'
