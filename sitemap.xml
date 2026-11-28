@@ -3,6 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.rodrigoletelier.cl/</loc>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.rodrigoletelier.cl/" />
@@ -11,6 +12,7 @@
   </url>
   <url>
     <loc>https://www.rodrigoletelier.cl/en/</loc>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.rodrigoletelier.cl/" />
@@ -19,6 +21,7 @@
   </url>
   <url>
     <loc>https://www.rodrigoletelier.cl/diagnostico/</loc>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.rodrigoletelier.cl/diagnostico/" />
@@ -27,6 +30,7 @@
   </url>
   <url>
     <loc>https://www.rodrigoletelier.cl/en/diagnostic/</loc>
+    <lastmod>2026-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="es" href="https://www.rodrigoletelier.cl/diagnostico/" />
